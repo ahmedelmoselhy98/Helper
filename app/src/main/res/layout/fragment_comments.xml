@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_round_15_top_white"
+    android:backgroundTint="#F5F5F4"
+    android:paddingTop="5dp"
+    tools:context=".presentation.main_video.comments.CommentsFragment">
+
+    <TextView
+        android:id="@+id/tvCommentsNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:textColor="@color/black"
+        tools:text="579 comments" />
+
+    <ImageView
+        android:id="@+id/ivClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="2dp"
+        android:src="@drawable/ic_dialog_close_dark"
+        app:tint="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/tvCommentsNumber"
+        android:layout_marginTop="-1dp"
+        android:background="@color/gray" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_below="@id/tvCommentsNumber"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_comments" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recyclerView"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="6dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edtComment"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:hint="@string/add_comment"
+            android:imeOptions="actionSend"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp" />
+
+        <ImageView
+            android:id="@+id/ivMention"
+            android:layout_width="25dp"
+            android:layout_height="42dp"
+            android:gravity="center"
+            android:src="@drawable/iv_mention"
+            android:textColor="@color/low_white"
+            android:textSize="19dp"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/send_emotion"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:padding="3dp"
+            android:src="@drawable/ic_baseline_insert_emoticon_24" />
+
+        <ImageView
+            android:id="@+id/send_massage"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:padding="3dp"
+            android:src="@drawable/ic_send"
+            app:tint="@color/black" />
+    </LinearLayout>
+</RelativeLayout>

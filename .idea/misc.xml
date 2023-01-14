@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.334" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/drawable/ic_camera.xml" value="0.334" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/drawable/ic_chatbubble_outline.xml" value="0.334" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/drawable/ic_heart.xml" value="0.334" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/drawable/ic_send.xml" value="0.334" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/drawable/ic_youtube.xml" value="0.2825" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/drawable/shape_strock_round_5_white.xml" value="0.2825" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/layout/activity_main.xml" value="0.22760416666666666" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/layout/activity_splash.xml" value="0.2" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/layout/fragment_comments.xml" value="0.4" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/layout/fragment_ingedients.xml" value="0.34010416666666665" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/layout/fragment_pref.xml" value="0.34010416666666665" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/layout/fragment_profile_fragment.xml" value="0.33" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/layout/fragment_video.xml" value="0.22760416666666666" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/layout/fragment_vides_player.xml" value="0.34010416666666665" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/layout/item_comments.xml" value="0.34010416666666665" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/layout/item_ingrdients.xml" value="0.34010416666666665" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/layout/item_vedio_player.xml" value="0.22" />
+        <entry key="..\:/freelance/ChefsHub/app/src/main/res/layout/item_videos.xml" value="0.34010416666666665" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>

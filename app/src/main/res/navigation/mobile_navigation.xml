@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/videoFragment">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.chefshub.app.presentation.main.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.chefshub.app.presentation.main.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.chefshub.app.presentation.main.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/profileFragmentFragment"
+        android:name="com.chefshub.app.presentation.main_video.profile.ProfileFragmentFragment"
+        android:label="fragment_profile_fragment"
+        tools:layout="@layout/fragment_profile_fragment" />
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.chefshub.app.presentation.main.ui.vedios.VideoFragment"
+        android:label="fragment_video"
+        tools:layout="@layout/fragment_video" />
+    <dialog
+        android:id="@+id/dialogSuccessOrder"
+        android:name="com.chefshub.app.presentation.main.ui.success_order.DialogSuccessOrder"
+        android:label="DialogSuccessOrder" />
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.chefshub.app.presentation.main.ui.checkout.CheckoutFragment"
+        android:label="fragment_checkout"
+        tools:layout="@layout/fragment_checkout" />
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="com.chefshub.app.presentation.main.ui.orders.OrdersFragment"
+        android:label="fragment_orders"
+        tools:layout="@layout/fragment_orders" />
+    <dialog
+        android:id="@+id/commentsFragment"
+        android:name="com.chefshub.app.presentation.main_video.comments.CommentsFragment"
+        android:label="fragment_comments"
+        tools:layout="@layout/fragment_comments" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.chefshub.app.presentation.chat.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+</navigation>

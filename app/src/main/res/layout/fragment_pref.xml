@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.select_pref.PrefActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        app:elevation="12dp"
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/purple_700"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+          style="@style/Toolbar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chefs"
+                    android:textAllCaps="true"
+                    android:textColor="@color/green"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hub"
+                    android:textAllCaps="true"
+                    android:textColor="@color/yellow"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/textView2"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+
+        android:text="@string/select_your_n_favorite_food"
+        android:textColor="@color/purple_700"
+        android:textSize="22sp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
+    <TextView
+        android:id="@+id/tv_selection"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="24dp"
+
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/shape_round_10_white"
+        android:backgroundTint="#3F3F4484"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_next"
+        style="@style/materialButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:text="@string/next"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <include
+        android:id="@+id/tv_center"
+        layout="@layout/circle_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintBottom_toTopOf="@+id/btn_next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_selection" />
+
+    <include
+        android:id="@+id/pref_1"
+        layout="@layout/circle_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintBottom_toBottomOf="@+id/tv_center"
+        app:layout_constraintEnd_toStartOf="@+id/tv_center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_center" />
+
+    <include
+        android:id="@+id/pref_2"
+        layout="@layout/circle_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_center"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_center"
+        app:layout_constraintTop_toTopOf="@+id/tv_center" />
+
+    <include
+        android:id="@+id/pref_4"
+        layout="@layout/circle_text_view"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/tv_center"
+        app:layout_constraintEnd_toEndOf="@+id/tv_center"
+        app:layout_constraintStart_toStartOf="@+id/tv_center"
+        app:layout_constraintTop_toBottomOf="@+id/tv_selection" />
+
+    <include
+        android:id="@+id/pref_3"
+        layout="@layout/circle_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next"
+
+        app:layout_constraintEnd_toEndOf="@+id/tv_center"
+        app:layout_constraintStart_toStartOf="@+id/tv_center"
+        app:layout_constraintTop_toBottomOf="@id/tv_center" />
+
+    <include
+        android:id="@+id/pref_5"
+        layout="@layout/circle_text_view"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/pref_3"
+        app:layout_constraintEnd_toStartOf="@+id/tv_center"
+        app:layout_constraintStart_toStartOf="@+id/pref_1"
+        app:layout_constraintTop_toBottomOf="@+id/pref_1" />
+
+    <include
+        android:id="@+id/pref_6"
+        layout="@layout/circle_text_view"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/pref_3"
+        app:layout_constraintEnd_toEndOf="@+id/pref_2"
+        app:layout_constraintStart_toEndOf="@+id/tv_center"
+        app:layout_constraintTop_toBottomOf="@+id/pref_1" />
+
+    <include
+        android:id="@+id/pref_7"
+        layout="@layout/circle_text_view"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/pref_2"
+        app:layout_constraintEnd_toEndOf="@+id/pref_2"
+        app:layout_constraintStart_toEndOf="@+id/pref_4"
+        app:layout_constraintTop_toTopOf="@+id/pref_4" />
+
+    <include
+        android:id="@+id/pref_8"
+        layout="@layout/circle_text_view"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/pref_1"
+        app:layout_constraintEnd_toStartOf="@+id/pref_4"
+        app:layout_constraintStart_toStartOf="@+id/pref_1"
+        app:layout_constraintTop_toTopOf="@+id/pref_4" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

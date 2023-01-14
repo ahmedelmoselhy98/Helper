@@ -1,0 +1,23 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        jcenter()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        jcenter()
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "ChefsHub"
+include ':app'
+include ':base'
+include ':data'
+include ':domain'
+include ':utils'
+include ':di'

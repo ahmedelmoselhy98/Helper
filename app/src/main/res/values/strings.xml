@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">ChefsHub</string>
+    <string name="hub">HUB</string>
+    <string name="chefs">chefs</string>
+    <string name="welcome_to">welcome to</string>
+    <string name="singup_to_see_nmore_videos">Welcome To Your Chefs Hub</string>
+    <string name="your_email_or_your_phone">Your email or your phone</string>
+    <string name="password">Password</string>
+    <string name="forget">Forgot Password?</string>
+    <string name="login">Login or Signup</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_pref">PrefActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="select_your_n_favorite_food">Select your \nfavorite food</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="home">Home</string>
+    <string name="search">search</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="checkout">Checkout</string>
+    <string name="address_1">ADDRESS #1</string>
+    <string name="default_notification_channel_id">defualt notifications</string>
+<!--    <string name="facebook_app_id" translatable="false">3363028827345538</string>-->
+<!--    <string name="facebook_client_token" translatable="false">fb3363028827345538</string>-->
+    <string name="follow">Follow</string>
+    <string name="comments">\" comments\"</string>
+    <string name="add_comment">Add comment ...</string>
+    <string name="following">Following</string>
+    <string name="gridView">GridView</string>
+    <string name="listView">ListVIew</string>
+    <string name="settings">Settings</string>
+    <string name="post">Post</string>
+    <string name="message">message</string>
+    <string name="profile">Profile</string>
+
+
+    <string name="facebook_app_id">499828035586595</string>
+    <string name="fb_login_protocol_scheme">fb499828035586595</string>
+    <string name="facebook_client_token">b205d124f01723e1f14fd767201e32e9</string>
+
+
+</resources>

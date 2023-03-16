@@ -1,6 +1,7 @@
 package com.chefshub.domain.usecase.auth
 
 import PrefKeys
+import android.util.Log
 import android.util.Patterns
 import com.chefshub.base.Validation
 import com.chefshub.data.cache.PreferencesGateway
@@ -21,12 +22,14 @@ class AuthUseCase @Inject constructor(
     suspend fun loginWithSocial(
         provider_id: String,
         provider_name: String,
+        name: String,
         avatar_path: String,
         device_token: String,
         device_id: String,
     ) = authRepository.loginWithSocial(
         provider_id,
         provider_name,
+        name,
         avatar_path,
         device_token,
         device_id

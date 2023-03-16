@@ -2,6 +2,7 @@ package com.chefshub.base
 
 import ERROR_API
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chefshub.data.cache.PreferencesGateway
@@ -48,7 +49,8 @@ open class BaseViewModel : ViewModel() {
             }
                 .onCompletion { sharedFlow.emit(NetworkState.StopLoading) }
                 .catch { sharedFlow.emit(NetworkState.Error(it)) }
-                .collectLatest { sharedFlow.emit(NetworkState.Success(it)) }
+                .collectLatest {
+                    sharedFlow.emit(NetworkState.Success(it)) }
         }
     }
 

@@ -67,7 +67,8 @@
         android:text="12K"
         android:gravity="center"
         app:drawableTint="@color/gray"
-        app:drawableTopCompat="@drawable/ic_heart" />
+        app:drawableTopCompat="@drawable/ic_heart"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tvViewReplies"

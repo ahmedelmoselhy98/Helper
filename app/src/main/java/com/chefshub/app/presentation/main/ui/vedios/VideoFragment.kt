@@ -26,9 +26,8 @@ class VideoFragment : BaseFragment(R.layout.fragment_video) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentVideoBinding.bind(view)
 
-
         binding.viewPager2.apply {
-            reduceDragSensitivity(8)
+            reduceDragSensitivity(2)
             adapter = MainPagerAdapter(this@VideoFragment)
             setCurrentItem(1, false)
 

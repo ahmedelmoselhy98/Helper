@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class TutorialModel(
     @SerializedName("id") var id: Int? = null,
+    @SerializedName("tutorial_ id") var tutorial_id: Int? = null,
     @SerializedName("title") var title: String? = null,
     @SerializedName("chef") var chef: Chef? = Chef(),
     @SerializedName("created_at") var createdAt: String? = null,
@@ -20,13 +21,18 @@ data class TutorialModel(
     @SerializedName("updated_at") var updatedAt: String? = null,
     @SerializedName("image_path") var imagePath: String? = null,
 
-    )
+    @SerializedName("views_count") var views: Int? = null,
+    @SerializedName("shares_count") var sharesCount: Int? =null,
+    @SerializedName("comments_count") var commentsCount: Int? = null,
+    @SerializedName("favourites_count") var favouritesCount: Int? = null,
+    @SerializedName("is_favourited") var isFavourites: Boolean? = null,
 
+    )
 data class Chef(
     @SerializedName("id") var id: Int? = null,
     @SerializedName("name") var name: String? = null,
-    @SerializedName("avatar_path") var avatarPath: String? = null
-
+    @SerializedName("avatar_path") var avatarPath: String? = null,
+    @SerializedName("is_following") var isFollowing: Boolean? = false
 )
 
 data class TutorialVideos(
@@ -40,10 +46,11 @@ data class TutorialVideos(
     @SerializedName("enc_video_filename") var encVideoFilename: String? = null,
     @SerializedName("processed_percentage") var processedPercentage: String? = null,
     @SerializedName("length_in_seconds") var lengthInSeconds: Int? = null,
-    @SerializedName("views") var views: Int? = null,
+    @SerializedName("views_count") var views: Int? = null,
     @SerializedName("created_at") var createdAt: String? = null,
     @SerializedName("updated_at") var updatedAt: String? = null,
     @SerializedName("favourites_count") var favouritesCount: Int? = null,
+    @SerializedName("is_favourited") var isFavourites: Boolean? = null,
     @SerializedName("comments_count") var commentsCount: Int? = null,
     @SerializedName("url") var url: String? = null,
     @SerializedName("chef") var chef: Chef? = Chef(),

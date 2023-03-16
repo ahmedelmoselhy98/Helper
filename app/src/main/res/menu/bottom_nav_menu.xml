@@ -20,7 +20,7 @@
         android:title="@string/message"/>
 
     <item
-        android:id="@+id/profileFragmentFragment"
+        android:id="@+id/myProfile"
         android:icon="@drawable/profile_selctor"
         android:title="@string/profile" />
 

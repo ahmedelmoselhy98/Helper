@@ -14,6 +14,7 @@ interface AuthRepository {
     suspend fun loginWithSocial(
         provider_id: String,
         provider_name: String,
+        name: String,
         avatar_path: String,
         device_token: String,
         device_id: String,

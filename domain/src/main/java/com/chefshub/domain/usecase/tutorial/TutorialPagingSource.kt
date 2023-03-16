@@ -13,8 +13,10 @@ class TutorialPagingSource(private val faqRepository: TutorialRepository) :
     var userId: Int? = null
 
     override fun getRefreshKey(state: PagingState<Int, TutorialModel>): Int? {
+
+        Log.e("getRefreshKey"," getRefreshKey "+state.anchorPosition)
         return state.anchorPosition.apply {
-            if (this == null || this == 1) return 1
+            if (this == null || this == 0) return 1
             else this.minus(1)
         }
     }
@@ -30,9 +32,10 @@ class TutorialPagingSource(private val faqRepository: TutorialRepository) :
                 return LoadResult.Error(Throwable(message = ERROR_API.UNAUTHRIZED))
 
             val data =
-                resp.body()?.data ?: ArrayList()
+                resp.body()?.data?: ArrayList()
 
-            Log.e("ttttttt"," data "+data)
+            Log.e("loadloadload"," data "+data)
+
             return LoadResult.Page(
 //                nextKey = null,
                 nextKey = if (data.isEmpty()) null else currentPage.plus(1),

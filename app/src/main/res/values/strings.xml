@@ -48,6 +48,7 @@
     <string name="facebook_app_id">499828035586595</string>
     <string name="fb_login_protocol_scheme">fb499828035586595</string>
     <string name="facebook_client_token">b205d124f01723e1f14fd767201e32e9</string>
+    <string name="add_to_basket">Add to basket</string>
 
 
 </resources>

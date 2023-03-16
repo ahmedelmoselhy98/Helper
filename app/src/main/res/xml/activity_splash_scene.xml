@@ -18,16 +18,19 @@
             android:layout_height="wrap_content"
             motion:layout_constraintTop_toBottomOf="@+id/textView"
             motion:layout_constraintStart_toStartOf="@+id/textView"
-            android:alpha=".2"
-            android:scaleX=".5"
-            android:scaleY=".5" />
-        <Constraint
-            android:id="@+id/textView7"
-            motion:layout_constraintStart_toEndOf="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintTop_toBottomOf="@+id/textView"
-            android:visibility="invisible" />
+            android:scaleX="0"
+            android:scaleY="0"
+                    />
+        <!--android:alpha=".2"-->
+<!--        android:scaleX=".5"-->
+<!--        android:scaleY=".5"-->
+<!--        <Constraint-->
+<!--            android:id="@+id/textView7"-->
+<!--            motion:layout_constraintStart_toEndOf="@+id/textView2"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            motion:layout_constraintTop_toBottomOf="@+id/textView"-->
+<!--            android:visibility="invisible" />-->
         <Constraint
             android:id="@+id/textView"
             motion:layout_constraintEnd_toEndOf="parent"
@@ -37,9 +40,13 @@
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintHorizontal_bias="0.45"
             motion:layout_constraintStart_toStartOf="parent"
-            android:scaleX="0"
-            android:scaleY="0"
+            android:alpha=".2"
+            android:scaleX=".5"
+            android:scaleY=".5"
+
             motion:transitionEasing="cubic(0.9,0.07,0.94,0.72)" />
+        <!--            android:scaleX="0"-->
+        <!--            android:scaleY="0"-->
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">

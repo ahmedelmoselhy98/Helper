@@ -12,10 +12,10 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(private val userApi: AuthApi) : AuthRepository {
 
-
     override suspend fun loginWithSocial(
         provider_id: String,
         provider_name: String,
+        name: String,
         avatar_path: String,
         device_token: String,
         device_id: String
@@ -24,6 +24,7 @@ class AuthRepositoryImpl @Inject constructor(private val userApi: AuthApi) : Aut
             userApi.loginWithSocial(
                 provider_id,
                 provider_name,
+                name,
                 avatar_path,
                 device_token,
                 device_id

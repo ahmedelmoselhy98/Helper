@@ -3,6 +3,7 @@ package com.example.di
 
 import PrefKeys
 import android.content.Context
+import android.util.Log
 import com.chefshub.data.BuildConfig
 import com.chefshub.data.cache.PreferencesGateway
 import com.chefshub.data.remote.AppApi
@@ -15,11 +16,15 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
+import okhttp3.internal.userAgent
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.CookieManager
+import java.net.CookiePolicy
 import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
@@ -126,6 +131,14 @@ object NetWorkModule {
     ): OkHttpClient {
 
 //trustAllCertificates()
+
+//        val cookieManager = CookieManager()
+//        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL)
+//        val client = OkHttpClient.Builder()
+//            .cookieJar(JavaNetCookieJar(cookieManager))
+//            .build()
+
+//        OkHttpDataSourceFactory(client, userAgent, bandwidthMeter)
 
         val okHttpClient = getUnsafeOkHttpClient()?.newBuilder()
 //        val okHttpClient = OkHttpClient().newBuilder()

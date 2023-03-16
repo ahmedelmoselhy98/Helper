@@ -7,25 +7,35 @@
     android:background="@color/white"
     tools:context=".presentation.main_video.profile.ProfileFragmentFragment">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        >
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
+
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivUserCover"
             android:layout_width="match_parent"
             android:layout_height="178dp"
-            android:layout_margin="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
             android:padding="2dp"
             android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearance="@style/roundedImage"
             app:strokeColor="@color/blue"
             app:strokeWidth="0dp" />
@@ -35,12 +45,12 @@
             android:id="@+id/user_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="154dp"
+            android:layout_marginTop="140dp"
             android:padding="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearance="@style/circleImage"
             app:strokeColor="@color/white"
             app:strokeWidth="4dp" />
@@ -71,8 +81,8 @@
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Master Chef"
-            android:textColor="@color/low_white"
+            android:text="bio description  Chef"
+            android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -95,6 +105,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:padding="5dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -103,6 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="4dp"
+                    android:textStyle="bold"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -122,6 +134,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:padding="5dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -130,6 +143,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="4dp"
+                    android:textStyle="bold"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -149,6 +163,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:padding="5dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -157,6 +172,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="4dp"
+                    android:textStyle="bold"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -190,7 +206,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/shape_round_10_white"
             android:ems="10"
-            android:padding="8dp"
+            android:padding="12dp"
             android:src="@drawable/ic_facebook"
             app:backgroundTint="@color/low_white"
             app:layout_constraintEnd_toStartOf="@id/btnYoutube"
@@ -205,7 +221,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/shape_round_10_white"
             android:ems="10"
-            android:padding="8dp"
+            android:padding="12dp"
             android:src="@drawable/ic_instagram"
             app:backgroundTint="@color/low_white"
             app:layout_constraintEnd_toStartOf="@id/btnFaceBook"
@@ -220,7 +236,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/shape_round_10_white"
             android:ems="10"
-            android:padding="8dp"
+            android:padding="12dp"
             android:src="@drawable/ic_youtube"
             app:backgroundTint="@color/low_white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -264,8 +280,10 @@
             android:nestedScrollingEnabled="true"
             android:paddingBottom="55dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="2"
+            app:spanCount="2"
             app:layout_constraintTop_toBottomOf="@+id/tabLayout"
             tools:listitem="@layout/item_videos" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
+</LinearLayout>
 </androidx.core.widget.NestedScrollView>

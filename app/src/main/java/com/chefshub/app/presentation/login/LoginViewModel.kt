@@ -36,6 +36,7 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCase) :
     fun loginWithSocial(
         provider_id: String,
         provider_name: String,
+        name: String,
         avatar_path: String,
         device_id: String,
     ) {
@@ -45,6 +46,7 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCase) :
                 authUseCase.loginWithSocial(
                     provider_id,
                     provider_name,
+                    name,
                     avatar_path,
                     firebaseToken,
                     device_id

@@ -1,6 +1,8 @@
 package com.chefshub.app.presentation.select_pref
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
@@ -18,6 +20,7 @@ import com.chefshub.utils.ext.setBackgroundTint
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.min
 import kotlin.random.Random
+
 
 @AndroidEntryPoint
 class PrefFragment : BaseFragment(R.layout.fragment_pref) {
@@ -104,24 +107,22 @@ class PrefFragment : BaseFragment(R.layout.fragment_pref) {
                 listOfPref.get(i).let {
                     it.root.isVisible = true
                     it.tv.text = arrayList[i].name
-                    it.tv.setBackgroundTint(R.color.gray)
+                    it.tv.setBackgroundTint(arrayColor.get(Random.nextInt(arrayColor.size.minus(1))))
+//                    it.tv.setBackgroundTint(R.color.gray)
+
                     it.tv.setOnClickListener { view ->
-                        view.setBackgroundTint(arrayColor.get(Random.nextInt(arrayColor.size.minus(1))))
+//                        view.setBackgroundTint(arrayColor.get(Random.nextInt(arrayColor.size.minus(1))))
+                        view.setBackgroundTint(R.color.gray)
                         listOfSelections.add(it.tv.text.toString())
                         setListToTextViewSelection()
                     }
-
                 }
             }
-
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

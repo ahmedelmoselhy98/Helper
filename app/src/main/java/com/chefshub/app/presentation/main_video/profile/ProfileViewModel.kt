@@ -1,5 +1,6 @@
 package com.chefshub.app.presentation.main_video.profile
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -22,15 +23,31 @@ class ProfileViewModel @Inject constructor(
 ) : BaseViewModel() {
 
 
+
+    private val _VideosChefFlow = MutableSharedFlow<NetworkState>()
+    val VideosChefFlow get() = _VideosChefFlow.asSharedFlow()
+
+
+
+    fun getTutorialsVideosChef(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            executeSharedFlow(_VideosChefFlow, tutorialUseCase.getTutorialsVideosChef(id!!))
+        }
+    }
+
+
+
     private val _userFlow = MutableSharedFlow<NetworkState>()
     val userFlow get() = _userFlow.asSharedFlow()
+
+    private val _toggleFlow = MutableSharedFlow<NetworkState>()
+    val toggleFlow get() = _toggleFlow.asSharedFlow()
 
 
     fun videos(userid: Int) = Pager(
         config = PagingConfig(15, 1),
         pagingSourceFactory = { tutorialUseCase.getPagingSource(userid) }
     ).flow.cachedIn(viewModelScope)
-
 
     fun getUserProfile(isMe: Boolean, userID: Int? = null) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -43,7 +60,7 @@ class ProfileViewModel @Inject constructor(
 
     fun toggleFollow(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            executeSharedFlow(_userFlow, authUseCase.toggleFollow(id))
+            executeSharedFlow(_toggleFlow, authUseCase.toggleFollow(id))
         }
     }
 

@@ -18,12 +18,15 @@ class SplashActivity : BaseActivity() {
 
 
         lifecycleScope.launchWhenStarted {
-            delay(1000)
-            findViewById<MotionLayout>(R.id.motionLayout).transitionToEnd {
+            delay(2000)
 
-                startActivity(MainActivity::class.java)
-                finishAffinity()
-            }
+            startActivity(MainActivity::class.java)
+            finishAffinity()
+//            findViewById<MotionLayout>(R.id.motionLayout).transitionToEnd {
+//
+//                startActivity(MainActivity::class.java)
+//                finishAffinity()
+//            }
         }
 
     }

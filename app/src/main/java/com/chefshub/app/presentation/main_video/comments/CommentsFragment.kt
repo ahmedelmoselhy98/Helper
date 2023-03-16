@@ -37,9 +37,12 @@ class CommentsFragment : BaseBottomSheetFragment(R.layout.fragment_comments) {
 
 
         setupRecyclerView()
+        Log.e("numofcomments"," jjjj "+arguments?.getInt(POST_ID))
+
 
         postId = arguments?.getInt(POST_ID) ?: -1
         numComments = arguments?.getInt(NUM_COMMENTS) ?: -1
+
 
         setAction()
         getPostComments()
@@ -52,9 +55,13 @@ class CommentsFragment : BaseBottomSheetFragment(R.layout.fragment_comments) {
         })
         handleSharedFlow(viewModel.commentsListFlow, onSuccess = {
 
-            Log.e("mmmmmm"," jjjj "+it)
+//            Log.e("mmmmmm"," jjjj "+it)
             if (it is ArrayList<*>) {
                 commentsAdapter.setAll(it as ArrayList<CommentsModel>)
+
+
+                binding.tvCommentsNumber.text= it.size.toString() +" comments"
+
 //                binding.tvCommentsNumber.text =
 //                    commentsAdapter.itemCount.toString() + getString(R.string.comments)
             }
@@ -67,9 +74,11 @@ class CommentsFragment : BaseBottomSheetFragment(R.layout.fragment_comments) {
 
     private fun setAction() {
 
-        binding.tvCommentsNumber.text= numComments.toString() +" comments"
+//        binding.tvCommentsNumber.text= numComments.toString() +" comments"
         binding.sendMassage.setOnClickListener{
-            Toast.makeText(requireContext() , "Unauthorized ", Toast.LENGTH_SHORT).show()
+            viewModel.addComment(postId, binding.edtComment.text.toString())
+            binding.edtComment.setText("")
+//            Toast.makeText(requireContext() , "Unauthorized ", Toast.LENGTH_SHORT).show()
         }
         binding.edtComment.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {
@@ -89,6 +98,8 @@ class CommentsFragment : BaseBottomSheetFragment(R.layout.fragment_comments) {
         binding.recyclerView.apply {
             setHasFixedSize(true)
             adapter = commentsAdapter
+
+            scrollToPosition(0)
         }
     }
 

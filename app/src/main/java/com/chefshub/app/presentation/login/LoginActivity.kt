@@ -62,11 +62,14 @@ class LoginActivity : BaseActivity() {
 
     private fun observeFlow() {
         googleLoginHelper.userAccountLivedata.observe(this) {
+
+            Log.e("googleLoginHelper"," googleLoginHelper "+it?.displayName)
             if (it == null) return@observe
             it.let {
                 viewModel.loginWithSocial(
                     provider_id = it.id!!,
                     provider_name = "google",
+                    name= it.displayName!!,
                     avatar_path = it.photoUrl?.path ?: "",
                     device_id = getDeviceID(),
                 )
@@ -84,6 +87,7 @@ class LoginActivity : BaseActivity() {
                 viewModel.loginWithSocial(
                     provider_id = json.optString("id"),
                     provider_name = "facebook",
+                    name=  json.optString("name"),
                     avatar_path = ("https://graph.facebook.com/${json.optString("id")}/picture?type=large")
                         ?: "",
                     device_id = getDeviceID(),

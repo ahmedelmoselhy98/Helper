@@ -44,6 +44,10 @@ class MainActivity : BaseActivity(), Animator.AnimatorListener {
         navController?.addOnDestinationChangedListener { controller, destination, arguments ->
             if (destination.id in listOf(
                     R.id.videoFragment,
+//                    R.id.navigation_home,
+//                    R.id.navigation_dashboard,
+//                    R.id.chatFragment,
+//                    R.id.profileFragmentFragment
                     R.id.checkoutFragment,
                     R.id.ordersFragment,
                     R.id.dialogSuccessOrder,
@@ -55,10 +59,28 @@ class MainActivity : BaseActivity(), Animator.AnimatorListener {
 
             } else {
 //                showNavViewIfPossible()
-                showToolbarIfPossible()
+
+//                showToolbarIfPossible()
 
             }
         }
+
+//        navView.setOnNavigationItemSelectedListener { menuItem ->
+//            when (menuItem.itemId) {
+//                R.id.videoFragment -> {
+//                    // Refresh data for nav item one
+//
+//                    true
+//                }
+////                R.id.nav_item_two -> {
+////                    // Refresh data for nav item two
+////                    true
+////                }
+//                // Add more nav items as needed
+//                else -> false
+//            }
+//        }
+
         if (intent.hasExtra("desc")) {
             navController?.navigate(intent.getIntExtra("desc", R.id.navigation_home))
             lifecycleScope.launchWhenStarted {

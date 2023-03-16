@@ -2,18 +2,34 @@ package com.chefshub.app.presentation.main.ui.ingrediants
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.chefshub.app.R
-import com.chefshub.app.databinding.ItemChefsBinding
 import com.chefshub.app.databinding.ItemIngrdientsBinding
+import com.chefshub.data.entity.tutorial.TutorialModel
+import com.chefshub.utils.ext.loadImage
 
 class IngredientsAdapter : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
+
+    private val videoList = ArrayList<TutorialModel>()
+
+    var step = 1
+
     inner class ViewHolder(val item: ItemIngrdientsBinding) : RecyclerView.ViewHolder(item.root) {
+
+        fun bind() {
+            item.ivMeal.loadImage(videoList[bindingAdapterPosition].url)
+            item.step.setText("step ${step}")
+            step++
+        }
 
         init {
             item.root.setOnClickListener {
-                Navigation.findNavController(it).navigate(R.id.profileFragmentFragment)
+                Navigation.findNavController(it).navigate(
+                    R.id.FragmentVideoIngredients,
+                    bundleOf("url" to videoList.get(bindingAdapterPosition).url.toString())
+                )
             }
         }
     }
@@ -23,9 +39,18 @@ class IngredientsAdapter : RecyclerView.Adapter<IngredientsAdapter.ViewHolder>()
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+        holder.bind()
     }
 
-    override fun getItemCount() = 10
+    override fun getItemCount() = videoList.size
+
+    fun setAll(it: ArrayList<TutorialModel>) {
+        step = 1
+        this.videoList.apply {
+            clear()
+            addAll(it)
+        }
+        notifyDataSetChanged()
+    }
 
 }

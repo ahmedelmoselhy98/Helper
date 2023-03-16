@@ -1,5 +1,6 @@
 package com.chefshub.app.presentation.main.ui.home
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -70,6 +71,12 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     }
 
     private fun setupSearchListener() {
+        binding.edtSearch.setOnSearchClickListener {
+
+        }
+
+        binding.edtSearch.isQueryRefinementEnabled=true
+
         binding.edtSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 homeViewModel.searchFor(binding.edtSearch.query)

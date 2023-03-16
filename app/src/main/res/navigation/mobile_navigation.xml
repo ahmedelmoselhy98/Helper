@@ -28,10 +28,30 @@
         android:label="fragment_profile_fragment"
         tools:layout="@layout/fragment_profile_fragment" />
     <fragment
+        android:id="@+id/myProfile"
+        android:name="com.chefshub.app.presentation.main_video.my_profile.MyProfileFragment"
+        android:label="my_profile"
+        tools:layout="@layout/fragment_my_profile" />
+
+     <fragment
+        android:id="@+id/FragmentVideoIngredients"
+        android:name="com.chefshub.app.presentation.main.ui.ingrediants.IngedientsVideoFragment"
+        android:label="fragment_profile_fragment"
+        tools:layout="@layout/fragment_video_ingedients" />
+
+    <fragment
+        android:id="@+id/ChefVideoFragment"
+        android:name="com.chefshub.app.presentation.main_video.profile.ChefVideoFragment"
+        android:label="fragment_profile_fragment"
+        tools:layout="@layout/fragment_video_ingedients" />
+
+
+    <fragment
         android:id="@+id/videoFragment"
         android:name="com.chefshub.app.presentation.main.ui.vedios.VideoFragment"
         android:label="fragment_video"
         tools:layout="@layout/fragment_video" />
+
     <dialog
         android:id="@+id/dialogSuccessOrder"
         android:name="com.chefshub.app.presentation.main.ui.success_order.DialogSuccessOrder"
@@ -44,6 +64,11 @@
     <fragment
         android:id="@+id/ordersFragment"
         android:name="com.chefshub.app.presentation.main.ui.orders.OrdersFragment"
+        android:label="fragment_orders"
+        tools:layout="@layout/fragment_orders" />
+    <fragment
+        android:id="@+id/VediosPlayerFragment"
+        android:name="com.chefshub.app.presentation.main_video.video.VediosPlayerFragment"
         android:label="fragment_orders"
         tools:layout="@layout/fragment_orders" />
     <dialog

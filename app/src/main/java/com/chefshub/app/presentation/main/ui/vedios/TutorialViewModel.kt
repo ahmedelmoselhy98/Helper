@@ -46,7 +46,7 @@ class TutorialViewModel @Inject constructor(
 
 
     val list = Pager(
-        config = PagingConfig(15, 1),
+        config = PagingConfig(15, enablePlaceholders = false , prefetchDistance = 1),
         pagingSourceFactory = { tutorialUseCase.getPagingSource() }
     ).flow.cachedIn(viewModelScope)
 

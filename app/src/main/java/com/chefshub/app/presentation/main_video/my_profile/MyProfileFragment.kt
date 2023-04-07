@@ -1,5 +1,6 @@
 package com.chefshub.app.presentation.main_video.my_profile
 
+import GoogleSingingHelper
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -18,12 +19,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chefshub.app.R
 import com.chefshub.app.databinding.FragmentMyProfileBinding
 import com.chefshub.app.databinding.FragmentProfileFragmentBinding
+import com.chefshub.app.presentation.login.LoginActivity
 import com.chefshub.app.presentation.main.ui.ingrediants.IngedientsFragment
 import com.chefshub.app.presentation.main_video.profile.ChefVideosAdapter
 import com.chefshub.app.presentation.main_video.profile.ProfileVideosAdapter
 import com.chefshub.app.presentation.main_video.profile.ProfileViewModel
 import com.chefshub.base.BaseActivity
 import com.chefshub.base.BaseFragment
+import com.chefshub.data.cache.PreferencesGateway
 import com.chefshub.data.entity.tutorial.TutorialModel
 import com.chefshub.data.entity.user.UserModel
 import com.chefshub.utils.ext.loadImage
@@ -51,7 +54,6 @@ class MyProfileFragment : BaseFragment(R.layout.fragment_my_profile) {
     private val listvideosChef = ChefVideosAdapter()
 
 
-
     private var _binding: FragmentMyProfileBinding? = null
     private val binding get() = _binding!!
     private val profileVideosAdapter = ProfileVideosAdapter()
@@ -71,7 +73,7 @@ class MyProfileFragment : BaseFragment(R.layout.fragment_my_profile) {
         binding.apply {
 //            binding.recyclerViewVideos.setLayoutManager(GridLayoutManager(requireContext(), 2))
             binding.recyclerViewVideos.setLayoutManager(GridLayoutManager( requireContext(),3))
-            ProfileVideosAdapter.visible = false
+//            ProfileVideosAdapter.visible = false
             recyclerViewVideos.adapter = listvideosChef
         }
 
@@ -91,6 +93,12 @@ class MyProfileFragment : BaseFragment(R.layout.fragment_my_profile) {
                 binding.btnFollow.text = "follow"
             }
             toggleFollow() }
+
+        binding.logout.setOnClickListener {
+            PreferencesGateway(requireContext()).clearAll()
+            startActivity(Intent(requireContext() , LoginActivity::class.java))
+            requireActivity().finishAffinity()
+        }
 
         binding.btnFaceBook.setOnClickListener {
             try {
@@ -135,11 +143,9 @@ class MyProfileFragment : BaseFragment(R.layout.fragment_my_profile) {
     }
 
     private fun shareProfile(id: Int?) {
-
         createDynamicLink(requireActivity() as BaseActivity,id.toString() ){ dynamicLink->
             this.shareDeepLink(dynamicLink)
         }
-///
     }
 
     private fun toggleFollow() {
@@ -159,7 +165,7 @@ class MyProfileFragment : BaseFragment(R.layout.fragment_my_profile) {
                 selectTab(binding.tabLayout.getTabAt(1)!!, tab?.position == 1)
 
                 if (tab?.position == 0){
-                    ProfileVideosAdapter.visible = false
+//                    ProfileVideosAdapter.visible = false
 //                    binding.recyclerViewVideos.adapter=profileVideosAdapter
 
                     binding.recyclerViewVideos.apply {
@@ -168,8 +174,7 @@ class MyProfileFragment : BaseFragment(R.layout.fragment_my_profile) {
                     }
                     binding.recyclerViewVideos.setLayoutManager(GridLayoutManager( requireContext(),3))
                 }else{
-                    ProfileVideosAdapter.visible = true
-
+//                    ProfileVideosAdapter.visible = true
 //                    binding.recyclerViewVideos.isVisible=true
                     binding.recyclerViewVideos.adapter = profileVideosAdapter
                     binding.recyclerViewVideos.setLayoutManager(LinearLayoutManager(requireContext()))
@@ -189,13 +194,12 @@ class MyProfileFragment : BaseFragment(R.layout.fragment_my_profile) {
 
     private fun setupTabsIcon() {
         binding.tabLayout.apply {
-            addTab(setCustomTab(R.drawable.ic_categories, getString(R.string.gridView)))
+            addTab(setCustomTab(R.drawable.ic_categories, getString(R.string.savedVideo)))
             addTab(setCustomTab(R.drawable.ic_baseline_menu_24, getString(R.string.listView)))
         }
     }
 
     private fun observeFlow() {
-
         handleSharedFlow(userViewModel.VideosChefFlow, onSuccess = {
             Log.e("ingredientsFlow"," it "+it)
             listvideosChef.setAll(it as ArrayList<TutorialModel>)

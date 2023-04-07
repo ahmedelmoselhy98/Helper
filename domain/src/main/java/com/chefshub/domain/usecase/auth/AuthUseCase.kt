@@ -61,10 +61,32 @@ class AuthUseCase @Inject constructor(
             }
     }
 
+    suspend fun signup(
+        email: String,
+        name: String,
+        password: String,
+        device_token: String,
+        device_id: String,
+    ): Flow<UserModel> {
+        return authRepository.signup(email,name, password, device_token, device_id)
+            .transformResponseData<UserModel, AuthMeta, UserModel>(true) { emit(it) }.onEach {
+                preferencesGateway.save(PrefKeys.USER, it)
+                preferencesGateway.save(PrefKeys.IS_USER_LOGGED, true)
+                preferencesGateway.save(PrefKeys.TOKEN, it.token!!)
+            }
+    }
+
 
     fun isValidAuthData(email: String?, password: String?) = when {
         (isValidEmail(email) == Validation.IS_VALID).not() -> false
         (isValidPassword(password) == Validation.IS_VALID).not() -> false
+        else -> true
+    }
+    fun isValidRegisterAuthData(email: String?,name: String?, password: String?,confirmPassword: String?) = when {
+        (isValidEmail(email) == Validation.IS_VALID).not() -> false
+        (isValidPassword(password) == Validation.IS_VALID).not() -> false
+        (isValidText(name) == Validation.IS_VALID).not() -> false
+        (isValidConfirmPassword(password,confirmPassword) == Validation.IS_VALID).not() -> false
         else -> true
     }
 
@@ -75,12 +97,25 @@ class AuthUseCase @Inject constructor(
             return Validation.IS_VALID
         return Validation.NOT_VALID
     }
-
+    fun isValidText(text: String?): Validation {
+        if (text.isNullOrEmpty()) {
+            return Validation.EMPTY
+        }else{
+            return Validation.IS_VALID
+        }
+    }
 
     fun isValidPassword(password: String?): Validation {
         if (password.isNullOrEmpty())
             return Validation.EMPTY
         if (password.length > 6)
+            return Validation.IS_VALID
+        return Validation.NOT_VALID
+    }
+    fun isValidConfirmPassword(password: String? , confirmPassword:String?): Validation {
+        if (password.isNullOrEmpty()||confirmPassword.isNullOrEmpty())
+            return Validation.EMPTY
+        if (confirmPassword == password)
             return Validation.IS_VALID
         return Validation.NOT_VALID
     }
@@ -98,6 +133,9 @@ class AuthUseCase @Inject constructor(
 
     suspend fun addFavorite(int: Int) =
         authRepository.addFavorite(int).transformResponseData<Any, Any, Any> { emit(it) }
+
+    suspend fun addSavedVideo(int: Int) =
+        authRepository.addSavedVideo(int).transformResponseData<Any, Any, Any> { emit(it) }
 
 
     suspend fun getMyProfile() =

@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import com.chefshub.app.R
 import com.chefshub.app.databinding.ActivityLoginBinding
+import com.chefshub.app.databinding.ActivitySignupBinding
 import com.chefshub.app.presentation.main.MainActivity
 import com.chefshub.app.presentation.select_pref.PrefActivity
 import com.chefshub.base.BaseActivity
@@ -19,8 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 private const val TAG = "LoginActivity"
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivity() {
-    private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
+class SignUpActivity : BaseActivity() {
+    private val binding by lazy { ActivitySignupBinding.inflate(layoutInflater) }
     private val viewModel: LoginViewModel by viewModels()
     private val facebookLoginHelper by lazy { FacebookLoginHelper(this) }
     private val googleLoginHelper by lazy { GoogleSingingHelper(this) }
@@ -33,9 +34,6 @@ class LoginActivity : BaseActivity() {
         facebookLoginHelper.userAccountLivedata
 
         binding.btnLogin.setOnClickListener { setLogin() }
-        binding.signup.setOnClickListener {
-            startActivity(SignUpActivity::class.java)
-        }
         binding.skip.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java).apply {
                 putExtra("desc", R.id.videoFragment)
@@ -53,14 +51,20 @@ class LoginActivity : BaseActivity() {
 
     private fun setLogin() {
         with(viewModel) {
-            loginWithEmail(
+            signup(
                 binding.edtEmail.editableText.toString(),
+                binding.edtName.editableText.toString(),
                 binding.edtPassword.editableText.toString(),
+                binding.edtConfirmPassword.editableText.toString(),
                 getDeviceID()
             ).also {
                 isValidEmail(binding.edtEmail.editableText.toString())
             }.also {
                 isValidPassword(binding.edtPassword.editableText.toString())
+            }.also {
+                isValidUserName(binding.edtName.editableText.toString())
+            }.also {
+                isValidConfirmPassword(binding.edtPassword.editableText.toString() , binding.edtConfirmPassword.editableText.toString())
             }
         }
     }
@@ -72,6 +76,8 @@ class LoginActivity : BaseActivity() {
     private fun observeValidations() {
         observeValidation(viewModel.isValidEmail, binding.inputEmail)
         observeValidation(viewModel.isValidPassword, binding.textInputLayoutPassword)
+        observeValidation(viewModel.isValidUserName, binding.inputName)
+        observeValidation(viewModel.isValidConfirmPassword, binding.textInputLayoutConfirmPassword)
     }
 
     private fun observeFlow() {

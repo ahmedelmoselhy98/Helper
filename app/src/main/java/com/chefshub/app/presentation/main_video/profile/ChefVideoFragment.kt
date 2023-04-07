@@ -1,51 +1,107 @@
 package com.chefshub.app.presentation.main_video.profile
 
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
+import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chefshub.app.R
-import com.chefshub.app.databinding.FragmentIngedientsBinding
-import com.chefshub.app.databinding.FragmentVideoIngedientsBinding
-import com.chefshub.app.presentation.main_video.profile.ProfileVideosAdapter
-import com.chefshub.app.presentation.select_pref.PrefViewModel
+import com.chefshub.app.databinding.FragmentVideoChefBinding
+import com.chefshub.app.presentation.main.ui.vedios.TutorialViewModel
+import com.chefshub.app.presentation.main_video.comments.CommentsFragment
+import com.chefshub.app.presentation.main_video.video.VideosAdapter
 import com.chefshub.base.BaseFragment
 import com.chefshub.data.entity.tutorial.TutorialModel
-import com.chefshub.data.entity.user.UserModel
 import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChefVideoFragment : BaseFragment(R.layout.fragment_video_ingedients) {
-    private var _binding: FragmentVideoIngedientsBinding? = null
+class ChefVideoFragment : BaseFragment(R.layout.fragment_video_chef) {
+    private var _binding: FragmentVideoChefBinding? = null
 
     private val binding get() = _binding!!
 
     private var exoPlayer: ExoPlayer? =null
     private var playbackPosition = 0L
     private var playWhenReady = true
+    private val userViewModel: ProfileViewModel by viewModels()
+    private val viewModel: TutorialViewModel by activityViewModels()
 
 
-//    private val viewModel: IngredientsViewModel by viewModels()
-//    private val ingredientsAdapter = IngredientsAdapter()
-//
+
+    val listvideosChef by lazy {
+        ChefListVideosAdapter(
+            requireActivity(),
+            onComments = { openComments(it.first, it.second) },
+            onToggleFollow = { toggleFollow(it) },
+            onFavorite = { addFavorite(it) },
+            fragment = this
+        )
+    }
+
+    private fun openComments(id: Int, num: Int) {
+        findNavController().navigate(
+            R.id.commentsFragment,
+            bundleOf(CommentsFragment.POST_ID to id, CommentsFragment.NUM_COMMENTS to num)
+        )
+    }
+
+    private fun toggleFollow(it: Int) {
+        viewModel.toggleFollow(it)
+    }
+
+    private fun addFavorite(it: Int) {
+        viewModel.addFavorite(it)
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentVideoIngedientsBinding.bind(view)
+        _binding = FragmentVideoChefBinding.bind(view)
+
+        userViewModel.getTutorialsVideosChef(ProfileFragmentFragment.userId!!)
 
 //        viewModel.getIngredients(7)
+        setupRecyclerView()
+
+        setViewPager()
 
 
         observeFlow()
         setAction()
+    }
+
+    private fun setupRecyclerView() {
+        binding.recVideo.adapter = listvideosChef
+        binding.recVideo.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.recVideo.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
+
+                    listvideosChef.setCurrentWindow(firstVisiblePosition)
+                }
+            }
+        })
+    }
+
+
+    private fun setViewPager() {
+        binding.apply {
+
+            val layoutManager = LinearLayoutManager(requireContext())
+            recVideo.layoutManager = layoutManager
+            recVideo.adapter = listvideosChef
+
+
+    }
     }
 
     private fun setAction() {
@@ -55,47 +111,47 @@ class ChefVideoFragment : BaseFragment(R.layout.fragment_video_ingedients) {
                 findNavController().navigateUp()
             }
 
-            idExoPlayerVIew.setOnClickListener {
-                if (idExoPlayerVIew.player?.isPlaying == true) {
-//                    idExoPlayerVIewPause.isVisible = true
-                    idExoPlayerVIew.player?.pause()
-                } else {
-                    idExoPlayerVIew.player?.play()
-//                    idExoPlayerVIewPause.isVisible = false
-                }
-            }
+//            idExoPlayerVIew.setOnClickListener {
+//                if (idExoPlayerVIew.player?.isPlaying == true) {
+////                    idExoPlayerVIewPause.isVisible = true
+//                    idExoPlayerVIew.player?.pause()
+//                } else {
+//                    idExoPlayerVIew.player?.play()
+////                    idExoPlayerVIewPause.isVisible = false
+//                }
+//            }
 
-            exoPlayer = ExoPlayer.Builder(requireContext()).build()
+//            exoPlayer = ExoPlayer.Builder(requireContext()).build()
+//
+//            val videoURL = arguments?.get("url").toString()
+////                    "https://media.geeksforgeeks.org/wp-content/uploads/20201217163353/Screenrecorder-2020-12-17-16-32-03-350.mp4"
+//            Log.e("videoUrl ", " videoURL " + videoURL)
+//
+//
+//            val uri: Uri =
+//                Uri.parse(videoURL)
+//            val mediaItem: MediaItem =
+//                MediaItem.fromUri(uri)
+//
+//                idExoPlayerVIew.player = exoPlayer
+//                idExoPlayerVIew.player?.repeatMode = Player.REPEAT_MODE_ALL
+//                exoPlayer?.addMediaItem(mediaItem)
+//
+//                exoPlayer?.seekTo(playbackPosition)
+//                exoPlayer?.playWhenReady = playWhenReady
+//                exoPlayer?.prepare()
 
-            val videoURL = arguments?.get("url").toString()
-//                    "https://media.geeksforgeeks.org/wp-content/uploads/20201217163353/Screenrecorder-2020-12-17-16-32-03-350.mp4"
-            Log.e("videoUrl ", " videoURL " + videoURL)
-
-
-            val uri: Uri =
-                Uri.parse(videoURL)
-            val mediaItem: MediaItem =
-                MediaItem.fromUri(uri)
-
-
-
-                idExoPlayerVIew.player = exoPlayer
-                idExoPlayerVIew.player?.repeatMode = Player.REPEAT_MODE_ALL
-                exoPlayer?.addMediaItem(mediaItem)
-
-                exoPlayer?.seekTo(playbackPosition)
-                exoPlayer?.playWhenReady = playWhenReady
-                exoPlayer?.prepare()
 //                    exoPlayer?.playWhenReady = true
 //                    exoPlayer?.play()
             }
         }
 
     private fun observeFlow() {
-//        handleSharedFlow(viewModel.ingredientsFlow, onSuccess = {
-//            Log.e("ingredientsFlow"," it "+it)
-//            ingredientsAdapter.setAll(it as ArrayList<TutorialModel>)
-//        })
+        handleSharedFlow(userViewModel.VideosChefFlow, onSuccess = {
+            Log.e("ingredientsFlow"," it "+it)
+            listvideosChef.setAll(it as ArrayList<TutorialModel>)
+        })
+
     }
 
 

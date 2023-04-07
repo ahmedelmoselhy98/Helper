@@ -9,7 +9,7 @@ import retrofit2.Response
 
 interface TutorialRepository {
     suspend fun getTutorials(page: Int): Response<EndPointModel<ArrayList<TutorialModel>, Any>>
-    suspend fun getTutorials(page: Int,userId:Int): Response<EndPointModel<ArrayList<TutorialModel>, Any>>
+    suspend fun getTutorials(page: Int,userId:Int):Flow< Response<EndPointModel<ArrayList<TutorialModel>, Any>>>
 
     suspend fun getTutorialsVideosChef(tutorialId:Int):Flow<Response<EndPointModel<ArrayList<TutorialModel>, Any>>>
 

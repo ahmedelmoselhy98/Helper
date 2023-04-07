@@ -14,7 +14,7 @@ class TutorialRepositoryImpl @Inject constructor(private val tutorialApi: Tutori
     override suspend fun getTutorials(page: Int) = tutorialApi.getTutorials(page)
 
 
-    override suspend fun getTutorials(page: Int,userId:Int) = tutorialApi.getTutorials(page,userId)
+    override suspend fun getTutorials(page: Int,userId:Int) = flow {emit( tutorialApi.getTutorials(page,userId))}
 
     override suspend fun getTutorialsVideosChef(tutorialId:Int) = flow { emit(tutorialApi.getTutorialsVideosChef(tutorialId)) }
 

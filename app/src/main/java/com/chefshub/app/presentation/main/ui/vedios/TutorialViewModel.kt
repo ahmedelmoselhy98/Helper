@@ -44,6 +44,14 @@ class TutorialViewModel @Inject constructor(
         }
     }
 
+ private val _addSavedVideo = MutableSharedFlow<NetworkState>()
+    val addSavedVideo get() = _addSavedVideo
+    fun addSavedVideo(it: Int) {
+        viewModelScope.launch {
+            executeSharedFlow(_addSavedVideo, useCase.addSavedVideo(it))
+        }
+    }
+
 
     val list = Pager(
         config = PagingConfig(15, enablePlaceholders = false , prefetchDistance = 1),

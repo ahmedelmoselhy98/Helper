@@ -25,8 +25,9 @@ class TutorialPagingSource(private val faqRepository: TutorialRepository) :
         try {
             val currentPage = params.key ?: 1
             val resp =
-                if (userId == null) faqRepository.getTutorials(currentPage)
-                else faqRepository.getTutorials(currentPage,userId!!)
+//                if (userId == null)
+                    faqRepository.getTutorials(currentPage)
+//                else faqRepository.getTutorials(currentPage,userId!!)
 
             if (resp.code() == 401)
                 return LoadResult.Error(Throwable(message = ERROR_API.UNAUTHRIZED))
@@ -34,7 +35,13 @@ class TutorialPagingSource(private val faqRepository: TutorialRepository) :
             val data =
                 resp.body()?.data?: ArrayList()
 
-            Log.e("loadloadload"," data "+data)
+            val iterator = data.iterator()
+            while (iterator.hasNext()) {
+                val item = iterator.next()
+                if (!item.url!!.endsWith(".mp4")) {
+                    iterator.remove()
+                }
+            }
 
             return LoadResult.Page(
 //                nextKey = null,

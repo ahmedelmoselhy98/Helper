@@ -26,6 +26,7 @@ data class TutorialModel(
     @SerializedName("comments_count") var commentsCount: Int? = null,
     @SerializedName("favourites_count") var favouritesCount: Int? = null,
     @SerializedName("is_favourited") var isFavourites: Boolean? = null,
+    @SerializedName("is_bookmarked") var is_bookmarked: Boolean? = null,
 
     )
 data class Chef(

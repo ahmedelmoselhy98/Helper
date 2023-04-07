@@ -32,6 +32,14 @@ interface AuthRepository {
         device_id: String,
     ): Flow<Response<EndPointModel<UserModel, AuthMeta>>>
 
+    suspend fun signup(
+        email: String,
+        name: String,
+        password: String,
+        device_token: String,
+        device_id: String,
+    ): Flow<Response<EndPointModel<UserModel, AuthMeta>>>
+
     suspend fun getProfile(): Flow<Response<EndPointModel<UserModel, Any>>>
 
     suspend fun getUser(id: Int): Flow<Response<EndPointModel<UserModel, Any>>>
@@ -41,6 +49,8 @@ interface AuthRepository {
     suspend fun singleVideo(id: Int): Flow<Response<EndPointModel<TutorialVideos, Any>>>
 
     suspend fun addFavorite(id: Int): Flow<Response<EndPointModel<Any, Any>>>
+
+    suspend fun addSavedVideo(id: Int): Flow<Response<EndPointModel<Any, Any>>>
 
     suspend fun getFoodSystem(): Flow<Response<EndPointModel<ArrayList<FoodSystemModel>, Any>>>
 

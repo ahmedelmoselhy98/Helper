@@ -14,7 +14,7 @@ class MainPagerAdapter(fragmentActivity: Fragment) :
     override fun getItemCount() = 3
 
     override fun createFragment(position: Int): Fragment {
-        Log.e("iiiiiii","package name " )
+
         return when (position) {
             2 -> ProfileFragmentFragment()
             1 -> VediosPlayerFragment()

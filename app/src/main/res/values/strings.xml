@@ -2,12 +2,15 @@
     <string name="app_name">ChefsHub</string>
     <string name="hub">HUB</string>
     <string name="chefs">chefs</string>
+    <string name="chefs_hup">chefs Hup</string>
     <string name="welcome_to">welcome to</string>
     <string name="singup_to_see_nmore_videos">Welcome To Your Chefs Hub</string>
+    <string name="hi_and">Hi, and</string>
+    <string name="welcome">welcome to</string>
     <string name="your_email_or_your_phone">Your email or your phone</string>
     <string name="password">Password</string>
     <string name="forget">Forgot Password?</string>
-    <string name="login">Login or Signup</string>
+    <string name="login">Signup</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_pref">PrefActivity</string>
@@ -38,17 +41,24 @@
     <string name="add_comment">Add comment ...</string>
     <string name="following">Following</string>
     <string name="gridView">GridView</string>
+    <string name="savedVideo">Saved video</string>
     <string name="listView">ListVIew</string>
     <string name="settings">Settings</string>
     <string name="post">Post</string>
     <string name="message">message</string>
     <string name="profile">Profile</string>
-
-
     <string name="facebook_app_id">499828035586595</string>
     <string name="fb_login_protocol_scheme">fb499828035586595</string>
     <string name="facebook_client_token">b205d124f01723e1f14fd767201e32e9</string>
     <string name="add_to_basket">Add to basket</string>
-
+    <string name="skip">skip</string>
+    <string name="logout">"logout "</string>
+    <string name="welcome_to_signup">Sign up and enjoy a new world of chefs including you!</string>
+    <string name="welcome_to_signup2">chefs including you!</string>
+    <string name="user_name">User Name</string>
+    <string name="donot_have_an_account">Don’t have an account? </string>
+    <string name="signup_now">Sign up now</string>
+    <string name="confirm_password">Retype Password</string>
+    <string name="confirm_privacy">Creating an account means you are okay with our terms of services and our Privacy Policy</string>
 
 </resources>

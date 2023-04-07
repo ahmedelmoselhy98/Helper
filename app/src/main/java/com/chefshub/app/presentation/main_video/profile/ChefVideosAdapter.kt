@@ -14,15 +14,15 @@ class ChefVideosAdapter : RecyclerView.Adapter<ChefVideosAdapter.ViewHolder>() {
 
     private val videoList = ArrayList<TutorialModel>()
 
-    var step = 1
+//    var step = 1
 
     inner class ViewHolder(val item: ItemIngrdientsBinding) : RecyclerView.ViewHolder(item.root) {
 
         fun bind() {
             item.ivMeal.loadImage(videoList[bindingAdapterPosition].url)
             item.views.text = videoList[bindingAdapterPosition].views.toString()
-            item.step.setText("step ${step}")
-            step++
+//            item.step.setText("step ${step}")
+//            step++
         }
 
         init {
@@ -46,7 +46,7 @@ class ChefVideosAdapter : RecyclerView.Adapter<ChefVideosAdapter.ViewHolder>() {
     override fun getItemCount() = videoList.size
 
     fun setAll(it: ArrayList<TutorialModel>) {
-        step = 1
+//        step = 1
         this.videoList.apply {
             clear()
             addAll(it)

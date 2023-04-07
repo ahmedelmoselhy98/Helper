@@ -15,6 +15,9 @@ class TutorialUseCase @Inject constructor(private val tutorialRepository: Tutori
         TutorialPagingSource(tutorialRepository).apply { userId = id }
 
 
+    suspend fun getTutorialsDetailVideosChef(userId: Int? = null) =
+        tutorialRepository.getTutorials(1,userId!!).transformResponseData<ArrayList<TutorialModel>, Any, ArrayList<TutorialModel>> { emit(it) }
+
     suspend fun getTutorialsVideosChef(tutorialId: Int? = null) =
         tutorialRepository.getTutorialsVideosChef(tutorialId!!).transformResponseData<ArrayList<TutorialModel>, Any, ArrayList<TutorialModel>> { emit(it) }
 

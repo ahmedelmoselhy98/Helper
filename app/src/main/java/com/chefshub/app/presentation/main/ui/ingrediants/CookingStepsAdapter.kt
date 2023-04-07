@@ -3,6 +3,7 @@ package com.chefshub.app.presentation.main.ui.ingrediants
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.chefshub.app.R
@@ -11,10 +12,9 @@ import com.chefshub.app.databinding.ItemIngrdientsBinding
 import com.chefshub.data.entity.tutorial.TutorialModel
 import com.chefshub.utils.ext.loadImage
 
-class CookingStepsAdapter : RecyclerView.Adapter<CookingStepsAdapter.ViewHolder>() {
+class CookingStepsAdapter(private val onClicked: (url:String) -> Unit) : RecyclerView.Adapter<CookingStepsAdapter.ViewHolder>() {
 
     private val videoList = ArrayList<TutorialModel>()
-
     var step = 1
 
     inner class ViewHolder(val item: ItemCookingStepsBinding) : RecyclerView.ViewHolder(item.root) {
@@ -22,16 +22,18 @@ class CookingStepsAdapter : RecyclerView.Adapter<CookingStepsAdapter.ViewHolder>
         fun bind() {
             item.ivMeal.loadImage(videoList[bindingAdapterPosition].url)
             item.caption.text = videoList[bindingAdapterPosition].caption
-            item.step.setText("step ${step}")
+            item.step.setText(videoList[bindingAdapterPosition].title)
             step++
         }
 
         init {
             item.root.setOnClickListener {
-                Navigation.findNavController(it).navigate(
-                    R.id.FragmentVideoIngredients,
-                    bundleOf("url" to videoList.get(bindingAdapterPosition).url.toString())
-                )
+                onClicked.invoke(videoList.get(bindingAdapterPosition).url.toString())
+
+//                Navigation.findNavController(it).navigate(
+//                    R.id.FragmentVideoIngredients,
+//                    bundleOf("url" to videoList.get(bindingAdapterPosition).url.toString())
+//                )
             }
         }
     }
@@ -53,6 +55,10 @@ class CookingStepsAdapter : RecyclerView.Adapter<CookingStepsAdapter.ViewHolder>
             addAll(it)
         }
         notifyDataSetChanged()
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick()
     }
 
 }

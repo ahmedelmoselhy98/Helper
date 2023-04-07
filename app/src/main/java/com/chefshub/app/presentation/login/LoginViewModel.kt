@@ -70,18 +70,47 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCase) :
         }
     }
 
+    fun signup(
+        email: String,
+        name: String,
+        password: String,
+        confirmPassword: String?,
+        device_id: String,
+    ) {
+        if (!authUseCase.isValidRegisterAuthData(email, name,password,confirmPassword)) return
+        viewModelScope.launch(Dispatchers.IO) {
+            executeSharedFlow(
+                _userFlow,
+                authUseCase.signup(email,name, password, firebaseToken, device_id)
+            )
+        }
+    }
+
 
     private val _isValidEmail =
         MutableStateFlow<Validation>(Validation.IDLE)
+    private val _isValidUserName =
+        MutableStateFlow<Validation>(Validation.IDLE)
     private val _isValidPassword =
         MutableStateFlow<Validation>(Validation.IDLE)
+    private val _isValidConfirmPassword =
+        MutableStateFlow<Validation>(Validation.IDLE)
     val isValidEmail get() = _isValidEmail.asSharedFlow()
+    val isValidUserName get() = _isValidUserName.asSharedFlow()
     val isValidPassword get() = _isValidPassword.asSharedFlow()
+    val isValidConfirmPassword get() = _isValidConfirmPassword.asSharedFlow()
+
     fun isValidEmail(email: String?) {
         _isValidEmail.value = authUseCase.isValidEmail(email)
     }
+    fun isValidUserName(name: String?) {
+        _isValidUserName.value = authUseCase.isValidText(name)
+    }
     fun isValidPassword(password: String?) {
         _isValidPassword.value = authUseCase.isValidPassword(password)
+    }
+    fun isValidConfirmPassword(password: String?, confirmPassword:String?) {
+        _isValidConfirmPassword.value = authUseCase.isValidConfirmPassword(password,confirmPassword)
     }
 
 }

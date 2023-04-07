@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="logout">"logout "</string>
+    <string name="welcome_to_signup">Sign up and enjoy a new world of chefs including you!</string>
+    <string name="user_name">User Name</string>
+    <string name="donot_have_an_account">Don’t have an account? </string>
+    <string name="signup_now">Sign up now</string>
+    <string name="confirm_password">Retype Password</string>
+    <string name="confirm_privacy">Creating an account means you are okay with our terms of services and our Privacy Policy</string>
+</resources>

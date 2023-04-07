@@ -39,6 +39,17 @@ interface AuthApi {
     ): Response<EndPointModel<UserModel, AuthMeta>>
 
 
+    @FormUrlEncoded
+    @POST("auth/login")
+    suspend fun signup(
+        @Field("email") email: String,
+        @Field("name") name: String,
+        @Field("password") password: String,
+        @Field("device_token") device_token: String,
+        @Field("device_id") device_id: String,
+    ): Response<EndPointModel<UserModel, AuthMeta>>
+
+
     @GET("auth/me")
     suspend fun getProfile(): Response<EndPointModel<UserModel, Any>>
 
@@ -61,5 +72,8 @@ interface AuthApi {
 
     @POST("videos/{id}/favourites")
     suspend fun addFavorite(@Path("id") id: Int): Response<EndPointModel<Any, Any>>
+
+    @POST("videos/{id}/bookmark")
+    suspend fun addSavedVideo(@Path("id") id: Int): Response<EndPointModel<Any, Any>>
 
 }

@@ -27,11 +27,18 @@ class ProfileViewModel @Inject constructor(
     private val _VideosChefFlow = MutableSharedFlow<NetworkState>()
     val VideosChefFlow get() = _VideosChefFlow.asSharedFlow()
 
-
-
     fun getTutorialsVideosChef(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             executeSharedFlow(_VideosChefFlow, tutorialUseCase.getTutorialsVideosChef(id!!))
+        }
+    }
+
+    private val _VideosDetailChefFlow = MutableSharedFlow<NetworkState>()
+    val VideosDetailChefFlow get() = _VideosDetailChefFlow.asSharedFlow()
+
+    fun getDetailVideosChef(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            executeSharedFlow(_VideosDetailChefFlow, tutorialUseCase.getTutorialsDetailVideosChef(id!!))
         }
     }
 

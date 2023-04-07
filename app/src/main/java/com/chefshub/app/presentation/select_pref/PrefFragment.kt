@@ -2,9 +2,12 @@ package com.chefshub.app.presentation.select_pref
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -18,6 +21,7 @@ import com.chefshub.base.BaseFragment
 import com.chefshub.data.entity.food_system.FoodSystemModel
 import com.chefshub.utils.ext.setBackgroundTint
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.log
 import kotlin.math.min
 import kotlin.random.Random
 
@@ -54,7 +58,6 @@ class PrefFragment : BaseFragment(R.layout.fragment_pref) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentPrefBinding.bind(view)
 
-
         if (arguments == null)
             viewModel.getSystemFood()
         else
@@ -75,6 +78,9 @@ class PrefFragment : BaseFragment(R.layout.fragment_pref) {
                             finishAffinity()
                         }
             }
+            skip.setOnClickListener {
+                btnNext.performClick()
+            }
         }
     }
 
@@ -90,6 +96,37 @@ class PrefFragment : BaseFragment(R.layout.fragment_pref) {
     private fun setupPrefrs(arrayList: ArrayList<FoodSystemModel>) {
         if (_binding == null) return
         with(binding) {
+
+            tvCenter.root.isVisible = true
+            pref1.root.isVisible = true
+            pref2.root.isVisible = true
+            pref3.root.isVisible = true
+            pref4.root.isVisible = true
+            pref5.root.isVisible = true
+            pref6.root.isVisible = true
+            pref7.root.isVisible = true
+            pref8.root.isVisible = true
+
+//            tvCenter.tv.setBackgroundTint(R.color.red)
+//            pref1.tv.setBackgroundTint(R.color.purple_500)
+//            pref2.tv.setBackgroundTint(R.color.purple_700)
+//            pref3.tv.setBackgroundTint(R.color.red)
+//            pref4.tv.setBackgroundTint(R.color.green)
+//            pref5.tv.setBackgroundTint(R.color.purple_500)
+//            pref6.tv.setBackgroundTint(R.color.purple_700)
+//            pref7.tv.setBackgroundTint(R.color.red)
+//            pref8.tv.setBackgroundTint(R.color.green)
+
+//            tvCenter.tv.setBackgroundTint(R.color.pref_background)
+//            pref1.tv.setBackgroundTint(R.color.pref_background)
+//            pref2.tv.setBackgroundTint(R.color.pref_background)
+//            pref3.tv.setBackgroundTint(R.color.pref_background)
+//            pref4.tv.setBackgroundTint(R.color.pref_background)
+//            pref5.tv.setBackgroundTint(R.color.pref_background)
+//            pref6.tv.setBackgroundTint(R.color.pref_background)
+//            pref7.tv.setBackgroundTint(R.color.pref_background)
+//            pref8.tv.setBackgroundTint(R.color.pref_background)
+
             val listOfPref = listOf<CircleTextViewBinding>(
                 tvCenter,
                 pref1,
@@ -107,14 +144,21 @@ class PrefFragment : BaseFragment(R.layout.fragment_pref) {
                 listOfPref.get(i).let {
                     it.root.isVisible = true
                     it.tv.text = arrayList[i].name
-                    it.tv.setBackgroundTint(arrayColor.get(Random.nextInt(arrayColor.size.minus(1))))
-//                    it.tv.setBackgroundTint(R.color.gray)
+//                    it.tv.setBackgroundTint(arrayColor.get(Random.nextInt(arrayColor.size.minus(1))))
+//                    it.tv.setBackgroundTint(R.color.pref_background_un)
 
                     it.tv.setOnClickListener { view ->
-//                        view.setBackgroundTint(arrayColor.get(Random.nextInt(arrayColor.size.minus(1))))
-                        view.setBackgroundTint(R.color.gray)
+                        if (it.tv.backgroundTintList != null && it.tv.backgroundTintList!!.defaultColor ==
+                            ContextCompat.getColor(view.context, R.color.pref_background)) {
+                            listOfSelections.remove(it.tv.text)
+                            setListToTextViewSelection()
+                            it.tv.setBackgroundTint(R.color.purple_700)
+//                            (arrayColor.get(Random.nextInt(arrayColor.size.minus(1))))
+                        } else {
+                        view.setBackgroundTint(R.color.pref_background)
                         listOfSelections.add(it.tv.text.toString())
                         setListToTextViewSelection()
+                    }
                     }
                 }
             }

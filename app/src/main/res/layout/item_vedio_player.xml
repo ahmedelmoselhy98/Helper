@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black">
 
 
@@ -68,8 +67,8 @@
             android:padding="1dp"
             android:src="@drawable/man_test"
             app:shapeAppearance="@style/circleImage"
-            app:strokeWidth="1dp"
-            app:strokeColor="@null"/>
+            app:strokeColor="@null"
+            app:strokeWidth="1dp" />
 
         <!--        app:strokeColor="@color/red"-->
 
@@ -100,36 +99,36 @@
             android:textSize="14sp"
             app:backgroundTint="@color/transparent"
             app:strokeColor="@color/white"
-            app:strokeWidth="2dp"
-            />
+            app:strokeWidth="2dp" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:alpha="10"
         android:maxWidth="250dp"
         android:maxHeight="100dp"
-        android:text="#Lazagne"
+        android:text="Lazagne Lazagne Lazagne Lazagne Lazagne "
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:alpha="10"
         app:layout_constraintBottom_toTopOf="@id/tv_description"
-        app:layout_constraintStart_toStartOf="@id/tv_description" />
+        app:layout_constraintStart_toStartOf="parent"
+      />
 
     <TextView
         android:id="@+id/tv_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:alpha="5"
         android:elevation="5dp"
         android:text="Lazagne Lazagne Lazagne Lazagne Lazagne"
         android:textColor="@color/white"
-        android:textStyle="bold"
         android:textSize="14sp"
-        android:alpha="5"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -138,14 +137,14 @@
         android:layout_width="42dp"
         android:layout_height="42dp"
         android:layout_marginEnd="10dp"
-        android:padding="1dp"
         android:elevation="5dp"
+        android:padding="1dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:shapeAppearance="@style/roundedImage"
         app:strokeColor="@color/white"
-        app:strokeWidth="1dp"
-        android:visibility="gone"/>
+        app:strokeWidth="1dp" />
 
 
     <LinearLayout
@@ -153,12 +152,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@id/tvTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="visible"
+        android:alpha="5"
         android:elevation="5dp"
-        android:alpha="5">
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/tvTitle"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:id="@+id/tvFav"
@@ -193,16 +192,16 @@
             android:textColor="@color/white"
             app:drawableTopCompat="@drawable/ic_send" />
 
-        <TextView
+        <ImageView
             android:id="@+id/book_mark"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:drawablePadding="5dp"
-            android:gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/unsaved"
             android:text="15"
             android:textColor="@color/white"
-            app:drawableTopCompat="@drawable/ic_bookmark"/>
+            app:drawableTopCompat="@drawable/ic_bookmark" />
 
         <TextView
             android:id="@+id/view_count"
@@ -215,13 +214,14 @@
             android:text=""
             android:textColor="@color/white"
             app:drawableTopCompat="@drawable/ic_baseline_remove_red_eye_24" />
-<!--        app:drawableTopCompat="@drawable/ic_baseline_more_vert_24"-->
+        <!--        app:drawableTopCompat="@drawable/ic_baseline_more_vert_24"-->
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/home_gradient"/>
+        android:background="@drawable/home_gradient"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

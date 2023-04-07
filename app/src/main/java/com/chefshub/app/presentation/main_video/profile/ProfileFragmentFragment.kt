@@ -47,12 +47,9 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
     var youtupe :String?=null
     private val listvideosChef = ChefVideosAdapter()
 
-
-
     private var _binding: FragmentProfileFragmentBinding? = null
     private val binding get() = _binding!!
     private val profileVideosAdapter = ProfileVideosAdapter()
-//    private val profileVideosAdapterGride = ProfileVideosAdapterGride()
 
     private val userViewModel: ProfileViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,20 +58,21 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
 
         if (!(userId == null || IngedientsFragment.tutorial_id!! ==null)){
             userViewModel.getTutorialsVideosChef(userId!!)
-//            viewModel.getIngredients(IngedientsFragment.tutorial_id!!)
+            userViewModel.getDetailVideosChef(userId!!)
             userViewModel.getUserProfile(userId == null, userId)
         }
 
         binding.apply {
 //            binding.recyclerViewVideos.setLayoutManager(GridLayoutManager(requireContext(), 2))
             binding.recyclerViewVideos.setLayoutManager(GridLayoutManager( requireContext(),3))
-            ProfileVideosAdapter.visible = false
+//            ProfileVideosAdapter.visible = false
             recyclerViewVideos.adapter = listvideosChef
         }
 
         observeFlow()
         setupTabs()
         setupActions()
+        loadUserVideos()
 
     }
 
@@ -124,9 +122,6 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
 
             }
         }
-
-
-
         binding.userImage.loadImage(userimage)
         binding.ivUserCover.loadImage(userimage)
         binding.userName.text = name
@@ -138,7 +133,7 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
         createDynamicLink(requireActivity() as BaseActivity,id.toString() ){ dynamicLink->
             this.shareDeepLink(dynamicLink)
         }
-///
+
     }
 
     private fun toggleFollow() {
@@ -158,7 +153,7 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
                 selectTab(binding.tabLayout.getTabAt(1)!!, tab?.position == 1)
 
                 if (tab?.position == 0){
-                    ProfileVideosAdapter.visible = false
+//                    ProfileVideosAdapter.visible = false
 //                    binding.recyclerViewVideos.adapter=profileVideosAdapter
 
                     binding.recyclerViewVideos.apply {
@@ -167,7 +162,7 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
                     }
                     binding.recyclerViewVideos.setLayoutManager(GridLayoutManager( requireContext(),3))
                 }else{
-                    ProfileVideosAdapter.visible = true
+//                    ProfileVideosAdapter.visible = true
 
 //                    binding.recyclerViewVideos.isVisible=true
                     binding.recyclerViewVideos.adapter = profileVideosAdapter
@@ -200,6 +195,11 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
             listvideosChef.setAll(it as ArrayList<TutorialModel>)
         })
 
+        handleSharedFlow(userViewModel.VideosDetailChefFlow, onSuccess = {
+            Log.e("ingredientsFlow"," it "+it)
+            profileVideosAdapter.setAll(it as ArrayList<TutorialModel>)
+        })
+
         handleSharedFlow(userViewModel.userFlow, onSuccess = {
             Log.e("myprofile"," itttttttttt "+it)
             if (it is UserModel && it !=null ) {
@@ -207,16 +207,17 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
             }
         })
 
-        handleSharedFlow(userViewModel.toggleFlow, onSuccess = {
-            Log.e("fffffff"," msg "+it)
-            Toast.makeText( requireContext()," "+it , Toast.LENGTH_SHORT).show()
-        })
+//        handleSharedFlow(userViewModel.toggleFlow, onSuccess = {
+//            Log.e("fffffff"," msg "+it)
+//            Toast.makeText( requireContext()," "+it , Toast.LENGTH_SHORT).show()
+//        })
     }
 
     override fun onResume() {
         super.onResume()
         Log.e("onResume","onResume "+ userId)
         userViewModel.getTutorialsVideosChef(userId!!)
+        userViewModel.getDetailVideosChef(userId!!)
 
         userViewModel.getUserProfile(userId == null, userId)
         loadUserVideos()
@@ -228,14 +229,16 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
     }
 
     private fun loadUserVideos() {
-        lifecycleScope.launchWhenStarted {
-            if (userId == null) return@launchWhenStarted
-            userViewModel.videos(userId!!).collectLatest {
-                Log.e("loadUserVideos","loadUserVideos "+ it)
-//                profileVideosAdapterGride.submitData(it)
-                profileVideosAdapter.submitData(it)
-            }
-        }
+//        lifecycleScope.launchWhenStarted {
+//            if (userId == null) return@launchWhenStarted
+//            userViewModel.videos(userId!!).collectLatest {
+//                Log.e("loadUserVideos","loadUserVideos "+ it)
+////                profileVideosAdapterGride.submitData(it)
+//                profileVideosAdapter.submitData(it)
+//                Log.e("tester", "onTabSelected: ${profileVideosAdapter.itemCount}")
+//
+//            }
+//        }
     }
 
     private var userModel: UserModel? = null
@@ -245,12 +248,13 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
 //            ivUserCover.loadImage(it.avatarPath)
 //            userImage.loadImage(it.avatarPath)
 //            userName.text = it.name
-            if ( it !=null){
+            if (it !=null){
 //                userBio.text = it.bio
                 tvCountPosts.text = it.postsCount.toString()
                 tvCountFollowers.text = it.followersCount.toString()
                 tvCountCuisines.text = it.regionalCuisinesCount.toString()
                 btnFollow.text  = if (it.is_following ==true) "following" else "follow"
+                userBio.text = it.bio
 
                 btnFaceBook.isVisible = !it.socialMedia?.facebook.isNullOrEmpty()
                 btnInstagram.isVisible = if (!it.socialMedia?.instagram.isNullOrEmpty()) true else false

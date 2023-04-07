@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class IngredientsViewModel @Inject constructor(
-
     private val tutorialUseCase: TutorialUseCase
 ) : BaseViewModel() {
 

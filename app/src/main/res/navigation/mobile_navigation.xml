@@ -38,6 +38,11 @@
         android:name="com.chefshub.app.presentation.main.ui.ingrediants.IngedientsVideoFragment"
         android:label="fragment_profile_fragment"
         tools:layout="@layout/fragment_video_ingedients" />
+    <fragment
+        android:id="@+id/FragmentVideoIngredientsBottomsheet"
+        android:name="com.chefshub.app.presentation.main.ui.ingrediants.IngedientsVideoFragmentBottomSheet"
+        android:label="fragment_profile_fragment"
+        tools:layout="@layout/fragment_video_ingedients" />
 
     <fragment
         android:id="@+id/ChefVideoFragment"

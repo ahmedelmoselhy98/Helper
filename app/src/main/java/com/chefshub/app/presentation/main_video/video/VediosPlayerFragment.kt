@@ -1,5 +1,6 @@
 package com.chefshub.app.presentation.main_video.video
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -59,8 +61,6 @@ class VediosPlayerFragment : BaseFragment(R.layout.fragment_vides_player) {
 
 
     val videosAdapter by lazy {
-
-//        var exoPlayer = ExoPlayer.Builder(requireActivity()).build()
         VideosAdapter(
             requireActivity(),
             onSearchHasTag = { searchFor(it) },
@@ -68,6 +68,7 @@ class VediosPlayerFragment : BaseFragment(R.layout.fragment_vides_player) {
             onComments = { openComments(it.first, it.second) },
             onToggleFollow = { toggleFollow(it) },
             onFavorite = { addFavorite(it) },
+            onSaved = { toggleSaved(it)},
             myImage = getUserImage(),
             viewModel = viewModel,
             fragment = this,
@@ -76,6 +77,17 @@ class VediosPlayerFragment : BaseFragment(R.layout.fragment_vides_player) {
         )
     }
 
+    private fun toggleSaved(it: Int) {
+        Log.e("mashal", "toggleSaved: ${PreferencesGateway(requireContext()).isSaved(PrefKeys.IS_USER_LOGGED).not()}" )
+        if (PreferencesGateway(requireContext()).isSaved(PrefKeys.IS_USER_LOGGED).not()){
+            videosAdapter.removeVideo()
+            (activity as BaseActivity).apply {
+                videosAdapter.removeVideo()
+                startActivity(LoginActivity::class.java)
+            }
+        }
+        viewModel.addSavedVideo(it)
+    }
 
     private fun toggleFollow(it: Int) {
         viewModel.toggleFollow(it)
@@ -115,7 +127,6 @@ class VediosPlayerFragment : BaseFragment(R.layout.fragment_vides_player) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("iiiiiii","package name onViewCreated " )
 
         requireActivity().window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -131,7 +142,6 @@ class VediosPlayerFragment : BaseFragment(R.layout.fragment_vides_player) {
 
             observeFlow()
 
-
 //            rec.adapter = videosAdapter
 
             viewPager2.adapter = videosAdapter
@@ -143,11 +153,6 @@ class VediosPlayerFragment : BaseFragment(R.layout.fragment_vides_player) {
 
 //                    ProfileFragmentFragment.userId = VideosAdapter.chefsId
 //                    IngedientsFragment.tutorial_id = VideosAdapter.tutorial_id
-
-
-//                    Log.e("positionviewPager2"," position "+VideosAdapter.chefsId)
-
-//                    Log.e("onResume", " positionviewPager2  " + VideosAdapter.chefsId)
 
                     videosAdapter.currentPosition = position
 
@@ -161,13 +166,6 @@ class VediosPlayerFragment : BaseFragment(R.layout.fragment_vides_player) {
                             videosAdapter.viewHolderList[index].item.idExoPlayerVIew.player?.play()
                         else videosAdapter.viewHolderList[index].item.idExoPlayerVIew.player?.pause()
                     }
-
-//                    videosAdapter.playVideoAt(position )
-//                    ProfileFragmentFragment.userId=videosAdapter.getItemAt(position)
-
-//                    viewModel.singleVideo(videosAdapter.getItemAt(position)!!)
-
-
 
                     if (viewModel.isLogin(requireContext()).not()) {
                         if (position >= 4) {

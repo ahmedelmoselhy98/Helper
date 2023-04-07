@@ -65,21 +65,43 @@ class MainActivity : BaseActivity(), Animator.AnimatorListener {
             }
         }
 
-//        navView.setOnNavigationItemSelectedListener { menuItem ->
-//            when (menuItem.itemId) {
-//                R.id.videoFragment -> {
-//                    // Refresh data for nav item one
-//
-//                    true
-//                }
-////                R.id.nav_item_two -> {
-////                    // Refresh data for nav item two
-////                    true
-////                }
-//                // Add more nav items as needed
-//                else -> false
-//            }
-//        }
+        navView.setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.videoFragment -> {
+                    // Refresh data for nav item one
+                    navController?.navigate(R.id.videoFragment)
+
+
+                    true
+                }
+                R.id.navigation_home -> {
+                    // Refresh data for nav item two
+                    navController?.navigate(R.id.navigation_home)
+
+                    true
+                }
+                R.id.navigation_dashboard -> {
+                    // Refresh data for nav item two
+                    navController?.navigate(R.id.navigation_dashboard)
+
+                    true
+                }
+                R.id.chatFragment -> {
+                    // Refresh data for nav item two
+                    navController?.navigate(R.id.chatFragment)
+
+                    true
+                }
+                R.id.myProfile -> {
+                    // Refresh data for nav item two
+                    navController?.navigate(R.id.myProfile)
+
+                    true
+                }
+                // Add more nav items as needed
+                else -> false
+            }
+        }
 
         if (intent.hasExtra("desc")) {
             navController?.navigate(intent.getIntExtra("desc", R.id.navigation_home))

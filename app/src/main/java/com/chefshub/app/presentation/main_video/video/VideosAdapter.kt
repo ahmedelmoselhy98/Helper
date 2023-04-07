@@ -1,6 +1,8 @@
 package com.chefshub.app.presentation.main_video.video
 
 import android.content.Context
+import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
 import android.util.Log
@@ -8,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.TextureView
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -18,12 +21,14 @@ import com.bumptech.glide.Glide
 import com.chefshub.app.R
 import com.chefshub.app.databinding.ItemVedioPlayerBinding
 import com.chefshub.app.presentation.App
+import com.chefshub.app.presentation.login.LoginActivity
 import com.chefshub.app.presentation.main.ui.ingrediants.IngedientsFragment
 import com.chefshub.app.presentation.main.ui.vedios.TutorialViewModel
 import com.chefshub.app.presentation.main_video.profile.ProfileFragmentFragment
 import com.chefshub.app.presentation.video_caching.VideoPreloadWorker
 import com.chefshub.base.BaseActivity
 import com.chefshub.base.BaseFragment
+import com.chefshub.data.cache.PreferencesGateway
 import com.chefshub.data.entity.tutorial.TutorialModel
 import com.chefshub.utils.ext.loadImage
 import com.google.android.exoplayer2.ExoPlayer
@@ -53,14 +58,24 @@ class VideosAdapter(
     private val onComments: (Pair<Int, Int>) -> Unit,
     private val onToggleFollow: (id: Int) -> Unit,
     private val onFavorite: (id: Int) -> Unit,
+    private val onSaved: (id: Int) -> Unit,
+
     private val myImage: String?,
     private val viewModel: TutorialViewModel,
     private val fragment: BaseFragment,
+
 //    private var exoPlayer1: ExoPlayer,
 //    private var mCacheDataSourceFactory: DataSource.Factory
 
-
 ) : PagingDataAdapter<TutorialModel, VideosAdapter.ViewHolder>(DIFF_UTILS) {
+
+
+    private var visiblePosition = RecyclerView.NO_POSITION
+
+    fun getList(): List<TutorialModel> {
+        val snapshot = snapshot()
+        return snapshot.items
+    }
 
 
 //    private lateinit var mHttpDataSourceFactory: HttpDataSource.Factory
@@ -74,7 +89,7 @@ class VideosAdapter(
     var currentPosition = -1
     lateinit var currentViewHolder: ViewHolder
     var viewHolderList = ArrayList<ViewHolder>()
-
+    private var exoPlayer: ExoPlayer? = null
 
 //    var item = TutorialVideos()
 
@@ -83,7 +98,6 @@ class VideosAdapter(
         var tutorial_id = 1
     }
 
-    private var exoPlayer: ExoPlayer? = null
 
     private var playbackPosition = 0L
     private var playWhenReady = true
@@ -117,15 +131,15 @@ class VideosAdapter(
             viewHolderList[currentPosition].item.idExoPlayerVIew.player?.stop()
     }
 
-      fun setUserAndTutorialId(position: Int) {
-          Log.e("getusername","getuser "+getItem(position)?.chef?.name)
+    fun setUserAndTutorialId(position: Int) {
+        Log.e("getusername", "getuser " + getItem(position)?.chef?.name)
 
-          ProfileFragmentFragment.userId =  getItem(position)?.chef?.id
-          ProfileFragmentFragment.name =  getItem(position)?.chef?.name
-          ProfileFragmentFragment.userimage =  getItem(position)?.chef?.avatarPath
-          IngedientsFragment.tutorial_id = getItem(position)?.tutorial_id
-          IngedientsFragment.ingredients_id = getItem(position)?.id
-          IngedientsFragment.background = getItem(position)?.url
+        ProfileFragmentFragment.userId = getItem(position)?.chef?.id
+        ProfileFragmentFragment.name = getItem(position)?.chef?.name
+        ProfileFragmentFragment.userimage = getItem(position)?.chef?.avatarPath
+        IngedientsFragment.tutorial_id = getItem(position)?.tutorial_id
+        IngedientsFragment.ingredients_id = getItem(position)?.id
+        IngedientsFragment.background = getItem(position)?.url
 //              IngedientsFragment.tutorial_id
     }
 
@@ -135,7 +149,8 @@ class VideosAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemVedioPlayerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemVedioPlayerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -153,8 +168,15 @@ class VideosAdapter(
 //        if (currentPosition == position) {
 //            currentViewHolder = holder
 //        }
+
         holder.bind()
     }
+
+//    fun removeItem(item: TutorialModel) {
+//        val currentList = snapshot().toMutableList()
+//        currentList.remove(item)
+//        submitList(currentList)
+//    }
 
     private var dim = false
     fun dim() {
@@ -182,7 +204,6 @@ class VideosAdapter(
                         getItem(bindingAdapterPosition)?.id.toString()
                     ) { dynamicLink ->
                         fragment.shareDeepLink(dynamicLink)
-
                     }
                 }
 //                ivLoggedInUserImage.loadImage(myImage)
@@ -201,6 +222,19 @@ class VideosAdapter(
                     }
                 mTextHashTagHelper.handle(item.tvTitle)
 
+                bookMark.setOnClickListener {
+                    if (bindingAdapterPosition == -1) return@setOnClickListener
+
+                    getItem(bindingAdapterPosition)?.id?.let {
+                        onSaved.invoke(it)
+                    }
+                    if (bookMark.drawable == context.resources.getDrawable(R.drawable.saved)) {
+                        bookMark.setImageResource(R.drawable.unsaved)
+                    } else {
+                        bookMark.setImageResource(R.drawable.saved)
+                    }
+                }
+
                 btnFollow.setOnClickListener {
                     if (bindingAdapterPosition == -1) return@setOnClickListener
                     getItem(bindingAdapterPosition)?.chef?.id.let { it1 -> onToggleFollow.invoke(it1!!) }
@@ -212,6 +246,7 @@ class VideosAdapter(
                         item.btnFollow.setTextColor(Color.WHITE)
                     }
                 }
+
                 tvFav.setOnClickListener {
                     if (bindingAdapterPosition == -1) return@setOnClickListener
                     getItem(bindingAdapterPosition)?.id?.let { it1 -> onFavorite.invoke(it1) }
@@ -261,28 +296,37 @@ class VideosAdapter(
         }
 
         fun bind() {
+
+
             val data = getItem(bindingAdapterPosition)
             Log.e("onResume", " adapter position data  " + data)
-//            Log.e("getdata111", " adapter position data  " + getItem(bindingAdapterPosition+1))
-            var url = getItem(bindingAdapterPosition)?.url
-            Glide.with(context).load(url).preload()
+            if (!data?.url?.endsWith(".mp4")!!) {
+
+                Log.e("link", " not valid  position data  " + data)
+            }
             tvFavState = data?.isFavourites!!
 //            chefsId = data.chef?.id!!
 //            tutorial_id = data.tutorial_id!!
+
+            if (data.is_bookmarked!!) {
+                item.bookMark.setImageResource(R.drawable.saved)
+            } else {
+                item.bookMark.setImageResource(R.drawable.unsaved)
+            }
             if (data.isFavourites!!) {
                 item.tvFav.setCompoundDrawablesWithIntrinsicBounds(
                     0,
                     R.drawable.filled_heart,
                     0,
                     0
-                );
+                )
             } else
                 item.tvFav.setCompoundDrawablesWithIntrinsicBounds(
                     0,
                     R.drawable.ic_heart,
                     0,
                     0
-                );
+                )
 
             if (data?.chef?.isFollowing!!) {
                 item.btnFollow.text = context.getText(R.string.following)
@@ -297,24 +341,15 @@ class VideosAdapter(
             item.tvComments.text = data.commentsCount.toString()
             item.viewCount.text = data.views.toString()
 
-//                data.views.toString()
             item.tvFav.text = data.favouritesCount.toString()
             item.tvMessage.text = data.sharesCount.toString()
 
-
-//            item.linearIcons.alpha = if (dim) .5f else 1f
             item.tvTitle.text = data?.title
             item.tvDescription.text = data?.caption
 
-//            item.tvUsername.text = data?.chef?.name
-
-//            item.btnFollow.text=data.
-//            if (selectedPosition == bindingAdapterPosition) {
-//                playWhenReady=false
-//                exoPlayer?.playWhenReady=false
-//                item.idExoPlayerVIew.player?.pause()
-//            exoPlayer?.release()
             exoPlayer = ExoPlayer.Builder(context).build()
+
+//            exoPlayer?.setVideoTextureView(item.idExoPlayerVIew.videoSurfaceView as TextureView?)
             val videoURL = data?.url
 //                    "https://media.geeksforgeeks.org/wp-content/uploads/20201217163353/Screenrecorder-2020-12-17-16-32-03-350.mp4"
             Log.e("videoUrl ", " videoURL " + videoURL)
@@ -327,26 +362,9 @@ class VideosAdapter(
                 idExoPlayerVIew.player = exoPlayer
                 idExoPlayerVIew.player?.repeatMode = Player.REPEAT_MODE_ALL
                 exoPlayer?.addMediaItem(mediaItem)
-//                exoPlayer?.seekTo(playbackPosition)
-//                exoPlayer?.playWhenReady = playWhenReady
-//                    exoPlayer?.pause()
-//                    exoPlayer?.playWhenReady = true
+
                 exoPlayer?.prepare()
-//                    exoPlayer?.play()
-//                if (bindingAdapterPosition == currentPosition) {
-//                    exoPlayer?.play()
-//                } else {
-//                    exoPlayer?.pause()
-//                }
-//                }
             }
-//            if (selectedPosition == bindingAdapterPosition) {
-//
-//                schedulePreloadWork(data.url!!)
-////                exoPlayer.release()
-//                setVideo(data.url!!, item.idExoPlayerVIew)
-//
-//            }
         }
 
         private fun schedulePreloadWork(videoUrl: String) {
@@ -358,168 +376,7 @@ class VideosAdapter(
                 videoPreloadWorker
             )
         }
-
-
-//        fun getSingleVideo(data: TutorialVideos) {
-////            Log.e("my item ", " my item video  " + data)
-//
-//            Log.e("getpostionat", " getSingleVideo  ")
-//
-////            item.linearIcons.isVisible = false
-////            Handler().postDelayed({
-////                item.linearIcons.isVisible = true
-//////                item.linearIcons.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
-////            }, 800)
-//
-//
-//
-//
-////                var tvFavState = data.isFavourites!!
-////
-////                chefsId = data.chef?.id!!
-////
-////
-////                if (data.isFavourites!!) {
-////                    item.tvFav.setCompoundDrawablesWithIntrinsicBounds(
-////                        0,
-////                        R.drawable.filled_heart,
-////                        0,
-////                        0
-////                    );
-////                } else
-////                    item.tvFav.setCompoundDrawablesWithIntrinsicBounds(
-////                        0,
-////                        R.drawable.ic_heart,
-////                        0,
-////                        0
-////                    );
-////
-////                if (data.chef?.isFollowing!!) {
-////                    item.btnFollow.text = context.getText(R.string.following)
-////                    item.btnFollow.setTextColor(Color.GREEN)
-////                } else {
-////                    item.btnFollow.setTextColor(Color.WHITE)
-////                    item.btnFollow.text = context.getText(R.string.follow)
-////                }
-////
-////                item.tvUsername.text = data?.chef?.name
-////                item.ivUserImage.loadImage(data?.chef?.avatarPath)
-////                item.tvComments.text = data.commentsCount.toString()
-////                item.viewCount.text = data.views.toString()
-////
-//////                data.views.toString()
-////                item.tvFav.text = data.favouritesCount.toString()
-////                item.tvMessage.text = data.sharesCount.toString()
-////
-////
-//////            item.linearIcons.alpha = if (dim) .5f else 1f
-////                item.tvTitle.text = data?.title
-////                item.tvDescription.text = data?.caption
-////
-//////            item.tvUsername.text = data?.chef?.name
-////
-//////            item.btnFollow.text=data.
-////                if (selectedPosition == bindingAdapterPosition) {
-//                    exoPlayer?.release()
-////                    exoPlayer = ExoPlayer.Builder(item.root.context).build()
-////
-////                    val videoURL = data?.url
-//////                    "https://media.geeksforgeeks.org/wp-content/uploads/20201217163353/Screenrecorder-2020-12-17-16-32-03-350.mp4"
-////                    Log.e("videoUrl ", " videoURL " + videoURL)
-////
-////
-////                    val uri: Uri =
-////                        Uri.parse(videoURL)
-////                    val mediaItem: MediaItem =
-////                        MediaItem.fromUri(uri)
-////
-////                    item.apply {
-////                        idExoPlayerVIew.player = exoPlayer
-////                        idExoPlayerVIew.player?.repeatMode = Player.REPEAT_MODE_ALL
-////                        exoPlayer?.setMediaItem(mediaItem)
-////                        exoPlayer?.seekTo(playbackPosition)
-////                        exoPlayer?.playWhenReady = playWhenReady
-////                        exoPlayer?.prepare()
-////                        exoPlayer?.playWhenReady = true
-////                        exoPlayer?.play()
-////                    }
-////                }
-////
-////                item.apply {
-////
-////
-////                    btnFollow.setOnClickListener {
-////                        if (bindingAdapterPosition == -1) return@setOnClickListener
-////                        data?.chef?.id.let { it1 -> onToggleFollow.invoke(it1!!) }
-////                        if (btnFollow.text == it.context.getString(R.string.follow)) {
-////                            btnFollow.text = it.context.getString(R.string.following)
-////                            item.btnFollow.setTextColor(Color.GREEN)
-////                        } else {
-////                            btnFollow.text = it.context.getString(R.string.follow)
-////                            item.btnFollow.setTextColor(Color.WHITE)
-////                        }
-////                    }
-////
-////                    tvFav.setOnClickListener {
-////                        if (bindingAdapterPosition == -1) return@setOnClickListener
-////                        getItem(bindingAdapterPosition)?.id?.let { it1 -> onFavorite.invoke(it1) }
-////                        var num: Int = tvFav.text.toString().toInt()
-////                        if (tvFavState) {
-////                            tvFavState = false
-////                            item.tvFav.setCompoundDrawablesWithIntrinsicBounds(
-////                                0,
-////                                R.drawable.ic_heart,
-////                                0,
-////                                0
-////                            )
-////                            tvFav.text = num.minus(1).toString()
-////                        } else {
-////                            tvFavState = true
-////                            tvFav.text = (num + 1).toString()
-////                            item.tvFav.setCompoundDrawablesWithIntrinsicBounds(
-////                                0,
-////                                R.drawable.filled_heart,
-////                                0,
-////                                0
-////                            )
-////                        }
-////                    }
-////                }
-//              }
-
     }
-
-    private fun setVideo(videoUrl: String, idExoPlayerVIew: StyledPlayerView) {
-//        mHttpDataSourceFactory = DefaultHttpDataSource.Factory()
-//            .setAllowCrossProtocolRedirects(true)
-//
-//        this.mDefaultDataSourceFactory = DefaultDataSourceFactory(
-//            context, mHttpDataSourceFactory)
-//
-//        mCacheDataSourceFactory = CacheDataSource.Factory()
-//            .setCache(cache)
-//            .setUpstreamDataSourceFactory(mHttpDataSourceFactory)
-//            .setFlags(CacheDataSource.FLAG_IGNORE_CACHE_ON_ERROR)
-
-
-//        exoPlayer.release()
-
-//        exoPlayer = SimpleExoPlayer.Builder(context)
-//            .setMediaSourceFactory(DefaultMediaSourceFactory(mCacheDataSourceFactory)).build()
-
-//        val videoUri = Uri.parse(videoUrl)
-//        val mediaItem = MediaItem.fromUri(videoUri)
-//        val mediaSource =
-//            ProgressiveMediaSource.Factory(mCacheDataSourceFactory).createMediaSource(mediaItem)
-
-//        idExoPlayerVIew.player = exoPlayer1
-//        exoPlayer1.playWhenReady = true
-//        exoPlayer1.seekTo(0, 0)
-//        exoPlayer1.setMediaSource(mediaSource, true)
-//        exoPlayer1.prepare()
-    }
-
-
 }
 
 

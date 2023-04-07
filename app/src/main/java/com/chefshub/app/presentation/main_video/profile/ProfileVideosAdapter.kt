@@ -11,42 +11,39 @@ import com.chefshub.app.presentation.main_video.video.DIFF_UTILS
 import com.chefshub.data.entity.tutorial.TutorialModel
 import com.chefshub.utils.ext.loadImage
 
-class ProfileVideosAdapter : PagingDataAdapter<TutorialModel, ProfileVideosAdapter.ViewHolder>(
-    DIFF_UTILS
-) {
-    companion object {
-        var visible = true
-    }
+//class ProfileVideosAdapter : PagingDataAdapter<TutorialModel, ProfileVideosAdapter.ViewHolder>(
+//    DIFF_UTILS
+//) {
+class ProfileVideosAdapter :  RecyclerView.Adapter<ProfileVideosAdapter.ViewHolder>() {
+
+//    companion object {
+//        var visible = true
+//    }
+    private val videoList = ArrayList<TutorialModel>()
 
     inner class ViewHolder(val item: ItemVideosBinding) : RecyclerView.ViewHolder(item.root) {
-        init {
-
-            Log.e("ProfileVideosAdapter", "ProfileVideosAdapter ")
-        }
-
 
         fun bind(position: Int): Unit {
 
-
             item.apply {
-                val item = getItem(position)
+//                val item = getItem(position)
                 Log.e("ProfileVideosAdapter", "ProfileVideosAdapter "+item)
-                tvMealName.text = item?.title
+                tvMealName.text = videoList[position].title
                 tvDescription.text =
-                    "2h" + "  " + item?.videosCount + " Views"
+                    "2h" + "  " + videoList[position].videosCount + " Views"
 //                     item?.lengthInMinutes + "m  " + item?.videosCount + " Views"
-                tvMealIcon.loadImage(item?.logoPath)
+                tvMealIcon.loadImage(videoList[position].logoPath)
             }
         }
 
         fun bind2(position: Int): Unit {
 
             item.apply {
-                val item = getItem(position)
+//                val item = getItem(position)
 
                 tvMealName.isVisible =false
                 tvDescription.isVisible =false
-                tvMealIcon.loadImage(item?.logoPath)
+//                tvMealIcon.loadImage(item?.logoPath)
             }
         }
     }
@@ -56,9 +53,23 @@ class ProfileVideosAdapter : PagingDataAdapter<TutorialModel, ProfileVideosAdapt
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Log.e("tester", "onBindViewHolder: position")
 //        if (visible)
             holder.bind(position)
 //        else holder.bind2(position)
     }
+
+    override fun getItemCount() = videoList.size
+
+    fun setAll(it: ArrayList<TutorialModel>) {
+//        step = 1
+        this.videoList.apply {
+            clear()
+            addAll(it)
+        }
+        notifyDataSetChanged()
+    }
+
+
 
 }

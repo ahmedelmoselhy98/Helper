@@ -49,6 +49,16 @@ class AuthRepositoryImpl @Inject constructor(private val userApi: AuthApi) : Aut
         Log.e("TAG", "loginWithEmail: repo")
         return flow { emit(userApi.loginWithEmail(email, password, device_token, device_id)) }
     }
+    override suspend fun signup(
+        email: String,
+        name: String,
+        password: String,
+        device_token: String,
+        device_id: String
+    ): Flow<Response<EndPointModel<UserModel, AuthMeta>>> {
+        Log.e("TAG", "loginWithEmail: repo")
+        return flow { emit(userApi.signup(email,name, password, device_token, device_id)) }
+    }
 
     override suspend fun getProfile() = flow { emit(userApi.getProfile()) }
 
@@ -59,6 +69,8 @@ class AuthRepositoryImpl @Inject constructor(private val userApi: AuthApi) : Aut
     override suspend fun singleVideo(id: Int)= flow { emit(userApi.singleVideo(id)) }
 
     override suspend fun addFavorite(id: Int) = flow { emit(userApi.addFavorite(id)) }
+
+    override suspend fun addSavedVideo(id: Int) = flow { emit(userApi.addSavedVideo(id)) }
 
     override suspend fun getFoodSystem() = flow { emit(userApi.getFoodSystem()) }
 

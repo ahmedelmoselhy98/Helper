@@ -58,7 +58,7 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
 
         if (!(userId == null || IngedientsFragment.tutorial_id!! ==null)){
             userViewModel.getTutorialsVideosChef(userId!!)
-            userViewModel.getDetailVideosChef(userId!!)
+//            userViewModel.getDetailVideosChef(userId!!)
             userViewModel.getUserProfile(userId == null, userId)
         }
 
@@ -193,12 +193,13 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
         handleSharedFlow(userViewModel.VideosChefFlow, onSuccess = {
             Log.e("ingredientsFlow"," it "+it)
             listvideosChef.setAll(it as ArrayList<TutorialModel>)
-        })
-
-        handleSharedFlow(userViewModel.VideosDetailChefFlow, onSuccess = {
-            Log.e("ingredientsFlow"," it "+it)
             profileVideosAdapter.setAll(it as ArrayList<TutorialModel>)
         })
+
+//        handleSharedFlow(userViewModel.VideosDetailChefFlow, onSuccess = {
+//            Log.e("ingredientsFlow"," it "+it)
+//            profileVideosAdapter.setAll(it as ArrayList<TutorialModel>)
+//        })
 
         handleSharedFlow(userViewModel.userFlow, onSuccess = {
             Log.e("myprofile"," itttttttttt "+it)
@@ -217,7 +218,7 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
         super.onResume()
         Log.e("onResume","onResume "+ userId)
         userViewModel.getTutorialsVideosChef(userId!!)
-        userViewModel.getDetailVideosChef(userId!!)
+//        userViewModel.getDetailVideosChef(userId!!)
 
         userViewModel.getUserProfile(userId == null, userId)
         loadUserVideos()

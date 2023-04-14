@@ -34,8 +34,8 @@
     <string name="checkout">Checkout</string>
     <string name="address_1">ADDRESS #1</string>
     <string name="default_notification_channel_id">defualt notifications</string>
-<!--    <string name="facebook_app_id" translatable="false">3363028827345538</string>-->
-<!--    <string name="facebook_client_token" translatable="false">fb3363028827345538</string>-->
+    <!--    <string name="facebook_app_id" translatable="false">3363028827345538</string>-->
+    <!--    <string name="facebook_client_token" translatable="false">fb3363028827345538</string>-->
     <string name="follow">Follow</string>
     <string name="comments">\" comments\"</string>
     <string name="add_comment">Add comment ...</string>

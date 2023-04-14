@@ -41,6 +41,10 @@ class SignUpActivity : BaseActivity() {
             startActivity(intent)
             finishAffinity()
         }
+        binding.privacy.setOnClickListener {
+            val intent = Intent(this, privacyActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.ivLoginFacebook.setOnClickListener { facebookLoginHelper.singIn() }
         binding.ivLoginGoogle.setOnClickListener { googleLoginHelper.singIn() }

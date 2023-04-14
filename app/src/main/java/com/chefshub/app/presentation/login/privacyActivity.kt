@@ -13,7 +13,6 @@ class privacyActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
     }
-///
     override fun onBackPressed() {
         super.onBackPressed()
         finish()

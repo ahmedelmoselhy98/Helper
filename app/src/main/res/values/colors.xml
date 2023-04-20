@@ -17,6 +17,7 @@
     <color name="red">#E02020</color>
     <color name="blue">#0091FF</color>
     <color name="blue1">#9E78DD</color>
+    <color name="txt_background">#3F3F4484</color>
     <color name="low_white">#F2F2F2</color>
     <color name="gray">#656565</color>
     <color name="light_blue_600">#FF039BE5</color>

@@ -149,16 +149,19 @@ class PrefFragment : BaseFragment(R.layout.fragment_pref) {
 
                     it.tv.setOnClickListener { view ->
                         if (it.tv.backgroundTintList != null && it.tv.backgroundTintList!!.defaultColor ==
-                            ContextCompat.getColor(view.context, R.color.pref_background)) {
+                            ContextCompat.getColor(view.context, R.color.purple_700)
+                        ) {
                             listOfSelections.remove(it.tv.text)
                             setListToTextViewSelection()
-                            it.tv.setBackgroundTint(R.color.purple_700)
+                            it.tv.setBackgroundTint(R.color.txt_background)
+                            it.tv.setTextColor(resources.getColor(R.color.purple_700))
 //                            (arrayColor.get(Random.nextInt(arrayColor.size.minus(1))))
                         } else {
-                        view.setBackgroundTint(R.color.pref_background)
-                        listOfSelections.add(it.tv.text.toString())
-                        setListToTextViewSelection()
-                    }
+                            view.setBackgroundTint(R.color.purple_700)
+                            it.tv.setTextColor(resources.getColor(R.color.white))
+                            listOfSelections.add(it.tv.text.toString())
+                            setListToTextViewSelection()
+                        }
                     }
                 }
             }

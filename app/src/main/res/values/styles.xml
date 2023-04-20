@@ -20,9 +20,25 @@
         <item name="android:insetRight">0dp</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
+        <item name="paddingEnd">20dp</item>
+        <item name="paddingStart">20dp</item>
         <item name="cornerRadius">15dp</item>
         <item name="elevation">0dp</item>
         <item name="rippleColor">@color/purple_700</item>
+    </style>
+    <style name="skipButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+
+        <item name="cornerRadius">15dp</item>
+        <item name="elevation">0dp</item>
+        <item name="rippleColor">@color/white</item>
+        <item name="textFillColor">@color/purple_700</item>
+        <item name="backgroundTint">@color/white</item>
+
     </style>
 
     <style name="Widget.Theme.ChefsHub.ButtonBar.Fullscreen" parent="">

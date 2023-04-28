@@ -7,4 +7,11 @@
     <string name="signup_now">Sign up now</string>
     <string name="confirm_password">Retype Password</string>
     <string name="confirm_privacy">Creating an account means you are okay with our terms of services and our Privacy Policy</string>
+    <string name="discount">discount</string>
+    <string name="up_to">up to 30% Discounts</string>
+    <string name="date_discount">17 - 24 January</string>
+    <string name="Breakfast">Breakfast</string>
+    <string name="pic_your_meal">Pick your meal</string>
+    <string name="Most_viewed_chefs">Most viewed chefs</string>
+    <string name="ratio">30 %</string>
 </resources>

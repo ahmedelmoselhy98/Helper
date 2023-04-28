@@ -10,7 +10,7 @@ import com.chefshub.app.presentation.main_video.profile.ProfileFragmentFragment
 import com.chefshub.data.entity.user.UserModel
 import com.chefshub.utils.ext.loadImage
 
-class HomeCheifsAdapter : RecyclerView.Adapter<HomeCheifsAdapter.ViewHolder>() {
+class SearchCheifsAdapter : RecyclerView.Adapter<SearchCheifsAdapter.ViewHolder>() {
     private val chefsList = ArrayList<UserModel>()
 
     inner class ViewHolder(val item: ItemChefsBinding) : RecyclerView.ViewHolder(item.root) {

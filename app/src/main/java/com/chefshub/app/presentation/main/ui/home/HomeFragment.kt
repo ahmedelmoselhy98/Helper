@@ -1,29 +1,29 @@
 package com.chefshub.app.presentation.main.ui.home
 
-import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewTreeLifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.chefshub.app.R
 import com.chefshub.app.databinding.FragmentHomeBinding
 import com.chefshub.base.BaseFragment
 import com.chefshub.data.entity.search.SearchResponse
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 //@HiltAndroidApp
 class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
     private var _binding: FragmentHomeBinding? = null
 
-    private val cheifsAdapter = HomeCheifsAdapter()
-    private val homeVideosAdapter = HomeVideosAdapter() {
+    private val cheifsAdapter = SearchCheifsAdapter()
+    private val mealAdapter = MealAdapter()
+    private val mostViewAdapter = MostViewAdapter()
+    private val searchVideosAdapter = SearchVideosAdapter() {
         findNavController().navigate(R.id.videoFragment)
     }
     private val homeViewModel: HomeViewModel by activityViewModels()
@@ -42,6 +42,19 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         setupSearchListener()
         setupRecyclers()
         setupObserver()
+        setupToolbar()
+        setUpMeal()
+    }
+
+    private fun setUpMeal() {
+        val mealItems: List<String> = Arrays.asList(
+            "Breakfast",
+            "Brunch",
+            "Breakfast",
+            "Breakfast",
+        )
+        mealAdapter.setAll(mealItems)
+
     }
 
     private fun setupObserver() {
@@ -58,22 +71,31 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             binding.tvTitleChefs.isVisible = cheifsAdapter.itemCount > 0
         }
         it.tutorials.let {
-            homeVideosAdapter.setAll(it)
+            searchVideosAdapter.setAll(it)
         }
-        binding.tvEmpty.isVisible = cheifsAdapter.itemCount == 0 && homeVideosAdapter.itemCount == 0
+        binding.tvEmpty.isVisible = cheifsAdapter.itemCount == 0 && searchVideosAdapter.itemCount == 0
     }
 
     private fun setupRecyclers() {
         binding.apply {
             recyclerViewChefs.adapter = cheifsAdapter
-            recyclerViewVideos.adapter = homeVideosAdapter
+            recyclerViewVideos.adapter = searchVideosAdapter
+            recMeal.adapter = mealAdapter
+            recMostView.adapter =mostViewAdapter
+        }
+    }
+
+    private fun setupToolbar() {
+        binding.toolbar.apply {
+            ivBack.setOnClickListener { findNavController().navigateUp() }
+            ivShare.isVisible = false
+            tvTitle.text = getString(R.string.search)
         }
     }
 
     private fun setupSearchListener() {
-        binding.edtSearch.setOnSearchClickListener {
 
-        }
+        binding.edtSearch.isIconified = false // set the SearchView to be open by default
 
         binding.edtSearch.isQueryRefinementEnabled=true
 

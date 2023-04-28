@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="130dp"
+    android:layout_height="60dp"
+    android:layout_margin="5dp"
+    android:background="@color/custom_grey"
+    android:backgroundTint="@color/custom_grey"
+    android:orientation="vertical"
+    app:cardCornerRadius="10dp">
+
+    <TextView
+        android:id="@+id/tvMeal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/Breakfast"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+
+</androidx.cardview.widget.CardView>

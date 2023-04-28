@@ -8,8 +8,8 @@ import com.chefshub.data.entity.tutorial.TutorialModel
 import com.chefshub.utils.ext.loadImage
 import java.util.ArrayList
 
-class HomeVideosAdapter constructor(private val onVideoClicked: () -> Unit) :
-    RecyclerView.Adapter<HomeVideosAdapter.ViewHolder>() {
+class SearchVideosAdapter constructor(private val onVideoClicked: () -> Unit) :
+    RecyclerView.Adapter<SearchVideosAdapter.ViewHolder>() {
     inner class ViewHolder(val item: ItemVideosMainBinding) : RecyclerView.ViewHolder(item.root) {
         fun bind(data: TutorialModel) {
             item.apply {

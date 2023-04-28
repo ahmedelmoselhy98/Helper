@@ -8,12 +8,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="gray1">#989494</color>
+    <color name="custom_grey">#EEEAF9</color>
     <color name="black1">#3F3939</color>
     <color name="white">#FFFFFFFF</color>
     <color name="white1">#EFEFEF</color>
     <color name="splash_bk">#987BD7</color>
     <color name="yellow">#FFBE13</color>
     <color name="green">#7DFFA7</color>
+    <color name="green1">#7CFEA6</color>
     <color name="red">#E02020</color>
     <color name="blue">#0091FF</color>
     <color name="blue1">#9E78DD</color>

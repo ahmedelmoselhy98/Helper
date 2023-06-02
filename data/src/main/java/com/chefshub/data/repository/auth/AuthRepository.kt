@@ -1,5 +1,6 @@
 package com.chefshub.data.repository.auth
 
+import android.net.Uri
 import com.chefshub.data.entity.EndPointModel
 import com.chefshub.data.entity.food_system.FoodSystemModel
 import com.chefshub.data.entity.tutorial.TutorialVideos
@@ -38,6 +39,13 @@ interface AuthRepository {
         password: String,
         device_token: String,
         device_id: String,
+    ): Flow<Response<EndPointModel<UserModel, AuthMeta>>>
+
+    suspend fun updateProfile(
+        email: String,
+        name: String,
+        password: String,
+        avatar_path: String
     ): Flow<Response<EndPointModel<UserModel, AuthMeta>>>
 
     suspend fun getProfile(): Flow<Response<EndPointModel<UserModel, Any>>>

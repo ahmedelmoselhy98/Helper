@@ -1,5 +1,6 @@
 package com.chefshub.app.presentation.login
 
+import android.net.Uri
 import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
@@ -82,6 +83,25 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCase) :
             executeSharedFlow(
                 _userFlow,
                 authUseCase.signup(email,name, password, firebaseToken, device_id)
+            )
+        }
+    }
+
+    private val _updateProfileFlow = MutableSharedFlow<NetworkState>()
+    val updateProfileFlow get() = _updateProfileFlow.asSharedFlow()
+
+    fun updateProfile(
+        email: String,
+        name: String,
+        password: String,
+        confirmPassword: String,
+        avatar_path: String?=null
+    ) {
+        if (!authUseCase.isValidRegisterAuthData(email, name,password,confirmPassword)) return
+        viewModelScope.launch(Dispatchers.IO) {
+            executeSharedFlow(
+                _updateProfileFlow,
+                authUseCase.updateProfile(email,name, password,avatar_path!! )
             )
         }
     }

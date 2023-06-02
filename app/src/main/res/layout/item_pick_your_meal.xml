@@ -19,5 +19,4 @@
         android:textSize="17sp"
         android:textStyle="bold" />
 
-
 </androidx.cardview.widget.CardView>

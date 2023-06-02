@@ -1,17 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.login.privacyActivity">
+    tools:context=".presentation.login.privacyActivity"
+    android:background="@drawable/bc_splash">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp">
+
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/privacy"
-        android:scaleType="fitXY"
-        android:elevation="51dp"
-        />
+        android:id="@+id/skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/skip"
+        android:textAllCaps="true"
+        android:textColor="@color/green"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:src="@drawable/com_facebook_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/skip"
+        android:layout_marginBottom="20dp"
+        >
+        <TextView
+            android:id="@+id/tx_chefs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chefs"
+            android:textAllCaps="true"
+            android:textColor="@color/green"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hub"
+            android:textAllCaps="true"
+            android:textColor="@color/yellow"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tx_chefs"
+
+            app:layout_constraintBottom_toTopOf="@+id/welcome_to"
+            android:layout_marginBottom="20dp" />
+
+    </LinearLayout>
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/privacy"
+        android:textColor="#9E78DD"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/linear"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

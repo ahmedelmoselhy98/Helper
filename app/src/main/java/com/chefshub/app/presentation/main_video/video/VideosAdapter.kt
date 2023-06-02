@@ -1,53 +1,33 @@
 package com.chefshub.app.presentation.main_video.video
 
 import android.content.Context
-import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
-import com.bumptech.glide.Glide
 import com.chefshub.app.R
 import com.chefshub.app.databinding.ItemVedioPlayerBinding
-import com.chefshub.app.presentation.App
-import com.chefshub.app.presentation.login.LoginActivity
 import com.chefshub.app.presentation.main.ui.ingrediants.IngedientsFragment
 import com.chefshub.app.presentation.main.ui.vedios.TutorialViewModel
 import com.chefshub.app.presentation.main_video.profile.ProfileFragmentFragment
 import com.chefshub.app.presentation.video_caching.VideoPreloadWorker
 import com.chefshub.base.BaseActivity
 import com.chefshub.base.BaseFragment
-import com.chefshub.data.cache.PreferencesGateway
 import com.chefshub.data.entity.tutorial.TutorialModel
 import com.chefshub.utils.ext.loadImage
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.source.hls.HlsMediaSource
-import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
-import com.google.android.exoplayer2.upstream.HttpDataSource
-import com.google.android.exoplayer2.upstream.cache.CacheDataSource
-import com.google.android.exoplayer2.upstream.cache.SimpleCache
 import com.volokh.danylo.hashtaghelper.HashTagHelper
 import createDynamicLink
-import dagger.hilt.android.qualifiers.ApplicationContext
 import shareDeepLink
 
 
@@ -139,7 +119,7 @@ class VideosAdapter(
         ProfileFragmentFragment.userimage = getItem(position)?.chef?.avatarPath
         IngedientsFragment.tutorial_id = getItem(position)?.tutorial_id
         IngedientsFragment.ingredients_id = getItem(position)?.id
-        IngedientsFragment.background = getItem(position)?.url
+        IngedientsFragment.background = getItem(position)?.screenshot_url
 //              IngedientsFragment.tutorial_id
     }
 

@@ -11,6 +11,7 @@ data class TutorialModel(
     @SerializedName("length_in_minutes") var lengthInMinutes: Int? = null,
     @SerializedName("videos_count") var videosCount: Int? = null,
     @SerializedName("url") var url: String? = null,
+    @SerializedName("screenshot_url") var screenshot_url: String? = null,
     @SerializedName("caption") var caption: String? = null,
 
 
@@ -33,7 +34,8 @@ data class Chef(
     @SerializedName("id") var id: Int? = null,
     @SerializedName("name") var name: String? = null,
     @SerializedName("avatar_path") var avatarPath: String? = null,
-    @SerializedName("is_following") var isFollowing: Boolean? = false
+    @SerializedName("is_following") var isFollowing: Boolean? = false,
+    @SerializedName("regional_cuisines_count") var regional_cuisines_count: Int? = null
 )
 
 data class TutorialVideos(

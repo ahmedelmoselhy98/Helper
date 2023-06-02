@@ -1,5 +1,6 @@
 package com.chefshub.data.remote
 
+import android.net.Uri
 import com.chefshub.data.entity.EndPointModel
 import com.chefshub.data.entity.food_system.FoodSystemModel
 import com.chefshub.data.entity.tutorial.TutorialVideos
@@ -47,6 +48,16 @@ interface AuthApi {
         @Field("password") password: String,
         @Field("device_token") device_token: String,
         @Field("device_id") device_id: String,
+    ): Response<EndPointModel<UserModel, AuthMeta>>
+
+
+    @FormUrlEncoded
+    @POST("profile/update")
+    suspend fun updateProfile(
+        @Field("email") email: String,
+        @Field("name") name: String,
+        @Field("password") password: String,
+        @Field("avatar_path") avatar_path: String,
     ): Response<EndPointModel<UserModel, AuthMeta>>
 
 

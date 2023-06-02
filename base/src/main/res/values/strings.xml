@@ -2,5 +2,7 @@
     <string name="app_name">base</string>
     <string name="email_not_valid">Email not valid</string>
     <string name="email_is_required">Email is Required</string>
+    <string name="text_is_required">Text is Required</string>
+    <string name="text_not_valid">text not valid</string>
     <string name="update_your_app">Update Your App</string>
 </resources>

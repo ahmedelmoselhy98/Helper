@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "679427183868",
-    "project_id": "chefshup-374011",
-    "storage_bucket": "chefshup-374011.appspot.com"
+    "project_number": "525164637556",
+    "project_id": "chefshup-387907",
+    "storage_bucket": "chefshup-387907.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:679427183868:android:e88b74f0916311d251f379",
+        "mobilesdk_app_id": "1:525164637556:android:2b8786c1680379a3859021",
         "android_client_info": {
           "package_name": "com.chefshub.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "679427183868-6m58sspbmi1rggs4qu7jhk09si21dr2h.apps.googleusercontent.com",
+          "client_id": "525164637556-2kdsk1lq4p9os8kf49d07hbk9f0a89o7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCVhY1AvpG9IeB0MrRaZPqqRaF-aHBIPMw"
+          "current_key": "AIzaSyCgUAwtyYo0E7zZILcUn97qZRRz7Hb490w"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "679427183868-6m58sspbmi1rggs4qu7jhk09si21dr2h.apps.googleusercontent.com",
+              "client_id": "525164637556-2kdsk1lq4p9os8kf49d07hbk9f0a89o7.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -22,6 +22,7 @@ object PrefKeys {
     const val HAS_REGISTER: String = "hasRegister"
     const val SHOW_NOTIFICATION: String = "notification_show"
     const val USER: String = "user"
+    const val USER_IMAGE: String = "user_image"
     const val SESSION: String = "session"
 }
 

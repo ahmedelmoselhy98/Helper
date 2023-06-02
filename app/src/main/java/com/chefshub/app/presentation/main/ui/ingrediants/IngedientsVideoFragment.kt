@@ -68,8 +68,6 @@ class IngedientsVideoFragment : BaseFragment(R.layout.fragment_video_ingedients)
             val mediaItem: MediaItem =
                 MediaItem.fromUri(uri)
 
-
-
                 idExoPlayerVIew.player = exoPlayer
                 idExoPlayerVIew.player?.repeatMode = Player.REPEAT_MODE_ALL
                 exoPlayer?.addMediaItem(mediaItem)
@@ -83,12 +81,7 @@ class IngedientsVideoFragment : BaseFragment(R.layout.fragment_video_ingedients)
         }
 
     private fun observeFlow() {
-//        handleSharedFlow(viewModel.ingredientsFlow, onSuccess = {
-//            Log.e("ingredientsFlow"," it "+it)
-//            ingredientsAdapter.setAll(it as ArrayList<TutorialModel>)
-//        })
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

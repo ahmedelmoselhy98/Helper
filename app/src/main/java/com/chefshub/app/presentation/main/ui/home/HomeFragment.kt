@@ -9,13 +9,19 @@ import androidx.lifecycle.ViewTreeLifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.chefshub.app.R
 import com.chefshub.app.databinding.FragmentHomeBinding
+import com.chefshub.app.presentation.main.ui.home.adapter.MealAdapter
+import com.chefshub.app.presentation.main.ui.home.adapter.MostViewAdapter
+import com.chefshub.app.presentation.main.ui.home.adapter.SearchCheifsAdapter
+import com.chefshub.app.presentation.main.ui.home.adapter.SearchVideosAdapter
 import com.chefshub.base.BaseFragment
+import com.chefshub.data.entity.search.MostViewResponse
 import com.chefshub.data.entity.search.SearchResponse
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import kotlin.collections.ArrayList
 
 
-//@HiltAndroidApp
+val TAG ="HomeFragment"
+//@AndroidEntryPoint
 class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
     private var _binding: FragmentHomeBinding? = null
@@ -24,7 +30,9 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     private val mealAdapter = MealAdapter()
     private val mostViewAdapter = MostViewAdapter()
     private val searchVideosAdapter = SearchVideosAdapter() {
-        findNavController().navigate(R.id.videoFragment)
+//        findNavController().navigate(R.id.videoFragment)
+        findNavController().navigate(R.id.FragmentVideoIngredients)
+
     }
     private val homeViewModel: HomeViewModel by activityViewModels()
 
@@ -32,12 +40,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     // onDestroyView.
     private val binding get() = _binding!!
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
-        ViewTreeLifecycleOwner.get(view)
+//        ViewTreeLifecycleOwner.get(view)
+        homeViewModel.mostViewByChefs()
 
+        setUpAction()
         setupArguments()
         setupSearchListener()
         setupRecyclers()
@@ -46,29 +55,57 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         setUpMeal()
     }
 
+    private fun setUpAction() {
+        binding.apply {
+            meal.setOnClickListener {
+                meal.setBackgroundColor(resources.getColor(R.color.blue1))
+                chefs.setBackgroundColor(resources.getColor(R.color.blue2))
+                recyclerViewChefs.isVisible=false
+                recyclerViewVideos.isVisible=true
+            }
+
+            chefs.setOnClickListener {
+                meal.setBackgroundColor(resources.getColor(R.color.blue2))
+                chefs.setBackgroundColor(resources.getColor(R.color.blue1))
+                recyclerViewChefs.isVisible=true
+                recyclerViewVideos.isVisible=false
+            }
+        }
+    }
+
     private fun setUpMeal() {
         val mealItems: List<String> = Arrays.asList(
-            "Breakfast",
-            "Brunch",
-            "Breakfast",
-            "Breakfast",
+            "breakfast",
+            "lunch",
+            "dinner",
+            "snack"
         )
         mealAdapter.setAll(mealItems)
-
     }
 
     private fun setupObserver() {
         handleSharedFlow(homeViewModel.dataListFlow, onSuccess = {
             if (it is SearchResponse) {
+                binding.meal.performClick()
                 setupResponse(it)
             }
+        })
+        handleSharedFlow(homeViewModel.mostViewListFlow, onSuccess = {
+                mostViewAdapter.setAll(it as List<MostViewResponse>)
         })
     }
 
     private fun setupResponse(it: SearchResponse) {
+        binding.apply {
+            disAccountCard.isVisible=false
+            pickMealCard.isVisible=false
+            chefsCard.isVisible=false
+            recCard.isVisible= true
+            filter.isVisible=true
+        }
         it.chefs.let {
             cheifsAdapter.setAll(it)
-            binding.tvTitleChefs.isVisible = cheifsAdapter.itemCount > 0
+//            binding.tvTitleChefs.isVisible = cheifsAdapter.itemCount > 0
         }
         it.tutorials.let {
             searchVideosAdapter.setAll(it)
@@ -120,6 +157,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+//        _binding = null
     }
 }

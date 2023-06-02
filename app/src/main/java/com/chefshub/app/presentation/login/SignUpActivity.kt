@@ -6,8 +6,15 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import com.chefshub.app.R
 import com.chefshub.app.databinding.ActivityLoginBinding
 import com.chefshub.app.databinding.ActivitySignupBinding
@@ -41,15 +48,64 @@ class SignUpActivity : BaseActivity() {
             startActivity(intent)
             finishAffinity()
         }
-        binding.privacy.setOnClickListener {
-            val intent = Intent(this, privacyActivity::class.java)
-            startActivity(intent)
-        }
+
+        privacyClicked()
+
 
         binding.ivLoginFacebook.setOnClickListener { facebookLoginHelper.singIn() }
         binding.ivLoginGoogle.setOnClickListener { googleLoginHelper.singIn() }
         observeFlow()
         observeValidations()
+
+    }
+
+    private fun privacyClicked() {
+//        val textView = findViewById<TextView>(R.id.textView)
+//        val text = "Creating an account means you are okay with our terms of services and our Privacy Policy"
+
+// Create a SpannableString with the entire text
+        val spannableString = SpannableString(binding.privacy.text)
+
+// Define the clickable spans for "terms of services" and "our Privacy Policy"
+        val termsClickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+
+                val intent = Intent(applicationContext, privacyActivity::class.java)
+                startActivity(intent)
+                // Perform the action for terms of services click
+                // For example, navigate to the terms of services activity or open a web page
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                // Customize the appearance of the clickable text
+                ds.isUnderlineText = true  // Remove underline
+                ds.color = ContextCompat.getColor(applicationContext, R.color.green)  // Set text color
+            }
+        }
+
+        val privacyClickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                // Perform the action for Privacy Policy click
+                // For example, navigate to the Privacy Policy activity or open a web page
+
+                val intent = Intent(applicationContext, privacyActivity::class.java)
+                startActivity(intent)
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                // Customize the appearance of the clickable text
+                ds.isUnderlineText = true  // Remove underline
+                ds.color = ContextCompat.getColor(applicationContext, R.color.green)  // Set text color
+            }
+        }
+
+// Set the clickable spans to the respective text positions
+        spannableString.setSpan(termsClickableSpan, binding.privacy.text.indexOf("terms of services"), binding.privacy.text.indexOf("terms of services") + "terms of services".length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(privacyClickableSpan, binding.privacy.text.indexOf("our Privacy Policy"), binding.privacy.text.indexOf("our Privacy Policy") + "our Privacy Policy".length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+// Set the modified SpannableString to the TextView
+        binding.privacy.text = spannableString
+        binding.privacy.movementMethod = LinkMovementMethod.getInstance()
 
     }
 

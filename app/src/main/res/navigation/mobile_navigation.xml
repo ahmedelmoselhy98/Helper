@@ -32,11 +32,21 @@
         android:name="com.chefshub.app.presentation.main_video.my_profile.MyProfileFragment"
         android:label="my_profile"
         tools:layout="@layout/fragment_my_profile" />
+    <fragment
+        android:id="@+id/EditMyProfile"
+        android:name="com.chefshub.app.presentation.main_video.my_profile.EditProfileFragment"
+        android:label="edit_my_profile"
+        tools:layout="@layout/fragment_edit_profile" />
 
      <fragment
         android:id="@+id/FragmentVideoIngredients"
         android:name="com.chefshub.app.presentation.main.ui.ingrediants.IngedientsVideoFragment"
         android:label="fragment_profile_fragment"
+        tools:layout="@layout/fragment_video_ingedients" />
+     <fragment
+        android:id="@+id/filterByMeal"
+        android:name="com.chefshub.app.presentation.main.ui.home.searchByMeal.FilterByMeal"
+        android:label="filter_by_meal"
         tools:layout="@layout/fragment_video_ingedients" />
     <fragment
         android:id="@+id/FragmentVideoIngredientsBottomsheet"

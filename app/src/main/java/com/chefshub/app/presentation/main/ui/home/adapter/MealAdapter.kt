@@ -1,12 +1,14 @@
-package com.chefshub.app.presentation.main.ui.home
+package com.chefshub.app.presentation.main.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.chefshub.app.R
 import com.chefshub.app.databinding.ItemPickYourMealBinding
-import com.chefshub.app.databinding.ItemVideosMainBinding
-import com.chefshub.data.entity.tutorial.TutorialModel
-import com.chefshub.utils.ext.loadImage
 import java.util.ArrayList
 
 class MealAdapter:
@@ -15,6 +17,14 @@ class MealAdapter:
         fun bind(data: String) {
             item.apply {
                 tvMeal.setText(data)
+            }
+        }
+        init {
+            item.root.setOnClickListener {
+                if (bindingAdapterPosition == -1) return@setOnClickListener
+
+                findNavController(it).navigate(R.id.filterByMeal, bundleOf("type" to item.tvMeal.text.toString()))
+
             }
         }
     }

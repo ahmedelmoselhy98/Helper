@@ -50,18 +50,10 @@ class IngedientsFragment : BaseFragment(R.layout.fragment_ingedients) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentIngedientsBinding.bind(view)
 
-//        Log.e("onViewCreated","onViewCreated1 "+DateExt.formatLastDate("2023-01-23 07:00:09"))
-//        Log.e("onViewCreated","onViewCreated2 "+DateExt.formatDateAndTime("2023-01-23 07:00:09"))
-//        Log.e("onViewCreated","onViewCreated3 "+DateExt.formatDate("2023-01-23 07:00:09"))
-//
-//     DateExt.format()
-//
-
         if (tutorial_id != null && ingredients_id != null) {
             viewModel.getCookingSteps(tutorial_id!!)
             viewModel.getIngredients1(ingredients_id!!)
         }
-
 
         binding.recyclerView.apply {
             setHasFixedSize(true)

@@ -11,6 +11,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/nested_view"
         >
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,15 +34,58 @@
             android:drawableTint="#77838F"
             android:elevation="2dp"
             android:gravity="center_vertical"
-
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:text="@string/search"
             android:textColorHint="@color/gray1"
             app:drawableStartCompat="@drawable/ic_baseline_search_24"
             app:queryHint="@string/search" />
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/meal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="By meal"
+                android:gravity="center"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:background="@color/blue1"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/chefs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="by chefs"
+                android:padding="10dp"
+                android:background="@color/blue2"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/disAccountCard"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_margin="12dp"
@@ -136,6 +180,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/pickMealCard"
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:layout_margin="12dp"
@@ -174,6 +219,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/chefsCard"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_margin="12dp"
@@ -210,13 +256,27 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:visibility="gone"
+            android:id="@+id/recCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            app:cardCornerRadius="15dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_videos"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="8"
             tools:listitem="@layout/item_videos_main" />
@@ -232,14 +292,19 @@
             android:visibility="invisible" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:id="@+id/recyclerView_chefs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="8"
-            tools:listitem="@layout/item_chefs" />
+            tools:listitem="@layout/item_videos_main" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>
     <TextView

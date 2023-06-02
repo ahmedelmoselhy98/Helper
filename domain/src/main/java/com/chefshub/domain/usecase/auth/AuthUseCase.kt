@@ -1,6 +1,7 @@
 package com.chefshub.domain.usecase.auth
 
 import PrefKeys
+import android.net.Uri
 import android.util.Log
 import android.util.Patterns
 import com.chefshub.base.Validation
@@ -37,6 +38,7 @@ class AuthUseCase @Inject constructor(
         preferencesGateway.save(PrefKeys.USER, it)
         preferencesGateway.save(PrefKeys.IS_USER_LOGGED, true)
         preferencesGateway.save(PrefKeys.TOKEN, it.token!!)
+        preferencesGateway.save(PrefKeys.USER_IMAGE, it.avatarPath!!)
     }
 
 
@@ -58,6 +60,7 @@ class AuthUseCase @Inject constructor(
                 preferencesGateway.save(PrefKeys.USER, it)
                 preferencesGateway.save(PrefKeys.IS_USER_LOGGED, true)
                 preferencesGateway.save(PrefKeys.TOKEN, it.token!!)
+                preferencesGateway.save(PrefKeys.USER_IMAGE, it.avatarPath!!)
             }
     }
 
@@ -73,8 +76,20 @@ class AuthUseCase @Inject constructor(
                 preferencesGateway.save(PrefKeys.USER, it)
                 preferencesGateway.save(PrefKeys.IS_USER_LOGGED, true)
                 preferencesGateway.save(PrefKeys.TOKEN, it.token!!)
+                preferencesGateway.save(PrefKeys.USER_IMAGE, it.avatarPath!!)
             }
     }
+
+    suspend fun updateProfile(
+        email: String,
+        name: String,
+        password: String,
+        avatar_path: String
+    )= authRepository.updateProfile(email,name, password, avatar_path)
+            .transformResponseData<UserModel, AuthMeta, UserModel> { emit(it) }.onEach {
+            preferencesGateway.save(PrefKeys.USER, it)
+        }
+
 
 
     fun isValidAuthData(email: String?, password: String?) = when {

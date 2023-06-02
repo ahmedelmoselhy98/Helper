@@ -1,5 +1,6 @@
 package com.chefshub.data.repository.auth
 
+import android.net.Uri
 import android.util.Log
 import com.chefshub.data.entity.EndPointModel
 import com.chefshub.data.entity.user.AuthMeta
@@ -58,6 +59,17 @@ class AuthRepositoryImpl @Inject constructor(private val userApi: AuthApi) : Aut
     ): Flow<Response<EndPointModel<UserModel, AuthMeta>>> {
         Log.e("TAG", "loginWithEmail: repo")
         return flow { emit(userApi.signup(email,name, password, device_token, device_id)) }
+    }
+
+    override suspend fun updateProfile(
+        email: String,
+        name: String,
+        password: String,
+        avatar_path: String
+    ): Flow<Response<EndPointModel<UserModel, AuthMeta>>> {
+        Log.e("TAG", "loginWithEmail: repo")
+        return flow {emit(userApi.updateProfile(email,name,password,avatar_path))
+        }
     }
 
     override suspend fun getProfile() = flow { emit(userApi.getProfile()) }

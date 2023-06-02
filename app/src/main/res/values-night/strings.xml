@@ -14,4 +14,6 @@
     <string name="pic_your_meal">Pick your meal</string>
     <string name="Most_viewed_chefs">Most viewed chefs</string>
     <string name="ratio">30 %</string>
+    <string name="account_settings">Account setting</string>
+    <string name="user_nick_name">\@UserName</string>
 </resources>

@@ -23,4 +23,25 @@ class HomeViewModel @Inject constructor(private val homeUseCase: HomeUseCase) : 
             executeSharedFlow(_dataListFlow, homeUseCase.searchForKey(text.toString()))
         }
     }
+
+
+    private val _mostViewListFlow = MutableSharedFlow<NetworkState>()
+    val mostViewListFlow get() = _mostViewListFlow.asSharedFlow()
+
+    fun mostViewByChefs() {
+        viewModelScope.launch(Dispatchers.IO) {
+            executeSharedFlow(_mostViewListFlow, homeUseCase.mostViewByChef())
+        }
+    }
+
+    private val _mealListFlow = MutableSharedFlow<NetworkState>()
+    val mealListFlow get() = _mealListFlow.asSharedFlow()
+
+    fun mealList(mealType:String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            executeSharedFlow(_mealListFlow, homeUseCase.mealList(mealType))
+        }
+    }
+
+
 }

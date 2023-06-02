@@ -30,9 +30,9 @@ class ProfileVideosAdapter :  RecyclerView.Adapter<ProfileVideosAdapter.ViewHold
                 Log.e("ProfileVideosAdapter", "ProfileVideosAdapter "+item)
                 tvMealName.text = videoList[position].title
                 tvDescription.text =
-                    "2h" + "  " + videoList[position].videosCount + " Views"
+                     "  ${videoList[position].videosCount?:0 } " + " Views"
 //                     item?.lengthInMinutes + "m  " + item?.videosCount + " Views"
-                tvMealIcon.loadImage(videoList[position].logoPath)
+                tvMealIcon.loadImage(videoList[position].screenshot_url)
             }
         }
 

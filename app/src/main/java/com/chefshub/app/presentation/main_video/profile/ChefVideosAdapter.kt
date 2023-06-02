@@ -19,7 +19,7 @@ class ChefVideosAdapter : RecyclerView.Adapter<ChefVideosAdapter.ViewHolder>() {
     inner class ViewHolder(val item: ItemIngrdientsBinding) : RecyclerView.ViewHolder(item.root) {
 
         fun bind() {
-            item.ivMeal.loadImage(videoList[bindingAdapterPosition].url)
+            item.ivMeal.loadImage(videoList[bindingAdapterPosition].screenshot_url)
             item.views.text = videoList[bindingAdapterPosition].views.toString()
 //            item.step.setText("step ${step}")
 //            step++

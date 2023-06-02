@@ -92,13 +92,13 @@ class LoginActivity : BaseActivity() {
 
         facebookLoginHelper.userAccountLivedata.observe(this) {
             if (it == null) return@observe
-            it.let { json ->
+            it.let {json ->
                 //   providerName = "facebook",
                 //                        providerID = json.optString("id"),
                 //                        email = json.optString("email"),
                 //                        name = json.optString("name"),
                 //                        profileImage = "https://graph.facebook.com/${json.optString("id")}/picture?type=large"
-                //
+
                 viewModel.loginWithSocial(
                     provider_id = json.optString("id"),
                     provider_name = "facebook",

@@ -1,6 +1,7 @@
 package com.chefshub.data.remote
 
 import com.chefshub.data.entity.EndPointModel
+import com.chefshub.data.entity.bookmarked.VideoModel
 import com.chefshub.data.entity.search.MealResponse
 import com.chefshub.data.entity.search.MostViewResponse
 import com.chefshub.data.entity.search.SearchResponse
@@ -18,6 +19,9 @@ interface AppApi {
 
     @GET("tutorials")
     suspend fun mealList(@Query("meal_type") meal: String): Response<EndPointModel<ArrayList<MealResponse>, Any>>
+
+    @GET("videos/most-famous")
+    suspend fun mostFamous(): Response<EndPointModel<VideoModel, Any>>
 
 
 }

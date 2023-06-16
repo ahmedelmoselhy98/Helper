@@ -1,5 +1,6 @@
 package com.chefshub.app.presentation.login
 
+import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import android.util.Patterns
@@ -95,13 +96,26 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCase) :
         name: String,
         password: String,
         confirmPassword: String,
-        avatar_path: String?=null
+        avatar_path: Bitmap?=null
     ) {
         if (!authUseCase.isValidRegisterAuthData(email, name,password,confirmPassword)) return
         viewModelScope.launch(Dispatchers.IO) {
             executeSharedFlow(
                 _updateProfileFlow,
                 authUseCase.updateProfile(email,name, password,avatar_path!! )
+            )
+        }
+    }
+
+    private val _getTutorialFlow = MutableSharedFlow<NetworkState>()
+    val getTutorialFlow get() = _getTutorialFlow.asSharedFlow()
+
+
+    fun getTutorial() {
+        viewModelScope.launch(Dispatchers.IO) {
+            executeSharedFlow(
+                _getTutorialFlow,
+                authUseCase.getTutorial()
             )
         }
     }

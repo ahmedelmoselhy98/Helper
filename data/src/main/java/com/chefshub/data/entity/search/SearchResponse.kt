@@ -23,7 +23,6 @@ data class MostViewResponse(
     var avatarPath: String? = null,
     @SerializedName("regional_cuisines_count")
     var regionalCuisinesCount: Int? = null,
-
     )
 
 data class MealResponse(

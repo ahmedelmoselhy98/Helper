@@ -250,7 +250,6 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
 //            userImage.loadImage(it.avatarPath)
 //            userName.text = it.name
             if (it !=null){
-//                userBio.text = it.bio
                 tvCountPosts.text = it.postsCount.toString()
                 tvCountFollowers.text = it.followersCount.toString()
                 tvCountCuisines.text = it.regionalCuisinesCount.toString()

@@ -25,6 +25,15 @@ class HomeViewModel @Inject constructor(private val homeUseCase: HomeUseCase) : 
     }
 
 
+    private val _mostFamousFlow = MutableSharedFlow<NetworkState>()
+    val mostFamousFlow get() = _mostFamousFlow.asSharedFlow()
+
+    fun getMostFamous() {
+        viewModelScope.launch(Dispatchers.IO) {
+            executeSharedFlow(_mostFamousFlow, homeUseCase.mostFamousVideo())
+        }
+    }
+
     private val _mostViewListFlow = MutableSharedFlow<NetworkState>()
     val mostViewListFlow get() = _mostViewListFlow.asSharedFlow()
 

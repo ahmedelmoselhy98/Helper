@@ -98,11 +98,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/discount_img"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/image"
+                    android:scaleType="fitXY"
+                    app:shapeAppearance="@style/roundedImage"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintWidth_percent=".5" />
 
@@ -119,43 +121,13 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintWidth_percent=".5">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/up_to"
-                            android:textColor="@color/black"
-                            android:textSize="17sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/discount_img"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/ratio"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ratio"
-                            android:textColor="@color/black"
-                            android:layout_marginStart="10dp"
-                            android:textSize="25sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/discount_img"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </LinearLayout>
-
-
                     <TextView
                         android:id="@+id/discount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
-                        android:text="@string/discount"
+                        android:text="@string/Meal_month"
                         android:textColor="@color/black"
                         android:textSize="25sp"
                         android:textStyle="bold"
@@ -164,9 +136,10 @@
                         app:layout_constraintTop_toBottomOf="@+id/ratio" />
 
                     <TextView
+                        android:id="@+id/meal_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/date_discount"
+                        android:text="@string/Meal_name"
                         android:textColor="@color/black"
                         android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"

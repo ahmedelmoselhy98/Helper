@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.chefshub.app.R
 import com.chefshub.app.databinding.FragmentMyProfileBinding
 import com.chefshub.app.presentation.login.LoginActivity
+import com.chefshub.app.presentation.login.LoginViewModel
 import com.chefshub.app.presentation.main.MainViewModel
 import com.chefshub.app.presentation.select_pref.PrefActivity
 import com.chefshub.base.BaseActivity
@@ -46,7 +47,7 @@ class MyProfileFragment : BaseFragment(R.layout.fragment_my_profile) {
         binding.userName.text = mainViewModel.getUser()?.name
         binding.userNickName.text = mainViewModel.getUser()?.name
         binding.favouriteCuisine.setOnClickListener {
-            startActivity(Intent(requireActivity(),PrefActivity::class.java) )
+            startActivity(Intent(requireActivity(),PrefActivity::class.java))
         }
 
         binding.logout.setOnClickListener {
@@ -60,11 +61,8 @@ class MyProfileFragment : BaseFragment(R.layout.fragment_my_profile) {
         binding.btnEdit.setOnClickListener {
             findNavController().navigate(R.id.EditMyProfile)
         }
-    }
-
-    private fun shareProfile(id: Int?) {
-        createDynamicLink(requireActivity() as BaseActivity, id.toString()) { dynamicLink ->
-            this.shareDeepLink(dynamicLink)
+        binding.savedMeal.setOnClickListener {
+            findNavController().navigate(R.id.MySavedTutorialFragment)
         }
     }
 

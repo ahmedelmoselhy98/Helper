@@ -14,8 +14,10 @@ import com.chefshub.app.presentation.main.ui.home.adapter.MostViewAdapter
 import com.chefshub.app.presentation.main.ui.home.adapter.SearchCheifsAdapter
 import com.chefshub.app.presentation.main.ui.home.adapter.SearchVideosAdapter
 import com.chefshub.base.BaseFragment
+import com.chefshub.data.entity.bookmarked.VideoModel
 import com.chefshub.data.entity.search.MostViewResponse
 import com.chefshub.data.entity.search.SearchResponse
+import com.chefshub.utils.ext.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -30,21 +32,18 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     private val mealAdapter = MealAdapter()
     private val mostViewAdapter = MostViewAdapter()
     private val searchVideosAdapter = SearchVideosAdapter() {
-//        findNavController().navigate(R.id.videoFragment)
         findNavController().navigate(R.id.FragmentVideoIngredients)
 
     }
     private val homeViewModel: HomeViewModel by activityViewModels()
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
-//        ViewTreeLifecycleOwner.get(view)
         homeViewModel.mostViewByChefs()
+        homeViewModel.getMostFamous()
 
         setUpAction()
         setupArguments()
@@ -92,6 +91,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         })
         handleSharedFlow(homeViewModel.mostViewListFlow, onSuccess = {
                 mostViewAdapter.setAll(it as List<MostViewResponse>)
+        })
+        handleSharedFlow(homeViewModel.mostFamousFlow, onSuccess = {
+            if (it is VideoModel){
+                var item :VideoModel= it
+               binding.apply {
+                   mealName.text=  item.title
+                   discountImg.loadImage(item.screenshot_url)
+               } }
         })
     }
 
@@ -155,8 +162,5 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-//        _binding = null
-    }
+
 }

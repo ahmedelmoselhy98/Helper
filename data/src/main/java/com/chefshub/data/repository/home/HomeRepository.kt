@@ -1,6 +1,7 @@
 package com.chefshub.data.repository.home
 
 import com.chefshub.data.entity.EndPointModel
+import com.chefshub.data.entity.bookmarked.VideoModel
 import com.chefshub.data.entity.search.MealResponse
 import com.chefshub.data.entity.search.MostViewResponse
 import com.chefshub.data.entity.search.SearchResponse
@@ -12,6 +13,8 @@ interface HomeRepository {
     fun search(query: String): Flow<Response<EndPointModel<SearchResponse, Any>>>
 
     fun mostViewChefs(): Flow<Response<EndPointModel<ArrayList<MostViewResponse>, Any>>>
+
+    fun mostFamousVideo(): Flow<Response<EndPointModel<VideoModel, Any>>>
 
     fun mealList(meal_type:String): Flow<Response<EndPointModel<ArrayList<MealResponse>, Any>>>
 }

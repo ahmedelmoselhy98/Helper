@@ -1,16 +1,19 @@
 package com.chefshub.data.remote
 
-import android.net.Uri
 import com.chefshub.data.entity.EndPointModel
+import com.chefshub.data.entity.bookmarked.VideoModel
 import com.chefshub.data.entity.food_system.FoodSystemModel
 import com.chefshub.data.entity.tutorial.TutorialVideos
-import com.chefshub.data.entity.user.AddFavorite
 import com.chefshub.data.entity.user.AuthMeta
 import com.chefshub.data.entity.user.UserModel
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
 interface AuthApi {
+
+
 
     @FormUrlEncoded
     @POST("auth/login")
@@ -51,14 +54,27 @@ interface AuthApi {
     ): Response<EndPointModel<UserModel, AuthMeta>>
 
 
-    @FormUrlEncoded
+//    @FormUrlEncoded
+//    @POST("profile/update")
+//    suspend fun updateProfile(
+//        @Field("email") email: String,
+//        @Field("name") name: String,
+//        @Field("password") password: String,
+//        @Field("avatar_path") avatar_path:  MultipartBody.Part?,
+//    ): Response<EndPointModel<UserModel, AuthMeta>>
+
+    @Multipart
     @POST("profile/update")
     suspend fun updateProfile(
-        @Field("email") email: String,
-        @Field("name") name: String,
-        @Field("password") password: String,
-        @Field("avatar_path") avatar_path: String,
+        @Part("email") email: RequestBody?,
+        @Part("name") name: RequestBody?,
+        @Part("password") password: RequestBody?,
+        @Part avatar: MultipartBody.Part?
     ): Response<EndPointModel<UserModel, AuthMeta>>
+
+    @GET("profile/bookmarked-videos")
+    suspend fun getTutorials():
+            Response<EndPointModel<ArrayList<VideoModel>, Any>>
 
 
     @GET("auth/me")

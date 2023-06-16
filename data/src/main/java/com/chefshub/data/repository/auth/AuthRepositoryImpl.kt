@@ -1,11 +1,14 @@
 package com.chefshub.data.repository.auth
 
-import android.net.Uri
+import android.graphics.Bitmap
 import android.util.Log
 import com.chefshub.data.entity.EndPointModel
+import com.chefshub.data.entity.bookmarked.VideoModel
 import com.chefshub.data.entity.user.AuthMeta
 import com.chefshub.data.entity.user.UserModel
 import com.chefshub.data.remote.AuthApi
+import com.chefshub.data.utils.convertToRequestBody
+import com.chefshub.data.utils.convertToRequestBodyPart
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.Response
@@ -65,12 +68,17 @@ class AuthRepositoryImpl @Inject constructor(private val userApi: AuthApi) : Aut
         email: String,
         name: String,
         password: String,
-        avatar_path: String
+        avatar_path: Bitmap
     ): Flow<Response<EndPointModel<UserModel, AuthMeta>>> {
-        Log.e("TAG", "loginWithEmail: repo")
-        return flow {emit(userApi.updateProfile(email,name,password,avatar_path))
+        return flow {emit(userApi.updateProfile(convertToRequestBody(email),convertToRequestBody(name),convertToRequestBody(password), convertToRequestBodyPart("data",avatar_path)))
         }
     }
+
+    override suspend fun getTutorial(): Flow<Response<EndPointModel<ArrayList<VideoModel>, Any>>>{
+        return  flow { emit(userApi.getTutorials()) }
+    }
+
+
 
     override suspend fun getProfile() = flow { emit(userApi.getProfile()) }
 

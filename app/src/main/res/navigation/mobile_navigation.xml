@@ -37,6 +37,11 @@
         android:name="com.chefshub.app.presentation.main_video.my_profile.EditProfileFragment"
         android:label="edit_my_profile"
         tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/MySavedTutorialFragment"
+        android:name="com.chefshub.app.presentation.main_video.my_profile.MySavedToturialFragment"
+        android:label="edit_my_profile"
+        tools:layout="@layout/fragment_saved_toturial" />
 
      <fragment
         android:id="@+id/FragmentVideoIngredients"

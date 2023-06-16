@@ -1,7 +1,9 @@
 package com.chefshub.app.presentation.main_video.my_profile
 
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -29,7 +31,7 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
     private val mainViewModel: MainViewModel by viewModels()
     private val viewModel: LoginViewModel by viewModels()
     val PICK_IMAGE_REQUEST_CODE = 122
-    var selectedImage: Uri? =null
+    var selectedImage: Bitmap? =null
 
 
     private val binding get() = _binding!!
@@ -67,26 +69,31 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
     // In your onActivityResult method, handle the selected image
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        var bitmap: Bitmap?
         if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-             selectedImage = data.data
-            Log.e("tester", "onActivityResult: "+selectedImage )
-            binding.userImg.setImageURI(selectedImage)
+            Log.e("tester", "onActivityResult: "+data.data)
+            binding.userImg.setImageURI(data.data)
 
-//            val contentResolver = requireActivity().contentResolver
-//            try {
-//                val inputStream = contentResolver.openInputStream(selectedImage!!)
-//
-//                Log.e("tester", "onActivityResult: /// "+inputStream )
-//                // Read the image data from the input stream
-//                // Perform the upload operation with the image data
-//                // ...
-//            } catch (e: IOException) {
-//                e.printStackTrace()
-//                // Handle any errors that occur during reading the image data
-//                // ...
-//            }
-        }
-    }
+
+                    val picUri: Uri? = data.data
+                    try {
+                        selectedImage = MediaStore.Images.Media.getBitmap(context?.contentResolver, picUri)
+
+                    } catch (e: Exception) {
+                        try {
+                            selectedImage = MediaStore.Images.Media.getBitmap(
+                                context?.contentResolver,
+                                data.data
+                            )
+                        } catch (ee: Exception) {
+                        }
+                        e.printStackTrace()
+                    }
+                } else {
+                    selectedImage = data?.extras?.get("data") as Bitmap?
+                }
+            }
+
 
     fun observe() {
         handleSharedFlow(viewModel.updateProfileFlow, onSuccess = {
@@ -112,8 +119,7 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
                 binding.edtName.editableText.toString(),
                 binding.edtPassword.editableText.toString(),
                 binding.edtRePassword.editableText.toString(),
-//                selectedImage!!
-                if (selectedImage!= null) selectedImage.toString() else null
+                if (selectedImage!= null) selectedImage else null
 
             ).also {
                 isValidEmail(binding.edtEmail.editableText.toString())

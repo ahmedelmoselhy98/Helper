@@ -1,7 +1,8 @@
 package com.chefshub.data.repository.auth
 
-import android.net.Uri
+import android.graphics.Bitmap
 import com.chefshub.data.entity.EndPointModel
+import com.chefshub.data.entity.bookmarked.VideoModel
 import com.chefshub.data.entity.food_system.FoodSystemModel
 import com.chefshub.data.entity.tutorial.TutorialVideos
 import com.chefshub.data.entity.user.AuthMeta
@@ -45,8 +46,10 @@ interface AuthRepository {
         email: String,
         name: String,
         password: String,
-        avatar_path: String
+        avatar_path: Bitmap
     ): Flow<Response<EndPointModel<UserModel, AuthMeta>>>
+
+    suspend fun getTutorial(): Flow<Response<EndPointModel<ArrayList<VideoModel>, Any>>>
 
     suspend fun getProfile(): Flow<Response<EndPointModel<UserModel, Any>>>
 

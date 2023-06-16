@@ -24,6 +24,7 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="select_your_n_favorite_food">Select your \nfavorite style</string>
+    <string name="select_your_n_favorite_cuisine">Select your \nfavorite cuisine</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
@@ -51,7 +52,7 @@
     <string name="facebook_app_id">499828035586595</string>
     <string name="fb_login_protocol_scheme">fb499828035586595</string>
     <string name="facebook_client_token">b205d124f01723e1f14fd767201e32e9</string>
-    <string name="add_to_basket">Add to basket</string>
+    <string name="add_to_basket">Add to saved</string>
     <string name="skip">skip</string>
     <string name="logout">"logout "</string>
     <string name="welcome_to_signup">Sign up and enjoy a new world of chefs including you!</string>
@@ -76,5 +77,7 @@
     <string name="update_password">Update Password</string>
     <string name="retry_password">Retype Password</string>
     <string name="save">Save</string>
+    <string name="Meal_month">Meal of \n the month</string>
+    <string name="Meal_name">"meal name "</string>
 
 </resources>

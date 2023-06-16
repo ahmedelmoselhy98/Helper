@@ -25,7 +25,6 @@ import kotlin.math.log
 import kotlin.math.min
 import kotlin.random.Random
 
-
 @AndroidEntryPoint
 class PrefFragment : BaseFragment(R.layout.fragment_pref) {
 
@@ -60,9 +59,10 @@ class PrefFragment : BaseFragment(R.layout.fragment_pref) {
 
         if (arguments == null)
             viewModel.getSystemFood()
-        else
+        else {
+            binding.textView6.text = getString(R.string.select_your_n_favorite_cuisine)
             viewModel.getRegionalCuisines()
-
+        }
         observeFlow()
         binding.apply {
             btnNext.setOnClickListener {

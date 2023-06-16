@@ -72,7 +72,6 @@ class IngedientsFragment : BaseFragment(R.layout.fragment_ingedients) {
             }
 
             plus.setOnClickListener {
-                Log.e("mashal", "setAction: ${totalAmount?.plus(1)}")
                 totalAmount = totalAmount?.plus(1)
                 amount.text = totalAmount.toString()
                 ingredientsAdapter.notifyDataSetChanged()

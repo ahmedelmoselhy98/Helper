@@ -1,11 +1,11 @@
 package com.chefshub.domain.usecase.auth
 
 import PrefKeys
-import android.net.Uri
-import android.util.Log
+import android.graphics.Bitmap
 import android.util.Patterns
 import com.chefshub.base.Validation
 import com.chefshub.data.cache.PreferencesGateway
+import com.chefshub.data.entity.bookmarked.VideoModel
 import com.chefshub.data.entity.tutorial.TutorialVideos
 import com.chefshub.data.entity.user.AuthMeta
 import com.chefshub.data.entity.user.UserModel
@@ -84,10 +84,16 @@ class AuthUseCase @Inject constructor(
         email: String,
         name: String,
         password: String,
-        avatar_path: String
+        avatar_path: Bitmap
     )= authRepository.updateProfile(email,name, password, avatar_path)
             .transformResponseData<UserModel, AuthMeta, UserModel> { emit(it) }.onEach {
             preferencesGateway.save(PrefKeys.USER, it)
+        }
+
+    suspend fun getTutorial(
+    )= authRepository.getTutorial()
+        .transformResponseData<ArrayList<VideoModel>, Any, ArrayList<VideoModel>> { emit(it) }.onEach {
+
         }
 
 

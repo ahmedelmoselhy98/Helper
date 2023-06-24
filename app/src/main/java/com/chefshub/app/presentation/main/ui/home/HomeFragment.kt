@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewTreeLifecycleOwner
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.chefshub.app.R
 import com.chefshub.app.databinding.FragmentHomeBinding
@@ -13,6 +14,8 @@ import com.chefshub.app.presentation.main.ui.home.adapter.MealAdapter
 import com.chefshub.app.presentation.main.ui.home.adapter.MostViewAdapter
 import com.chefshub.app.presentation.main.ui.home.adapter.SearchCheifsAdapter
 import com.chefshub.app.presentation.main.ui.home.adapter.SearchVideosAdapter
+import com.chefshub.app.presentation.main.ui.ingrediants.IngedientsFragment
+import com.chefshub.app.presentation.main.ui.singleVideo.SingleVideoLoadFragment
 import com.chefshub.base.BaseFragment
 import com.chefshub.data.entity.bookmarked.VideoModel
 import com.chefshub.data.entity.search.MostViewResponse
@@ -32,7 +35,10 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     private val mealAdapter = MealAdapter()
     private val mostViewAdapter = MostViewAdapter()
     private val searchVideosAdapter = SearchVideosAdapter() {
-        findNavController().navigate(R.id.FragmentVideoIngredients)
+
+            findNavController().navigate(R.id.singleVideoFragment)
+
+//        findNavController().navigate(R.id.FragmentVideoIngredients)
 
     }
     private val homeViewModel: HomeViewModel by activityViewModels()
@@ -98,7 +104,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
                binding.apply {
                    mealName.text=  item.title
                    discountImg.loadImage(item.screenshot_url)
-               } }
+               }
+            }
         })
     }
 

@@ -46,7 +46,7 @@ interface AuthRepository {
         email: String,
         name: String,
         password: String,
-        avatar_path: Bitmap
+        avatar_path: Bitmap?
     ): Flow<Response<EndPointModel<UserModel, AuthMeta>>>
 
     suspend fun getTutorial(): Flow<Response<EndPointModel<ArrayList<VideoModel>, Any>>>

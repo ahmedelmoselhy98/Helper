@@ -31,7 +31,6 @@ class VideoFragment : BaseFragment(R.layout.fragment_video) {
             adapter = MainPagerAdapter(this@VideoFragment)
             setCurrentItem(1, false)
 
-            Log.e("iiiiiii","package name " +getApplicationContext().getPackageName())
         }
 
 //        binding.viewPager2.registerOnPageChangeCallback(object :  ViewPager2.OnPageChangeCallback() {

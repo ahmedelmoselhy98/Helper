@@ -34,7 +34,7 @@ class IngedientsFragment : BaseFragment(R.layout.fragment_ingedients) {
     private val cookingStepsAdapter = CookingStepsAdapter({ onclicked(it) })
     private val ingredientsAdapter = RecepsIngredientsAdapter()
 
-    fun onclicked(url:String) {
+    fun onclicked(url: String) {
         val bottomSheetFragment = IngedientsVideoFragmentBottomSheet.newInstance(url)
         bottomSheetFragment.show(requireFragmentManager(), bottomSheetFragment.tag)
     }
@@ -142,9 +142,10 @@ class IngedientsFragment : BaseFragment(R.layout.fragment_ingedients) {
     override fun onResume() {
         super.onResume()
         binding.recipeBackground.loadImage(background)
-
-        viewModel.getIngredients1(ingredients_id!!)
-        viewModel.getCookingSteps(tutorial_id!!)
+        if (ingredients_id != null && tutorial_id != null) {
+            viewModel.getIngredients1(ingredients_id!!)
+            viewModel.getCookingSteps(tutorial_id!!)
+        }
     }
 
     override fun onDestroyView() {

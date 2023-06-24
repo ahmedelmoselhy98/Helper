@@ -96,13 +96,13 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCase) :
         name: String,
         password: String,
         confirmPassword: String,
-        avatar_path: Bitmap?=null
+        avatar_path: Bitmap?
     ) {
         if (!authUseCase.isValidRegisterAuthData(email, name,password,confirmPassword)) return
         viewModelScope.launch(Dispatchers.IO) {
             executeSharedFlow(
                 _updateProfileFlow,
-                authUseCase.updateProfile(email,name, password,avatar_path!! )
+                authUseCase.updateProfile(email,name, password,avatar_path )
             )
         }
     }

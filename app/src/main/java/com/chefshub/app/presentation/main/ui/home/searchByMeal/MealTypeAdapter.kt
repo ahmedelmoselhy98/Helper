@@ -25,6 +25,8 @@ class MealTypeAdapter constructor(private val onVideoClicked: () -> Unit) :
 
         init {
             item.root.setOnClickListener {
+                if (bindingAdapterPosition == -1) return@setOnClickListener
+
                 it.context.apply {
                     onVideoClicked.invoke()
                 }

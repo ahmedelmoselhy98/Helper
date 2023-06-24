@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chefshub.app.databinding.ItemVideosMainBinding
+import com.chefshub.app.presentation.main.ui.ingrediants.IngedientsFragment
+import com.chefshub.app.presentation.main.ui.singleVideo.SingleVideoLoadFragment
 import com.chefshub.data.entity.tutorial.TutorialModel
 import com.chefshub.utils.ext.loadImage
 
@@ -22,6 +24,13 @@ class SearchVideosAdapter constructor(private val onVideoClicked: () -> Unit) :
 
         init {
             item.root.setOnClickListener {
+                if (bindingAdapterPosition == -1) return@setOnClickListener
+
+                SingleVideoLoadFragment.videoId = videosList[bindingAdapterPosition].id
+                IngedientsFragment.tutorial_id =  videosList[bindingAdapterPosition]?.tutorial_id
+                IngedientsFragment.ingredients_id = videosList[bindingAdapterPosition]?.id
+                IngedientsFragment.background = videosList[bindingAdapterPosition]?.screenshot_url
+
                 it.context.apply {
                     onVideoClicked.invoke()
                 }

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "525164637556-e2dtqnal92lgi2k8js2bpkgv1eiiuu6u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chefshub.app",
+            "certificate_hash": "d3396f9346e36a6c6a233669c66a698fc2607b32"
+          }
+        },
+        {
           "client_id": "525164637556-2kdsk1lq4p9os8kf49d07hbk9f0a89o7.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "525164637556-2kdsk1lq4p9os8kf49d07hbk9f0a89o7.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "525164637556-93n4c2p5vnelogup5c2p9gsa3i3tqj07.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.chefshub.app"
+              }
             }
           ]
         }

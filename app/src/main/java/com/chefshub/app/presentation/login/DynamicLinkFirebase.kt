@@ -15,10 +15,10 @@ fun createDynamicLink(activity: Activity, uid: String, onLinkCreated: (link: Str
 
         Firebase.dynamicLinks.dynamicLink { // or Firebase.dynamicLinks.shortLinkAsync
 
-            link = Uri.parse("https://chefshub.page.link/chefs?uid=$uid")
+            link = Uri.parse("https://chefshup.page.link/chefs?uid=$uid")
 
 //            domainUriPrefix = "https://chefshub.page.link/"
-            domainUriPrefix = "https://chefshub.page.link/chefs"
+            domainUriPrefix = "https://chefshup.page.link/chefs"
 
             androidParameters(activity.packageName) {
 

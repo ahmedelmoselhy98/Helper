@@ -68,7 +68,7 @@ class AuthRepositoryImpl @Inject constructor(private val userApi: AuthApi) : Aut
         email: String,
         name: String,
         password: String,
-        avatar_path: Bitmap
+        avatar_path: Bitmap?
     ): Flow<Response<EndPointModel<UserModel, AuthMeta>>> {
         return flow {emit(userApi.updateProfile(convertToRequestBody(email),convertToRequestBody(name),convertToRequestBody(password), convertToRequestBodyPart("data",avatar_path)))
         }

@@ -65,7 +65,6 @@ class ChefVideoFragment : BaseFragment(R.layout.fragment_video_chef) {
 
         userViewModel.getTutorialsVideosChef(ProfileFragmentFragment.userId!!)
 
-//        viewModel.getIngredients(7)
         setupRecyclerView()
 
         setViewPager()

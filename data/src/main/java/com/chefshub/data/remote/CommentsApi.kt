@@ -16,6 +16,4 @@ interface CommentsApi {
         @Path("id") id: Int,
         @Field("body") body: String
     ): Response<EndPointModel<CommentsModel, Any>>
-
-
 }

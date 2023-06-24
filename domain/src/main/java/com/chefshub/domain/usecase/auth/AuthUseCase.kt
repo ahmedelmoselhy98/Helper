@@ -84,7 +84,7 @@ class AuthUseCase @Inject constructor(
         email: String,
         name: String,
         password: String,
-        avatar_path: Bitmap
+        avatar_path: Bitmap?=null
     )= authRepository.updateProfile(email,name, password, avatar_path)
             .transformResponseData<UserModel, AuthMeta, UserModel> { emit(it) }.onEach {
             preferencesGateway.save(PrefKeys.USER, it)

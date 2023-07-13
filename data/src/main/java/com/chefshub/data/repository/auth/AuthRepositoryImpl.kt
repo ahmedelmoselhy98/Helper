@@ -50,7 +50,6 @@ class AuthRepositoryImpl @Inject constructor(private val userApi: AuthApi) : Aut
         device_token: String,
         device_id: String
     ): Flow<Response<EndPointModel<UserModel, AuthMeta>>> {
-        Log.e("TAG", "loginWithEmail: repo")
         return flow { emit(userApi.loginWithEmail(email, password, device_token, device_id)) }
     }
     override suspend fun signup(
@@ -67,10 +66,32 @@ class AuthRepositoryImpl @Inject constructor(private val userApi: AuthApi) : Aut
     override suspend fun updateProfile(
         email: String,
         name: String,
-        password: String,
-        avatar_path: Bitmap?
+        password: String?,
+        avatar_path: Bitmap?,
+        foodSystemsList: ArrayList<Int>?,
+        regional_cuisines: ArrayList<Int>?
     ): Flow<Response<EndPointModel<UserModel, AuthMeta>>> {
-        return flow {emit(userApi.updateProfile(convertToRequestBody(email),convertToRequestBody(name),convertToRequestBody(password), convertToRequestBodyPart("data",avatar_path)))
+        return flow {
+//            var foodSystemsList: ArrayList<Int> =ArrayList()
+//            foodSystemsList.add(1)
+//            foodSystemsList.add(2)
+
+            emit(userApi.updateProfile(convertToRequestBody(email),convertToRequestBody(name),
+                password?.let { convertToRequestBody(it) },
+                                                convertToRequestBodyPart("avatar",avatar_path), food_systems = foodSystemsList, regional_cuisines))
+        }
+    }
+
+    override suspend fun updateFoodSystemsList(
+        foodSystemsList: ArrayList<Int>?,
+        regional_cuisines: ArrayList<Int>?
+    ): Flow<Response<EndPointModel<UserModel, AuthMeta>>> {
+        return flow {
+//            var foodSystemsList: ArrayList<Int> =ArrayList()
+//            foodSystemsList.add(1)
+//            foodSystemsList.add(2)
+
+            emit(userApi.updateFoodSystemsList(food_systems = foodSystemsList, regional_cuisines))
         }
     }
 

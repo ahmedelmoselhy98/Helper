@@ -1,6 +1,5 @@
 package com.chefshub.app.presentation.main_video.my_profile
 
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Bitmap
@@ -21,9 +20,11 @@ import com.chefshub.base.BaseFragment
 import com.chefshub.utils.ext.loadImage
 import createDynamicLink
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import shareDeepLink
-import java.io.IOException
 
+private const val TAG = "EditProfileFragment"
 @AndroidEntryPoint
 class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
 
@@ -46,6 +47,8 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
     }
 
     private fun setupActions() {
+
+        Log.e(TAG, "setupActions: ffffffff   ${mainViewModel.getUser()?.regionalCuisines}")
         binding.toolbar.ivShare.isVisible = false
         binding.toolbar.ivBack.setOnClickListener { findNavController().navigateUp() }
         binding.toolbar.tvTitle.setText(R.string.editProfile)
@@ -119,7 +122,9 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
                 binding.edtName.editableText.toString(),
                 binding.edtPassword.editableText.toString(),
                 binding.edtRePassword.editableText.toString(),
-                if (selectedImage!= null) selectedImage else null
+                if (selectedImage!= null) selectedImage else null,
+
+//                arrayOf("low","keto")
 
             ).also {
                 isValidEmail(binding.edtEmail.editableText.toString())
@@ -134,6 +139,7 @@ class EditProfileFragment : BaseFragment(R.layout.fragment_edit_profile) {
     }
 
     private fun shareProfile(id: Int?) {
+
         createDynamicLink(requireActivity() as BaseActivity, id.toString()) { dynamicLink ->
             this.shareDeepLink(dynamicLink)
         }

@@ -24,12 +24,21 @@ data class UserModel(
     @SerializedName("social_media")
     var socialMedia: SocialMedia? = SocialMedia(),
     @SerializedName("food_systems")
-    var foodSystems: ArrayList<String> = arrayListOf(),
+    var foodSystems: ArrayList<FoodSystem> = arrayListOf(),
     @SerializedName("regional_cuisines")
     var regionalCuisines: ArrayList<RegionalCuisines>  = arrayListOf(),
     @SerializedName("regional_cuisines_count")
     var regionalCuisinesCount: Int?=null,
     var token:String?=null
+)
+
+data class FoodSystem(
+    @SerializedName("id")
+    val id: Int? = null,
+    @SerializedName("name")
+    val name: String? = null,
+    @SerializedName("slug")
+    val slug: String? = null
 )
 
 data class SocialMedia(
@@ -38,8 +47,6 @@ data class SocialMedia(
     @SerializedName("instagram") var instagram: String? = null,
 )
 
-
-
 data class RegionalCuisines(
     @SerializedName("id")
     var id: Int? = null,
@@ -47,5 +54,4 @@ data class RegionalCuisines(
     var name: String? = null,
     @SerializedName("slug")
     var slug: String? = null,
-
 )

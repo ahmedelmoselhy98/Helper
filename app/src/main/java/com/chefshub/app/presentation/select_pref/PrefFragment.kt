@@ -15,7 +15,9 @@ import androidx.navigation.fragment.findNavController
 import com.chefshub.app.R
 import com.chefshub.app.databinding.CircleTextViewBinding
 import com.chefshub.app.databinding.FragmentPrefBinding
+import com.chefshub.app.presentation.login.LoginViewModel
 import com.chefshub.app.presentation.main.MainActivity
+import com.chefshub.app.presentation.main.MainViewModel
 import com.chefshub.base.BaseActivity
 import com.chefshub.base.BaseFragment
 import com.chefshub.data.entity.food_system.FoodSystemModel
@@ -27,6 +29,8 @@ import kotlin.random.Random
 
 @AndroidEntryPoint
 class PrefFragment : BaseFragment(R.layout.fragment_pref) {
+
+
 
     private val arrayColor =
         listOf<Int>(
@@ -47,8 +51,12 @@ class PrefFragment : BaseFragment(R.layout.fragment_pref) {
     private val binding get() = _binding!!
 
     private val viewModel: PrefViewModel by viewModels()
+    private val updateProfileViewModel: LoginViewModel by viewModels()
+
+    private val mainViewModel: MainViewModel by viewModels()
 
     private val listOfSelections = HashSet<String>()
+    private val listOfSelectionsId = ArrayList<Int>()
     private fun setListToTextViewSelection() {
         binding.tvSelection.text = listOfSelections.joinToString()
     }
@@ -57,18 +65,24 @@ class PrefFragment : BaseFragment(R.layout.fragment_pref) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentPrefBinding.bind(view)
 
-        if (arguments == null)
+        if (arguments == null) {
+            binding.pref7.root.isVisible = true
+            binding.pref8.root.isVisible = true
+            binding.view.isVisible = true
             viewModel.getSystemFood()
-        else {
+        } else {
             binding.textView6.text = getString(R.string.select_your_n_favorite_cuisine)
             viewModel.getRegionalCuisines()
         }
+
         observeFlow()
         binding.apply {
             btnNext.setOnClickListener {
-                if (arguments == null)
+                if (arguments == null) {
+                    updateProfileViewModel.updateFoodSystemsList( foodSystemsList = listOfSelectionsId  )
                     findNavController().navigate(R.id.prefFragment, bundleOf("data" to true))
-                else
+                } else {
+                    updateProfileViewModel.updateFoodSystemsList( regional_cuisines = listOfSelectionsId  )
                     if (activity is BaseActivity?)
                         (activity as BaseActivity).apply {
                             val intent = Intent(_context, MainActivity::class.java).apply {
@@ -77,12 +91,29 @@ class PrefFragment : BaseFragment(R.layout.fragment_pref) {
                             startActivity(intent)
                             finishAffinity()
                         }
+                }
             }
             skip.setOnClickListener {
-                btnNext.performClick()
+                skip()
             }
         }
     }
+
+    fun skip(){
+        if (arguments == null) {
+            findNavController().navigate(R.id.prefFragment, bundleOf("data" to true))
+        } else
+            if (activity is BaseActivity?)
+                (activity as BaseActivity).apply {
+                    val intent = Intent(_context, MainActivity::class.java).apply {
+                        putExtra("desc", R.id.videoFragment)
+                    }
+                    startActivity(intent)
+                    finishAffinity()
+                }
+    }
+
+
 
     private fun observeFlow() {
         handleSharedFlow(viewModel.foodSystemModel, onSuccess = {
@@ -104,28 +135,11 @@ class PrefFragment : BaseFragment(R.layout.fragment_pref) {
             pref4.root.isVisible = true
             pref5.root.isVisible = true
             pref6.root.isVisible = true
-            pref7.root.isVisible = true
-            pref8.root.isVisible = true
 
-//            tvCenter.tv.setBackgroundTint(R.color.red)
-//            pref1.tv.setBackgroundTint(R.color.purple_500)
-//            pref2.tv.setBackgroundTint(R.color.purple_700)
-//            pref3.tv.setBackgroundTint(R.color.red)
-//            pref4.tv.setBackgroundTint(R.color.green)
-//            pref5.tv.setBackgroundTint(R.color.purple_500)
-//            pref6.tv.setBackgroundTint(R.color.purple_700)
-//            pref7.tv.setBackgroundTint(R.color.red)
-//            pref8.tv.setBackgroundTint(R.color.green)
-
-//            tvCenter.tv.setBackgroundTint(R.color.pref_background)
-//            pref1.tv.setBackgroundTint(R.color.pref_background)
-//            pref2.tv.setBackgroundTint(R.color.pref_background)
-//            pref3.tv.setBackgroundTint(R.color.pref_background)
-//            pref4.tv.setBackgroundTint(R.color.pref_background)
-//            pref5.tv.setBackgroundTint(R.color.pref_background)
-//            pref6.tv.setBackgroundTint(R.color.pref_background)
-//            pref7.tv.setBackgroundTint(R.color.pref_background)
-//            pref8.tv.setBackgroundTint(R.color.pref_background)
+            if (arguments == null) {
+                pref7.root.isVisible = true
+                pref8.root.isVisible = true
+            }
 
             val listOfPref = listOf<CircleTextViewBinding>(
                 tvCenter,
@@ -144,19 +158,41 @@ class PrefFragment : BaseFragment(R.layout.fragment_pref) {
                 listOfPref.get(i).let {
                     it.root.isVisible = true
                     it.tv.text = arrayList[i].name
-//                    it.tv.setBackgroundTint(arrayColor.get(Random.nextInt(arrayColor.size.minus(1))))
-//                    it.tv.setBackgroundTint(R.color.pref_background_un)
+
+                    var food = mainViewModel.getUser()?.foodSystems?.any { foodSystem ->
+                        foodSystem.name == it.tv.text.toString()
+                    } ?: false
+                    var regionalCuisines =
+                        mainViewModel.getUser()?.regionalCuisines?.any { regionalCuisines ->
+                            regionalCuisines.name == it.tv.text.toString()
+                        } ?: false
+
+                    if (food || regionalCuisines) {
+                        it.tv.setBackgroundTint(R.color.purple_700)
+                        it.tv.setTextColor(resources.getColor(R.color.white))
+                        listOfSelections.add(it.tv.text.toString())
+                        arrayList[i].id?.let { it1 -> listOfSelectionsId.add(it1) }
+                        setListToTextViewSelection()
+                    }
 
                     it.tv.setOnClickListener { view ->
                         if (it.tv.backgroundTintList != null && it.tv.backgroundTintList!!.defaultColor ==
                             ContextCompat.getColor(view.context, R.color.purple_700)
                         ) {
                             listOfSelections.remove(it.tv.text)
+                            val iterator = listOfSelectionsId.iterator()
+                            while (iterator.hasNext()) {
+                                val id = iterator.next()
+                                if (id == arrayList[i].id) {
+                                    iterator.remove()
+                                }
+                            }
                             setListToTextViewSelection()
                             it.tv.setBackgroundTint(R.color.txt_background)
                             it.tv.setTextColor(resources.getColor(R.color.purple_700))
 //                            (arrayColor.get(Random.nextInt(arrayColor.size.minus(1))))
                         } else {
+                            arrayList[i].id?.let { it1 -> listOfSelectionsId.add(it1) }
                             view.setBackgroundTint(R.color.purple_700)
                             it.tv.setTextColor(resources.getColor(R.color.white))
                             listOfSelections.add(it.tv.text.toString())
@@ -165,6 +201,8 @@ class PrefFragment : BaseFragment(R.layout.fragment_pref) {
                     }
                 }
             }
+
+
         }
     }
 

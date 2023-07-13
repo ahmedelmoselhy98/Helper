@@ -40,6 +40,7 @@ interface AuthApi {
         @Field("password") password: String,
         @Field("device_token") device_token: String,
         @Field("device_id") device_id: String,
+        @Field("auth_type") auth_type: String="login"
     ): Response<EndPointModel<UserModel, AuthMeta>>
 
 
@@ -51,7 +52,8 @@ interface AuthApi {
         @Field("password") password: String,
         @Field("device_token") device_token: String,
         @Field("device_id") device_id: String,
-    ): Response<EndPointModel<UserModel, AuthMeta>>
+        @Field("auth_type") auth_type: String="register"
+        ): Response<EndPointModel<UserModel, AuthMeta>>
 
 
 //    @FormUrlEncoded
@@ -69,7 +71,15 @@ interface AuthApi {
         @Part("email") email: RequestBody?,
         @Part("name") name: RequestBody?,
         @Part("password") password: RequestBody?,
-        @Part avatar: MultipartBody.Part?
+        @Part avatar: MultipartBody.Part?,
+        @Query("food_systems[]") food_systems: ArrayList<Int>?,
+        @Query("regional_cuisines[]") regional_cuisines: ArrayList<Int>?
+    ): Response<EndPointModel<UserModel, AuthMeta>>
+
+    @POST("profile/update")
+    suspend fun updateFoodSystemsList(
+        @Query("food_systems[]") food_systems: ArrayList<Int>?,
+        @Query("regional_cuisines[]") regional_cuisines: ArrayList<Int>?
     ): Response<EndPointModel<UserModel, AuthMeta>>
 
     @GET("profile/bookmarked-videos")

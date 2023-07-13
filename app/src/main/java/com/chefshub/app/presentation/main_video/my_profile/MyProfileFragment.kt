@@ -2,6 +2,7 @@ package com.chefshub.app.presentation.main_video.my_profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -22,6 +23,7 @@ import createDynamicLink
 import dagger.hilt.android.AndroidEntryPoint
 import shareDeepLink
 
+private const val TAG = "MyProfileFragment"
 @AndroidEntryPoint
 class MyProfileFragment : BaseFragment(R.layout.fragment_my_profile) {
 
@@ -33,7 +35,6 @@ class MyProfileFragment : BaseFragment(R.layout.fragment_my_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMyProfileBinding.bind(view)
-
         setupActions()
     }
 

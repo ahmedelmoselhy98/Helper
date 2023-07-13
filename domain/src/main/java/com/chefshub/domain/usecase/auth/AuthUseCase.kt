@@ -2,6 +2,7 @@ package com.chefshub.domain.usecase.auth
 
 import PrefKeys
 import android.graphics.Bitmap
+import android.util.Log
 import android.util.Patterns
 import com.chefshub.base.Validation
 import com.chefshub.data.cache.PreferencesGateway
@@ -14,6 +15,8 @@ import com.chefshub.domain.usecase.transformResponseData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
+
+private const val TAG = "AuthUseCase"
 
 class AuthUseCase @Inject constructor(
     private val authRepository: AuthRepository,
@@ -34,11 +37,15 @@ class AuthUseCase @Inject constructor(
         avatar_path,
         device_token,
         device_id
-    ).transformResponseData<UserModel, AuthMeta, UserModel>(true) { emit(it) }.onEach {
+    ).transformResponseData<UserModel, AuthMeta, UserModel>(true) {
+        emit(it)
+    }.onEach {
         preferencesGateway.save(PrefKeys.USER, it)
         preferencesGateway.save(PrefKeys.IS_USER_LOGGED, true)
-        preferencesGateway.save(PrefKeys.TOKEN, it.token!!)
-        preferencesGateway.save(PrefKeys.USER_IMAGE, it.avatarPath!!)
+        it.token?.let { preferencesGateway.save(PrefKeys.TOKEN, it) }
+        it.avatarPath?.let {
+            preferencesGateway.save(PrefKeys.USER_IMAGE, it)
+        }
     }
 
 
@@ -71,7 +78,7 @@ class AuthUseCase @Inject constructor(
         device_token: String,
         device_id: String,
     ): Flow<UserModel> {
-        return authRepository.signup(email,name, password, device_token, device_id)
+        return authRepository.signup(email, name, password, device_token, device_id)
             .transformResponseData<UserModel, AuthMeta, UserModel>(true) { emit(it) }.onEach {
                 preferencesGateway.save(PrefKeys.USER, it)
                 preferencesGateway.save(PrefKeys.IS_USER_LOGGED, true)
@@ -83,19 +90,29 @@ class AuthUseCase @Inject constructor(
     suspend fun updateProfile(
         email: String,
         name: String,
-        password: String,
-        avatar_path: Bitmap?=null
-    )= authRepository.updateProfile(email,name, password, avatar_path)
-            .transformResponseData<UserModel, AuthMeta, UserModel> { emit(it) }.onEach {
+        password: String?=null,
+        avatar_path: Bitmap? = null,
+        foodSystemsList: ArrayList<Int>?=null,
+        regional_cuisines: ArrayList<Int>?=null
+    ) = authRepository.updateProfile(email, name, password, avatar_path,foodSystemsList,regional_cuisines)
+        .transformResponseData<UserModel, AuthMeta, UserModel> { emit(it) }.onEach {
+            preferencesGateway.save(PrefKeys.USER, it)
+        }
+
+    suspend fun updateFoodSystemsList(
+        foodSystemsList: ArrayList<Int>?=null,
+        regional_cuisines: ArrayList<Int>?=null
+    ) = authRepository.updateFoodSystemsList(foodSystemsList,regional_cuisines)
+        .transformResponseData<UserModel, AuthMeta, UserModel> { emit(it) }.onEach {
             preferencesGateway.save(PrefKeys.USER, it)
         }
 
     suspend fun getTutorial(
-    )= authRepository.getTutorial()
-        .transformResponseData<ArrayList<VideoModel>, Any, ArrayList<VideoModel>> { emit(it) }.onEach {
+    ) = authRepository.getTutorial()
+        .transformResponseData<ArrayList<VideoModel>, Any, ArrayList<VideoModel>> { emit(it) }
+        .onEach {
 
         }
-
 
 
     fun isValidAuthData(email: String?, password: String?) = when {
@@ -103,11 +120,17 @@ class AuthUseCase @Inject constructor(
         (isValidPassword(password) == Validation.IS_VALID).not() -> false
         else -> true
     }
-    fun isValidRegisterAuthData(email: String?,name: String?, password: String?,confirmPassword: String?) = when {
+
+    fun isValidRegisterAuthData(
+        email: String?,
+        name: String?,
+        password: String?,
+        confirmPassword: String?
+    ) = when {
         (isValidEmail(email) == Validation.IS_VALID).not() -> false
         (isValidPassword(password) == Validation.IS_VALID).not() -> false
         (isValidText(name) == Validation.IS_VALID).not() -> false
-        (isValidConfirmPassword(password,confirmPassword) == Validation.IS_VALID).not() -> false
+        (isValidConfirmPassword(password, confirmPassword) == Validation.IS_VALID).not() -> false
         else -> true
     }
 
@@ -118,10 +141,11 @@ class AuthUseCase @Inject constructor(
             return Validation.IS_VALID
         return Validation.NOT_VALID
     }
+
     fun isValidText(text: String?): Validation {
         if (text.isNullOrEmpty()) {
             return Validation.EMPTY
-        }else{
+        } else {
             return Validation.IS_VALID
         }
     }
@@ -133,8 +157,9 @@ class AuthUseCase @Inject constructor(
             return Validation.IS_VALID
         return Validation.NOT_VALID
     }
-    fun isValidConfirmPassword(password: String? , confirmPassword:String?): Validation {
-        if (password.isNullOrEmpty()||confirmPassword.isNullOrEmpty())
+
+    fun isValidConfirmPassword(password: String?, confirmPassword: String?): Validation {
+        if (password.isNullOrEmpty() || confirmPassword.isNullOrEmpty())
             return Validation.EMPTY
         if (confirmPassword == password)
             return Validation.IS_VALID
@@ -150,7 +175,8 @@ class AuthUseCase @Inject constructor(
         authRepository.toggleFollow(int).transformResponseData<Any, Any, Any> { emit(it) }
 
     suspend fun singleVideo(int: Int) =
-        authRepository.singleVideo(int).transformResponseData<TutorialVideos, Any, TutorialVideos> { emit(it) }
+        authRepository.singleVideo(int)
+            .transformResponseData<TutorialVideos, Any, TutorialVideos> { emit(it) }
 
     suspend fun addFavorite(int: Int) =
         authRepository.addFavorite(int).transformResponseData<Any, Any, Any> { emit(it) }

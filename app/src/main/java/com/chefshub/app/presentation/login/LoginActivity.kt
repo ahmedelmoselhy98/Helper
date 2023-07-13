@@ -48,7 +48,6 @@ class LoginActivity : BaseActivity() {
         binding.ivLoginGoogle.setOnClickListener { googleLoginHelper.singIn() }
         observeFlow()
         observeValidations()
-
     }
 
     private fun setLogin() {
@@ -76,8 +75,6 @@ class LoginActivity : BaseActivity() {
 
     private fun observeFlow() {
         googleLoginHelper.userAccountLivedata.observe(this) {
-
-            Log.e("googleLoginHelper", " googleLoginHelper " + it?.displayName + " photo "+it?.photoUrl)
             if (it == null) return@observe
             it.let {
                 viewModel.loginWithSocial(
@@ -93,12 +90,6 @@ class LoginActivity : BaseActivity() {
         facebookLoginHelper.userAccountLivedata.observe(this) {
             if (it == null) return@observe
             it.let {json ->
-                //   providerName = "facebook",
-                //                        providerID = json.optString("id"),
-                //                        email = json.optString("email"),
-                //                        name = json.optString("name"),
-                //                        profileImage = "https://graph.facebook.com/${json.optString("id")}/picture?type=large"
-
                 viewModel.loginWithSocial(
                     provider_id = json.optString("id"),
                     provider_name = "facebook",
@@ -110,9 +101,9 @@ class LoginActivity : BaseActivity() {
             }
         }
 
+
+
         handleSharedFlow(viewModel.userFlow, onSuccess = {
-            //UserModel(id=4, name=User 1667631034, email=mohamed@gmail.com, avatarPath=null, foodSystems=[], regionalCuisines=[])
-            Log.e(TAG, "observeFlow: ${it.toString()}")
             if (it is UserModel) {
                 if (it.foodSystems.isNullOrEmpty().not() && it.regionalCuisines.isNullOrEmpty()
                         .not()

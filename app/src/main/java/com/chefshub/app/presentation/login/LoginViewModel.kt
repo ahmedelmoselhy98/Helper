@@ -8,13 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.chefshub.base.BaseViewModel
 import com.chefshub.base.Validation
 import com.chefshub.data.entity.NetworkState
+import com.chefshub.data.entity.user.UserModel
 import com.chefshub.domain.usecase.auth.AuthUseCase
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 import javax.inject.Inject
@@ -33,7 +32,6 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCase) :
 
     private val _userFlow = MutableSharedFlow<NetworkState>()
     val userFlow get() = _userFlow.asSharedFlow()
-
 
     fun loginWithSocial(
         provider_id: String,
@@ -94,15 +92,28 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCase) :
     fun updateProfile(
         email: String,
         name: String,
-        password: String,
-        confirmPassword: String,
-        avatar_path: Bitmap?
+        password: String?=null,
+        confirmPassword: String?=null,
+        avatar_path: Bitmap?=null,
+        foodSystemsList: ArrayList<Int>?=null,
+        regional_cuisines: ArrayList<Int>?=null
     ) {
         if (!authUseCase.isValidRegisterAuthData(email, name,password,confirmPassword)) return
         viewModelScope.launch(Dispatchers.IO) {
             executeSharedFlow(
                 _updateProfileFlow,
-                authUseCase.updateProfile(email,name, password,avatar_path )
+                authUseCase.updateProfile(email,name, password,avatar_path,foodSystemsList,regional_cuisines)
+            )
+        }
+    }
+    fun updateFoodSystemsList(
+        foodSystemsList: ArrayList<Int>?=null,
+        regional_cuisines: ArrayList<Int>?=null
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            executeSharedFlow(
+                _updateProfileFlow,
+                authUseCase.updateFoodSystemsList(foodSystemsList,regional_cuisines)
             )
         }
     }

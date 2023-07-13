@@ -191,27 +191,19 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
     private fun observeFlow() {
 
         handleSharedFlow(userViewModel.VideosChefFlow, onSuccess = {
-            Log.e("ingredientsFlow"," it "+it)
+
             listvideosChef.setAll(it as ArrayList<TutorialModel>)
             profileVideosAdapter.setAll(it as ArrayList<TutorialModel>)
+
+           binding.tvCountPosts.text = listvideosChef.itemCount.toString()
         })
 
-//        handleSharedFlow(userViewModel.VideosDetailChefFlow, onSuccess = {
-//            Log.e("ingredientsFlow"," it "+it)
-//            profileVideosAdapter.setAll(it as ArrayList<TutorialModel>)
-//        })
-
         handleSharedFlow(userViewModel.userFlow, onSuccess = {
-            Log.e("myprofile"," itttttttttt "+it)
             if (it is UserModel && it !=null ) {
                 setUser(it)
             }
         })
 
-//        handleSharedFlow(userViewModel.toggleFlow, onSuccess = {
-//            Log.e("fffffff"," msg "+it)
-//            Toast.makeText( requireContext()," "+it , Toast.LENGTH_SHORT).show()
-//        })
     }
 
     override fun onResume() {
@@ -246,11 +238,9 @@ class ProfileFragmentFragment : BaseFragment(R.layout.fragment_profile_fragment)
     private fun setUser(it: UserModel) {
         this.userModel = it
         binding.apply {
-//            ivUserCover.loadImage(it.avatarPath)
-//            userImage.loadImage(it.avatarPath)
-//            userName.text = it.name
+
             if (it !=null){
-                tvCountPosts.text = it.postsCount.toString()
+//                tvCountPosts.text = it.postsCount.toString()
                 tvCountFollowers.text = it.followersCount.toString()
                 tvCountCuisines.text = it.regionalCuisinesCount.toString()
                 btnFollow.text  = if (it.is_following ==true) "following" else "follow"

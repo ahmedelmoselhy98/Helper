@@ -15,6 +15,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.log
 
 
 open class BaseViewModel : ViewModel() {
@@ -45,17 +46,29 @@ open class BaseViewModel : ViewModel() {
     ) {
         dispatcher = viewModelScope.launch(handlerSharedException(sharedFlow)) {
             request.onStart {
+                Log.e("tester", "executeSharedFlow: onStart " )
+
 //                sharedFlow.emit(NetworkState.Loading)
             }
-                .onCompletion { sharedFlow.emit(NetworkState.StopLoading) }
-                .catch { sharedFlow.emit(NetworkState.Error(it)) }
+                .onCompletion {
+                    Log.e("tester", "executeSharedFlow: onCompletion ${it?.message}" )
+
+                    sharedFlow.emit(NetworkState.StopLoading) }
+                .catch {
+                    it.printStackTrace()
+//                    Log.e("tester", "executeSharedFlow: catch ${it.printStackTrace()}" )
+
+                    sharedFlow.emit(NetworkState.Error(it)) }
                 .collectLatest {
+                    Log.e("tester", "executeSharedFlow: collectlatest ${it}" )
+
                     sharedFlow.emit(NetworkState.Success(it)) }
         }
     }
 
     private fun handlerSharedException(state: MutableSharedFlow<NetworkState>): CoroutineExceptionHandler {
         return CoroutineExceptionHandler { coroutineContext, throwable ->
+            throwable.printStackTrace()
             when (throwable.message) {
                 ERROR_API.UNAUTHRIZED -> {
                     _unAuthorizedFlow.tryEmit(true)

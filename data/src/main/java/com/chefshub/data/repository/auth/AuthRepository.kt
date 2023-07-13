@@ -45,8 +45,15 @@ interface AuthRepository {
     suspend fun updateProfile(
         email: String,
         name: String,
-        password: String,
-        avatar_path: Bitmap?
+        password: String?,
+        avatar_path: Bitmap?,
+        foodSystemsList: ArrayList<Int>?,
+        regional_cuisines: ArrayList<Int>?
+    ): Flow<Response<EndPointModel<UserModel, AuthMeta>>>
+
+    suspend fun updateFoodSystemsList(
+        foodSystemsList: ArrayList<Int>?,
+        regional_cuisines: ArrayList<Int>?
     ): Flow<Response<EndPointModel<UserModel, AuthMeta>>>
 
     suspend fun getTutorial(): Flow<Response<EndPointModel<ArrayList<VideoModel>, Any>>>

@@ -93,7 +93,6 @@ abstract class BaseActivity : AppCompatActivity() {
                             if (onError == null) handleErrorGeneral(networkState.throwable) else
                                 onError(networkState.throwable)
                         }
-
                         else -> {
                         }
                     }
@@ -101,7 +100,6 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
     }
-
 
     fun <T> startActivity(classz: Class<T>) {
         startActivity(Intent(this, classz))

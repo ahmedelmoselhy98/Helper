@@ -142,7 +142,6 @@ class SignUpActivity : BaseActivity() {
 
     private fun observeFlow() {
         googleLoginHelper.userAccountLivedata.observe(this) {
-
             Log.e("googleLoginHelper", " googleLoginHelper " + it?.displayName + " photo "+it?.photoUrl)
             if (it == null) return@observe
             it.let {

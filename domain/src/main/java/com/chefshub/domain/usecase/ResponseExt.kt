@@ -26,9 +26,11 @@ inline fun <T, M, R> Flow<Response<EndPointModel<T, M>>>.transformResponseData(
         val body = it.body()
 
         when {
+
             it.isSuccessful && body != null -> {
 
                 val data = body.data!!
+                Log.e("tester", "transformResponseData: ${data}" )
                 if (isLogin && data is UserModel) {
                     data.token = (it.body()?.meta as AuthMeta?)?.token
                 }

@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".presentation.main_video.my_profile.EditProfileFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,6 +31,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
         android:background="#EEEAF9"
+        android:fitsSystemWindows="true"
        >
 
 

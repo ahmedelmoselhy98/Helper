@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="8dp">
 
 <!--    <com.google.android.material.imageview.ShapeableImageView-->
@@ -44,7 +45,7 @@
         android:layout_toEndOf="@+id/ivUserImage"
         android:maxWidth="220dp"
         android:padding="5dp"
-        android:text="dsagdsagashsadg sdg sag sdag sdg dssa gsdag sda gsdag"
+        android:text="dsagdsagashsadg sdg sag sdag sdg dssa gsdag sda"
         android:textColor="@color/black" />
 
     <TextView
@@ -55,8 +56,8 @@
         android:layout_toEndOf="@+id/tvComment"
         android:maxLines="1"
         android:padding="5dp"
+        android:visibility="gone"
         android:text="12h" />
-
 
     <TextView
         android:id="@+id/tvFav"

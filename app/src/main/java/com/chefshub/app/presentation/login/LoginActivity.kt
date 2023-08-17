@@ -24,7 +24,6 @@ class LoginActivity : BaseActivity() {
     private val viewModel: LoginViewModel by viewModels()
     private val facebookLoginHelper by lazy { FacebookLoginHelper(this) }
     private val googleLoginHelper by lazy { GoogleSingingHelper(this) }
-
     @SuppressLint("HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,6 +85,8 @@ class LoginActivity : BaseActivity() {
                 )
             }
         }
+
+        listOf<String>().forEach {  }
 
         facebookLoginHelper.userAccountLivedata.observe(this) {
             if (it == null) return@observe

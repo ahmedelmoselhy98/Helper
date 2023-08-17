@@ -12,6 +12,7 @@ import com.chefshub.data.entity.user.AuthMeta
 import com.chefshub.data.entity.user.UserModel
 import com.chefshub.data.repository.auth.AuthRepository
 import com.chefshub.domain.usecase.transformResponseData
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject

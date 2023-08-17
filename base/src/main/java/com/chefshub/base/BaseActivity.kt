@@ -123,7 +123,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 showMessage("no AUth")
                 baseViewModel.logout()
             }
-            ERROR_API.UPDATE_APP->{
+            ERROR_API.UPDATE_APP -> {
                 showMessage(getString(R.string.update_your_app))
             }
             ERROR_API.MAINTENANCE -> {

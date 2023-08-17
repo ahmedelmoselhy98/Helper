@@ -4,7 +4,6 @@ import com.chefshub.data.entity.tutorial.Chef
 import com.google.gson.annotations.SerializedName
 
 data class UserModel(
-
     @SerializedName("id")
     var id: Int? = null,
     @SerializedName("is_following")

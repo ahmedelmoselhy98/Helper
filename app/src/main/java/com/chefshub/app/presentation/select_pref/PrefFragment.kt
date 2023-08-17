@@ -113,8 +113,6 @@ class PrefFragment : BaseFragment(R.layout.fragment_pref) {
                 }
     }
 
-
-
     private fun observeFlow() {
         handleSharedFlow(viewModel.foodSystemModel, onSuccess = {
             if (it !is ArrayList<*>) return@handleSharedFlow

@@ -1,5 +1,6 @@
 package com.chefshub.app.presentation.main.ui.checkout
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -15,6 +16,10 @@ class CheckoutFragment : BaseFragment(R.layout.fragment_checkout) {
     private var _binding: FragmentCheckoutBinding? = null
     private val binding get() = _binding!!
 
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCheckoutBinding.bind(view)
